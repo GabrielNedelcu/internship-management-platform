@@ -1,0 +1,30 @@
+.sign-in-form-container {
+    width: 60vh;
+    height: 70vh;
+    margin: 0 auto;
+    padding: 10px;
+    top: 2vh;
+    bottom: auto;
+    position: relative;
+}
+
+.sign-in-form-container .header {
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.sign-in-form-container .paragraph {
+    color: #c5c5c5;
+}
+
+.sign-in-form-container .login-form-button {
+    width: 100%;
+}
+
+.sign-in-form-container .login-form-forgot {
+    float: right;
+}
+
+.sign-in-form-container .signup-form-button {
+    width: 100%;
+}

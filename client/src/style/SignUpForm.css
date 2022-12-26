@@ -1,0 +1,96 @@
+.sign-up-container {
+    overflow: hidden;
+    border: 0;
+    border-radius: 20px;
+    box-shadow: 0 0.5rem 1rem 0 rgb(0, 0, 0, 0.1);
+    background-color: #F2F2F2;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    display: flex;
+}
+
+.steps-container {
+    padding: 30px;
+    height: 100%;
+    background-color: rgb(15, 28, 112);
+    display: flex;
+}
+
+.forms-container {
+    height: 100%;
+    width: 100vw;
+    background-color: white;
+}
+
+.forms-container .form-container {
+    width: 80%;
+    height: 90%;
+    margin: 0 auto;
+    padding: 5px;
+    top: 4vh;
+    bottom: auto;
+    position: relative;
+    overflow-y: auto;
+    justify-content: center;
+}
+
+.steps-container .ant-steps-item-title {
+    color: white !important;
+    font-weight: bold;
+}
+
+.steps-container .ant-steps-item-description {
+    color: white !important;
+}
+
+.steps-container .ant-steps-item-tail {
+    color: white !important;
+}
+
+.steps-container .ant-steps-icon {
+    color: white !important;
+}
+
+.steps-container .ant-steps-item-process .ant-steps-item-icon {
+    color: rgb(15, 28, 112) !important;
+    background-color: white !important;
+}
+
+.steps-container .ant-steps-item-process .ant-steps-icon {
+    color: rgb(15, 28, 112) !important;
+}
+
+.steps-container .ant-steps-item-tail::after {
+    background-color: white !important;
+}
+
+.general-info-container label {
+    font-weight: bold;
+}   
+
+.forms-container .form-container .header {
+    font-weight: bold;
+    font-size: 40px;
+    text-align: center;
+}
+
+.forms-container .form-container .paragraph {
+    color: #c5c5c5;
+    text-align: center;
+}
+
+.forms-container .form-container .sign-up-button {
+    
+}
+
+img {
+    width: 480px;
+    height: 340px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
