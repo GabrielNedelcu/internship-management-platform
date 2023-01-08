@@ -49,7 +49,7 @@ const dummyTableData = [
   },
 ];
 
-const AdminStudentSearch = () => {
+const AdminBrowseStudents = () => {
   const { columns, handleChange } = useStudentsTable();
   const [tableData, setTableData] = useState<any[]>();
 
@@ -83,4 +83,4 @@ const AdminStudentSearch = () => {
   );
 };
 
-export default AdminStudentSearch;
+export default AdminBrowseStudents;

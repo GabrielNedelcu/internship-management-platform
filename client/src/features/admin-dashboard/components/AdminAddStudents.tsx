@@ -26,7 +26,7 @@ const props: UploadProps = {
   },
 };
 
-const AdminStudentAdd = () => {
+const AdminAddStudents = () => {
   return (
     <>
       <Row gutter={[16, 16]}>
@@ -77,4 +77,4 @@ const AdminStudentAdd = () => {
   );
 };
 
-export default AdminStudentAdd;
+export default AdminAddStudents;

@@ -2,8 +2,8 @@ import { Typography } from "antd";
 import { TabNavigation } from "common";
 import type { TTab } from "common";
 import { PlusCircleOutlined, SearchOutlined } from "@ant-design/icons";
-import AdminStudentSearch from "./AdminStudentSearch";
-import AdminStudentAdd from "./AdminStudentAdd";
+import AdminBrowseStudents from "./AdminBrowseStudents";
+import AdminAddStudents from "./AdminAddStudents";
 
 const AdminStudentsList = () => {
   const tabs: TTab[] = [
@@ -15,7 +15,7 @@ const AdminStudentsList = () => {
         </span>
       ),
       key: "1",
-      children: <AdminStudentAdd />,
+      children: <AdminAddStudents />,
     },
     {
       label: (
@@ -25,7 +25,7 @@ const AdminStudentsList = () => {
         </span>
       ),
       key: "2",
-      children: <AdminStudentSearch />,
+      children: <AdminBrowseStudents />,
     },
   ];
 
