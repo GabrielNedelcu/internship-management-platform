@@ -16,6 +16,8 @@ root.render(
         theme={{
           token: {
             colorPrimary: "rgb(15, 28, 112)",
+            // colorPrimaryBgHover: "rgb(15, 28, 112)",
+            // colorPrimaryTextHover: "white",
             fontFamily: "Roboto",
             fontSize: 16,
           },

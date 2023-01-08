@@ -1,0 +1,53 @@
+.ant-layout .ant-layout-sider-children {
+    height: 100%;
+    margin-top: -0.1px;
+    padding-top: 0.1px;
+    background-color: white;
+}
+
+.ant-layout .ant-layout-sider-trigger {
+    position: fixed;
+    bottom: 0;
+    z-index: 1;
+    height: 48px;
+    color: #fff;
+    background-color: white;
+    line-height: 48px;
+    text-align: center;
+    background: rgb(15, 28, 112);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ant-menu-light {
+    color: rgba(0, 0, 0, 0.88);
+    background: white;
+}
+
+.ant-menu-light:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: rgb(15, 28, 112);
+    color: white;
+}
+.ant-menu-inline {
+    width: 100%;
+    height: 100%;
+}
+
+.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+    background: rgba(0, 0, 0, 0.02);
+    background-color: white;
+}
+
+.LogoContainer {
+    height: 32px;
+    margin: 16px;
+    color: rgb(15, 28, 112);
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    font-size: 20px;
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
