@@ -35,7 +35,7 @@ const keyToRedirectPath = new Map<string, string>([
   ["6", "/dashboard/admin"],
   ["7", "/dashboard/admin/stats"],
   ["8", "/dashboard/admin"],
-  ["9", "/dashboard/admin"],
+  ["9", "/dashboard/admin/messages"],
   ["10", "/dashboard/admin"],
 ]);
 

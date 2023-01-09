@@ -10,6 +10,7 @@ import { AdminOverview } from "../features";
 import { AdminStats } from "../features";
 import { AdminStudentsList } from "../features";
 import { AdminTeachersList } from "../features";
+import { AdminMessages } from "../features";
 
 const AppRoutes = () => {
   return (
@@ -49,6 +50,15 @@ const AppRoutes = () => {
           <DashboardLayout
             sider={<AdminNavBar selectedKey={"3"} />}
             content={<AdminTeachersList />}
+          />
+        }
+      />
+      <Route
+        path="/dashboard/admin/messages"
+        element={
+          <DashboardLayout
+            sider={<AdminNavBar selectedKey={"9"} />}
+            content={<AdminMessages />}
           />
         }
       />
