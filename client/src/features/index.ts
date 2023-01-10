@@ -5,6 +5,8 @@ import AdminStats from "./admin-dashboard/components/AdminStats";
 import AdminStudentsList from "./admin-dashboard/components/AdminStudentsList";
 import AdminTeachersList from "./admin-dashboard/components/AdminTeachersList";
 import AdminMessages from "./admin-dashboard/components/AdminMessages";
+import AdminDocuments from "./admin-dashboard/components/AdminDocuments";
+import AdminCompanyOffers from "./admin-dashboard/components/AdminCompanyOffers";
 
 export { SignInForm };
 export { SignUpForm };
@@ -13,3 +15,5 @@ export { AdminStats };
 export { AdminStudentsList };
 export { AdminTeachersList };
 export { AdminMessages };
+export { AdminDocuments };
+export { AdminCompanyOffers };

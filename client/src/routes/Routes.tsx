@@ -11,6 +11,8 @@ import { AdminStats } from "../features";
 import { AdminStudentsList } from "../features";
 import { AdminTeachersList } from "../features";
 import { AdminMessages } from "../features";
+import { AdminDocuments } from "../features";
+import { AdminCompanyOffers } from "../features";
 
 const AppRoutes = () => {
   return (
@@ -59,6 +61,24 @@ const AppRoutes = () => {
           <DashboardLayout
             sider={<AdminNavBar selectedKey={"9"} />}
             content={<AdminMessages />}
+          />
+        }
+      />
+      <Route
+        path="/dashboard/admin/documents"
+        element={
+          <DashboardLayout
+            sider={<AdminNavBar selectedKey={"8"} />}
+            content={<AdminDocuments />}
+          />
+        }
+      />
+      <Route
+        path="/dashboard/admin/offers"
+        element={
+          <DashboardLayout
+            sider={<AdminNavBar selectedKey={"6"} />}
+            content={<AdminCompanyOffers />}
           />
         }
       />
