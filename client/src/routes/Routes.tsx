@@ -13,6 +13,8 @@ import { AdminTeachersList } from "../features";
 import { AdminMessages } from "../features";
 import { AdminDocuments } from "../features";
 import { AdminCompanyOffers } from "../features";
+import { AdminCompaniesList } from "../features";
+import { AdminSignUpRequests } from "../features";
 
 const AppRoutes = () => {
   return (
@@ -79,6 +81,24 @@ const AppRoutes = () => {
           <DashboardLayout
             sider={<AdminNavBar selectedKey={"6"} />}
             content={<AdminCompanyOffers />}
+          />
+        }
+      />
+      <Route
+        path="/dashboard/admin/companies"
+        element={
+          <DashboardLayout
+            sider={<AdminNavBar selectedKey={"4"} />}
+            content={<AdminCompaniesList />}
+          />
+        }
+      />
+      <Route
+        path="/dashboard/admin/requests"
+        element={
+          <DashboardLayout
+            sider={<AdminNavBar selectedKey={"5"} />}
+            content={<AdminSignUpRequests />}
           />
         }
       />
