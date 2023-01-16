@@ -1,4 +1,4 @@
-import { Form, Input, InputNumber, Select } from "antd";
+import { Form, Input, InputNumber } from "antd";
 import { Collabsable } from "../../../common";
 const { TextArea } = Input;
 

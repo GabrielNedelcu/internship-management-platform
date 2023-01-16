@@ -1,7 +1,7 @@
 import { Button, Form } from "antd";
-import allDoneImg from "../../../assets/Checklist.jpg";
+import allDoneImg from "../../../../assets/Checklist.jpg";
 
-const AllDoneForm = () => {
+const AllDoneStep = () => {
   return (
     <>
       <img src={allDoneImg} alt="All done here!"></img>
@@ -20,4 +20,4 @@ const AllDoneForm = () => {
   );
 };
 
-export default AllDoneForm;
+export default AllDoneStep;

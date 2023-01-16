@@ -1,10 +1,10 @@
 import { Form, Button } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
-import { Collabsable } from "../../../common";
-import OfferForm from "./OfferForm";
+import { Collabsable } from "../../../../common";
+import { OfferForm } from "../";
 
-const CompanyOffersForm = () => {
+const CompanyOffersStep = () => {
   return (
     <>
       <Form.List name="company-offers">
@@ -47,4 +47,4 @@ const CompanyOffersForm = () => {
   );
 };
 
-export default CompanyOffersForm;
+export default CompanyOffersStep;

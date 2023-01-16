@@ -1,7 +1,7 @@
 import { Form, Input } from "antd";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 
-const AccountSetupForm = () => {
+const AccountSetupStep = () => {
   return (
     <>
       <Form.Item label="Email address" name="account_email">
@@ -26,4 +26,4 @@ const AccountSetupForm = () => {
   );
 };
 
-export default AccountSetupForm;
+export default AccountSetupStep;

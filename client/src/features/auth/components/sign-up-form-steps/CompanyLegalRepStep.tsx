@@ -1,6 +1,6 @@
 import { Form, Input } from "antd";
 
-const CompanyLegalRepForm = () => {
+const CompanyLegalRepStep = () => {
   return (
     <>
       <Form.Item label="Full Name" name="company_legal_rep_name">
@@ -22,4 +22,4 @@ const CompanyLegalRepForm = () => {
   );
 };
 
-export default CompanyLegalRepForm;
+export default CompanyLegalRepStep;

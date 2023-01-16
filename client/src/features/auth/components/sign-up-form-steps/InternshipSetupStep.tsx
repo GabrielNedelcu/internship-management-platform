@@ -1,7 +1,7 @@
 import { Form, Input, Switch } from "antd";
 const { TextArea } = Input;
 
-const InternshipSetupForm = () => {
+const InternshipSetupStep = () => {
   return (
     <>
       <Form.Item label="Address" name="company_internship_main_address">
@@ -43,4 +43,4 @@ const InternshipSetupForm = () => {
   );
 };
 
-export default InternshipSetupForm;
+export default InternshipSetupStep;

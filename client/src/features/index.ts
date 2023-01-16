@@ -1,23 +1,13 @@
-import SignInForm from "./auth/components/SignInForm";
-import SignUpForm from "./auth/components/SignUpForm";
-import AdminOverviewPage from "./admin-dashboard/pages/AdminOverviewPage";
-import AdminStatsPage from "./admin-dashboard/pages/AdminStatsPage";
-import AdminStudentsPage from "./admin-dashboard/pages/AdminStudentsPage";
-import AdminTeachersPage from "./admin-dashboard/pages/AdminTeachersPage";
-import AdminMessagesPage from "./admin-dashboard/pages/AdminMessagesPage";
-import AdminDocumentsPage from "./admin-dashboard/pages/AdminDocumentsPage";
-import AdminCompanyOffersPage from "./admin-dashboard/pages/AdminCompanyOffersPage";
-import AdminCompaniesPage from "./admin-dashboard/pages/AdminCompaniesPage";
-import AdminSignUpRequestsPage from "./admin-dashboard/pages/AdminSignUpRequestsPage";
+export { SignInPage, SignUpPage } from "./auth";
 
-export { SignInForm };
-export { SignUpForm };
-export { AdminOverviewPage };
-export { AdminStatsPage };
-export { AdminStudentsPage };
-export { AdminTeachersPage };
-export { AdminMessagesPage };
-export { AdminDocumentsPage };
-export { AdminCompanyOffersPage };
-export { AdminCompaniesPage };
-export { AdminSignUpRequestsPage };
+export {
+  AdminOverviewPage,
+  AdminStatsPage,
+  AdminStudentsPage,
+  AdminTeachersPage,
+  AdminMessagesPage,
+  AdminDocumentsPage,
+  AdminCompanyOffersPage,
+  AdminCompaniesPage,
+  AdminSignUpRequestsPage,
+} from "./admin-dashboard";

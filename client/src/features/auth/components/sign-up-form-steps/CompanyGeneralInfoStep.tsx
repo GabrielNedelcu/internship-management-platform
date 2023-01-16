@@ -1,7 +1,7 @@
 import { Form, Input, Select } from "antd";
 const { TextArea } = Input;
 
-const CompanyGeneralInfoForm = () => {
+const CompanyGeneralInfoStep = () => {
   return (
     <>
       <Form.Item label="Company Name" name="company_name">
@@ -34,4 +34,4 @@ const CompanyGeneralInfoForm = () => {
   );
 };
 
-export default CompanyGeneralInfoForm;
+export default CompanyGeneralInfoStep;

@@ -1,25 +1,28 @@
 import { Col, Row, Form } from "antd";
 import useSignUpForm from "../hooks/useSignUpForm";
-import SignUpSteps from "./SignUpSteps";
-import CompanyGeneralInfoForm from "./CompanyGeneralInfoForm";
-import CompanyLegalRepForm from "./CompanyLegalRepForm";
-import CompanyOffersForm from "./CompanyOffersForm";
-import InternshipSetupForm from "./InternshipSetupForm";
-import CompanyInternshipHandlerForm from "./CompanyInternshipHandlerForm";
-import AllDoneForm from "./AllDoneForm";
-import AccountSetupForm from "./AccountSetupForm";
+
+import {
+  SignUpSteps,
+  AllDoneStep,
+  AccountSetupStep,
+  CompanyOffersStep,
+  InternshipSetupStep,
+  CompanyLegalRepStep,
+  CompanyGeneralInfoStep,
+  CompanyInternshipHandlerStep,
+} from "../components";
 
 import "../../../style/SignUpForm.css";
 
-const SignUpForm = () => {
-  const { steps, currentStepIdx, step, goTo } = useSignUpForm([
-    <AccountSetupForm />,
-    <CompanyGeneralInfoForm />,
-    <CompanyLegalRepForm />,
-    <CompanyInternshipHandlerForm />,
-    <InternshipSetupForm />,
-    <CompanyOffersForm />,
-    <AllDoneForm />,
+const SignUpPage = () => {
+  const { currentStepIdx, step, goTo } = useSignUpForm([
+    <AccountSetupStep />,
+    <CompanyGeneralInfoStep />,
+    <CompanyLegalRepStep />,
+    <CompanyInternshipHandlerStep />,
+    <InternshipSetupStep />,
+    <CompanyOffersStep />,
+    <AllDoneStep />,
   ]);
 
   const onChangeCurrentStepHandler = (current: number) => {
@@ -47,4 +50,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default SignUpPage;

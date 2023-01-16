@@ -1,6 +1,6 @@
 import { Form, Input } from "antd";
 
-const CompanyInternshipHandlerForm = () => {
+const CompanyInternshipHandlerStep = () => {
   return (
     <>
       <Form.Item label="Full Name" name="company_internship_handler_name">
@@ -25,4 +25,4 @@ const CompanyInternshipHandlerForm = () => {
   );
 };
 
-export default CompanyInternshipHandlerForm;
+export default CompanyInternshipHandlerStep;
