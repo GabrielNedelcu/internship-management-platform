@@ -3,7 +3,6 @@ import type { MenuProps } from "antd";
 import { Layout, Menu } from "antd";
 
 import "../../style/NavBar.css";
-import { Navigate } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
 

@@ -6,7 +6,6 @@ import {
   SettingOutlined,
   TeamOutlined,
   UserOutlined,
-  LogoutOutlined,
   ProfileOutlined,
   MailOutlined,
 } from "@ant-design/icons";
@@ -23,7 +22,6 @@ const menuItems = [
   getNavBarMenuItem("Statistics", "7", <LineChartOutlined />),
   getNavBarMenuItem("Documents", "8", <FileOutlined />),
   getNavBarMenuItem("Messages", "9", <MailOutlined />),
-  getNavBarMenuItem("Log Out", "10", <LogoutOutlined />),
 ];
 
 const keyToRedirectPath = new Map<string, string>([
@@ -36,7 +34,6 @@ const keyToRedirectPath = new Map<string, string>([
   ["7", "/dashboard/admin/stats"],
   ["8", "/dashboard/admin/documents"],
   ["9", "/dashboard/admin/messages"],
-  ["10", "/dashboard/admin"],
 ]);
 
 type TAdminNavBarProps = {
