@@ -2,7 +2,7 @@ const express = require("express");
 const helmet = require("helmet");
 
 const api = require("./routes/api");
-const errorHandler = require("./middleware/errors.middleware");
+const errorHandler = require("./middleware/error.middleware");
 
 const app = express();
 
