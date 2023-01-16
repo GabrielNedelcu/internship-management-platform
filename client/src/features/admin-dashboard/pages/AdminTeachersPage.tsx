@@ -1,39 +1,40 @@
 import { Typography } from "antd";
+import { PlusCircleOutlined, SearchOutlined } from "@ant-design/icons";
+
 import { TabNavigation } from "common";
 import type { TTab } from "common";
-import { PlusCircleOutlined, SearchOutlined } from "@ant-design/icons";
-import AdminBrowseStudents from "./AdminBrowseStudents";
-import AdminAddStudents from "./AdminAddStudents";
 
-const AdminStudentsList = () => {
+import { AdminAddTeachers, AdminBrowseTeachers } from "../components";
+
+const AdminTeachersPage = () => {
   const tabs: TTab[] = [
     {
       label: (
         <span>
           <PlusCircleOutlined />
-          Add Students
+          Add Teachers
         </span>
       ),
       key: "1",
-      children: <AdminAddStudents />,
+      children: <AdminAddTeachers />,
     },
     {
       label: (
         <span>
           <SearchOutlined />
-          Browse Students
+          Browse Teachers
         </span>
       ),
       key: "2",
-      children: <AdminBrowseStudents />,
+      children: <AdminBrowseTeachers />,
     },
   ];
 
   return (
     <>
-      <Typography.Title level={1}>Students List</Typography.Title>
+      <Typography.Title level={1}>Teachers List</Typography.Title>
       <Typography.Title level={5} type={"secondary"}>
-        Add, view, edit or delete students from the internship program ...
+        Add, view, edit or delete teachers from the internship program ...
       </Typography.Title>
 
       <TabNavigation tabList={tabs} />
@@ -41,4 +42,4 @@ const AdminStudentsList = () => {
   );
 };
 
-export default AdminStudentsList;
+export default AdminTeachersPage;

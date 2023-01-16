@@ -2,15 +2,15 @@ import { Routes, Route } from "react-router-dom";
 import { Layout, AdminNavBar } from "layout";
 
 import {
-  AdminOverview,
-  AdminStats,
-  AdminStudentsList,
-  AdminTeachersList,
-  AdminMessages,
-  AdminDocuments,
-  AdminCompanyOffers,
-  AdminCompaniesList,
-  AdminSignUpRequests,
+  AdminOverviewPage,
+  AdminStatsPage,
+  AdminStudentsPage,
+  AdminTeachersPage,
+  AdminMessagesPage,
+  AdminDocumentsPage,
+  AdminCompanyOffersPage,
+  AdminCompaniesPage,
+  AdminSignUpRequestsPage,
 } from "../../features";
 
 const AdminRoutes = () => {
@@ -22,7 +22,7 @@ const AdminRoutes = () => {
           element={
             <Layout
               sider={<AdminNavBar selectedKey={"1"} />}
-              content={<AdminOverview />}
+              content={<AdminOverviewPage />}
             />
           }
         />
@@ -31,7 +31,7 @@ const AdminRoutes = () => {
           element={
             <Layout
               sider={<AdminNavBar selectedKey={"7"} />}
-              content={<AdminStats />}
+              content={<AdminStatsPage />}
             />
           }
         />
@@ -40,7 +40,7 @@ const AdminRoutes = () => {
           element={
             <Layout
               sider={<AdminNavBar selectedKey={"2"} />}
-              content={<AdminStudentsList />}
+              content={<AdminStudentsPage />}
             />
           }
         />
@@ -49,7 +49,7 @@ const AdminRoutes = () => {
           element={
             <Layout
               sider={<AdminNavBar selectedKey={"3"} />}
-              content={<AdminTeachersList />}
+              content={<AdminTeachersPage />}
             />
           }
         />
@@ -58,7 +58,7 @@ const AdminRoutes = () => {
           element={
             <Layout
               sider={<AdminNavBar selectedKey={"9"} />}
-              content={<AdminMessages />}
+              content={<AdminMessagesPage />}
             />
           }
         />
@@ -67,7 +67,7 @@ const AdminRoutes = () => {
           element={
             <Layout
               sider={<AdminNavBar selectedKey={"8"} />}
-              content={<AdminDocuments />}
+              content={<AdminDocumentsPage />}
             />
           }
         />
@@ -76,7 +76,7 @@ const AdminRoutes = () => {
           element={
             <Layout
               sider={<AdminNavBar selectedKey={"6"} />}
-              content={<AdminCompanyOffers />}
+              content={<AdminCompanyOffersPage />}
             />
           }
         />
@@ -85,7 +85,7 @@ const AdminRoutes = () => {
           element={
             <Layout
               sider={<AdminNavBar selectedKey={"4"} />}
-              content={<AdminCompaniesList />}
+              content={<AdminCompaniesPage />}
             />
           }
         />
@@ -94,7 +94,7 @@ const AdminRoutes = () => {
           element={
             <Layout
               sider={<AdminNavBar selectedKey={"5"} />}
-              content={<AdminSignUpRequests />}
+              content={<AdminSignUpRequestsPage />}
             />
           }
         />

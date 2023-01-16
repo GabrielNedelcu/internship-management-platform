@@ -37,7 +37,7 @@ const dummyTableData = [
   },
 ];
 
-const AdminCompaniesList = () => {
+const AdminCompaniesPage = () => {
   const { columns, handleChange } = useCompaniesTable();
   const [tableData, setTableData] = useState<any[]>();
 
@@ -76,4 +76,4 @@ const AdminCompaniesList = () => {
   );
 };
 
-export default AdminCompaniesList;
+export default AdminCompaniesPage;

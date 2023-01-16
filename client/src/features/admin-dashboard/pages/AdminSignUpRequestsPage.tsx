@@ -37,7 +37,7 @@ const dummyTableData = [
   },
 ];
 
-const AdminSignUpRequests = () => {
+const AdminSignUpRequestsPage = () => {
   const { columns, handleChange } = useSignUpTable();
   const [tableData, setTableData] = useState<any[]>();
 
@@ -76,4 +76,4 @@ const AdminSignUpRequests = () => {
   );
 };
 
-export default AdminSignUpRequests;
+export default AdminSignUpRequestsPage;

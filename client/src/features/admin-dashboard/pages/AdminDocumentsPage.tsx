@@ -1,6 +1,6 @@
 import { Typography } from "antd";
 
-const AdminDocuments = () => {
+const AdminDocumentsPage = () => {
   return (
     <>
       <Typography.Title level={1}>Documents</Typography.Title>
@@ -11,4 +11,4 @@ const AdminDocuments = () => {
   );
 };
 
-export default AdminDocuments;
+export default AdminDocumentsPage;

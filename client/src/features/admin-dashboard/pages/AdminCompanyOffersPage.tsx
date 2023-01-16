@@ -66,7 +66,7 @@ const dummyTableData = [
   },
 ];
 
-const AdminCompanyOffers = () => {
+const AdminCompanyOffersPage = () => {
   const { columns, handleChange } = useOffersTable();
   const [tableData, setTableData] = useState<any[]>();
 
@@ -105,4 +105,4 @@ const AdminCompanyOffers = () => {
   );
 };
 
-export default AdminCompanyOffers;
+export default AdminCompanyOffersPage;

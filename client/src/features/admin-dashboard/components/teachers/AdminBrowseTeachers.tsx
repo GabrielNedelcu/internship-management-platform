@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Row, Col, Table, Input } from "antd";
-import useTeachersTable from "../hooks/useTeachersTable";
+import useTeachersTable from "../../hooks/useTeachersTable";
 
 const { Search } = Input;
 

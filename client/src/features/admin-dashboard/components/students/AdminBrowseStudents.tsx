@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import useStudentsTable from "../hooks/useStudentsTable";
+import useStudentsTable from "../../hooks/useStudentsTable";
 import { Row, Col, Table, Input } from "antd";
-import AdminEditStudentModal from "./AdminEditStudentModal";
+//import AdminEditStudentModal from "./AdminEditStudentModal";
 
 const { Search } = Input;
 
@@ -78,7 +78,7 @@ const AdminBrowseStudents = () => {
             onChange={handleChange}
             bordered
           />
-          <AdminEditStudentModal></AdminEditStudentModal>
+          {/* <AdminEditStudentModal></AdminEditStudentModal> */}
         </Col>
       </Row>
     </>

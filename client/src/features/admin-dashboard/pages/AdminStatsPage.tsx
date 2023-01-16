@@ -1,6 +1,6 @@
 import { Typography, Row, Col, Statistic, Card, List, Button } from "antd";
 
-const AdminStats = () => {
+const AdminStatsPage = () => {
   const data = [
     {
       title: "Company 1",
@@ -185,4 +185,4 @@ const AdminStats = () => {
   );
 };
 
-export default AdminStats;
+export default AdminStatsPage;

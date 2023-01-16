@@ -3,7 +3,7 @@ import { ArrowUpOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
 
-const AdminOverview = () => {
+const AdminOverviewPage = () => {
   const data = [
     {
       title: "Company 1",
@@ -113,4 +113,4 @@ const AdminOverview = () => {
   );
 };
 
-export default AdminOverview;
+export default AdminOverviewPage;
