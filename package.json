@@ -1,0 +1,26 @@
+{
+  "name": "internship-management-platform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install-client": "npm install --prefix client",
+    "install-server": "npm install --prefix server",
+    "install": "npm run install-server && npm run install-client",
+    "server": "npm run dev --prefix server",
+    "client": "npm start --prefix client",
+    "dev": "npm run server & npm run client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GabrielNedelcu/internship-management-platform.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GabrielNedelcu/internship-management-platform/issues"
+  },
+  "homepage": "https://github.com/GabrielNedelcu/internship-management-platform#readme"
+}
