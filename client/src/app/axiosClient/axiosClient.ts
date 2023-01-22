@@ -1,8 +1,9 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { BACKEND_URL } from "./constants";
 
-const axiosInstance = axios.create({
+const axiosClient = axios.create({
   baseURL: BACKEND_URL,
+  withCredentials: true,
 });
 
 // axiosInstance.interceptors.request.use(
@@ -18,4 +19,4 @@ const axiosInstance = axios.create({
 //   }
 // );
 
-export default axiosInstance;
+export default axiosClient;
