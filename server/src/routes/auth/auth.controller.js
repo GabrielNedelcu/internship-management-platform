@@ -38,6 +38,7 @@ async function httpPostLogin(req, res) {
       account._id.toHexString(),
       account.role
     );
+
     const refreshToken = generateRefreshToken(
       account._id.toHexString(),
       account.role
@@ -45,13 +46,18 @@ async function httpPostLogin(req, res) {
 
     await updateAccountRefreshToken(account._id, refreshToken);
 
+    res.cookie("etti-internships-auth-jwt", refreshToken, {
+      httpOnly: true,
+      samesite: "None",
+      secure: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
     return res.status(200).json({
       accountId: account._id,
-      accountEmail: account.email,
       accountRole: account.role,
       accountLanguage: account.language,
       accessToken: accessToken,
-      refreshToken: refreshToken,
     });
   } else {
     const error = new Error("Invalid email or password");
@@ -65,15 +71,21 @@ async function httpPostLogin(req, res) {
  * @api {POST} /auth/tokens
  * @apiDescription Generate a new access token based on the refresh token
  *
- * @apiBody     {Object}                "token"
+ * @apiBody     {NULL}
  */
 async function httpPostTokens(req, res) {
-  const refreshToken = req.body.token;
+  const cookies = req.cookies;
+  const refreshToken = cookies["etti-internships-auth-jwt"];
+  if (!refreshToken) {
+    const error = new Error("No refresh token provided as cookie!");
+    error.statusCode = 400;
+    throw error;
+  }
 
   const queryRes = await queryAccounts({ refresh_token: refreshToken });
   if (!queryRes.length) {
     const error = new Error("Invalid refresh token");
-    error.statusCode = 403;
+    error.statusCode = 401;
     throw error;
   }
 

@@ -15,7 +15,8 @@ const {
 const authRouter = express.Router();
 
 authRouter.post("/login", validateLogin, asyncHandler(httpPostLogin));
-authRouter.post("/tokens", validateToken, asyncHandler(httpPostTokens));
+authRouter.post("/tokens", asyncHandler(httpPostTokens));
+// TODO: protect logout rout to only logged in users
 authRouter.delete("/logout", asyncHandler(httpDeleteLogout));
 
 module.exports = authRouter;
