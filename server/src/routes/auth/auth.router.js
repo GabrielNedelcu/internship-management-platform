@@ -1,10 +1,7 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
 
-const {
-  validateLogin,
-  validateToken,
-} = require("../../middleware/validation.middleware");
+const { validateLogin } = require("../../middleware/validation.middleware");
 
 const {
   httpPostLogin,

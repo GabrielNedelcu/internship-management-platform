@@ -27,17 +27,18 @@ async function validateLogin(req, res, next) {
 }
 
 /**
- * Validate the request body in order to generate an access token from
- * a refresh token
- * Endpoint in scope: {POST} /auth/token
+ * Validate the request body in order to reset an account's password
+ * Endpoint in scope: {PATCH} /accounts/password
  *
  * @param {*} req       http request
  * @param {*} res       http response
  * @param {*} next      next middleware in the chain
  */
-async function validateToken(req, res, next) {
+async function validatePasswordReset(req, res, next) {
   const validationRule = {
-    token: "required|string",
+    email: "required|email",
+    accountID: "string",
+    newPassword: "string",
   };
 
   await validator(req.body, validationRule, {}, (err, success) => {
@@ -54,5 +55,5 @@ async function validateToken(req, res, next) {
 
 module.exports = {
   validateLogin,
-  validateToken,
+  validatePasswordReset,
 };
