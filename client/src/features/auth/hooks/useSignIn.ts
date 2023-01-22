@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 
-import { loginUser } from "../api";
+import { loginUser, requestPassword } from "../api";
 import { UserContext } from "app/contexts/UserContext";
 import { LanguageContext } from "app/contexts/LanguageContext";
 
@@ -15,6 +15,7 @@ const useSignIn = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [reqPasswordEmail, setReqPasswordEmail] = useState("");
 
   const redirectAfterLogin = (userRole: string) => {
     switch (userRole) {
@@ -27,7 +28,7 @@ const useSignIn = () => {
     }
   };
 
-  const { mutate: mutateLoginUser, isLoading: isLoadingUer } = useMutation(
+  const { mutate: mutateLoginUser } = useMutation(
     ["loginUser"],
     () => loginUser(email, password),
     {
@@ -44,7 +45,30 @@ const useSignIn = () => {
         notification.error({
           message: "Ooops ...",
           description: "Invalid credentials ... please try again!",
-          duration: 3,
+          duration: 2,
+        });
+      },
+    }
+  );
+
+  const { mutate: mutateRequestPassword } = useMutation(
+    ["requestPassword"],
+    () => requestPassword(reqPasswordEmail),
+    {
+      onSuccess: (data) => {
+        notification.success({
+          message: "Great!",
+          description:
+            "We have sent you your email containing the instructions you need to follow in order to successfully. Please check your inbox!",
+          duration: 4,
+        });
+      },
+      onError: (error) => {
+        notification.error({
+          message: "Something went wrong ...",
+          description:
+            "An error occured while resetting your password! Please try again later ...",
+          duration: 4,
         });
       },
     }
@@ -54,6 +78,8 @@ const useSignIn = () => {
     setEmail,
     setPassword,
     mutateLoginUser,
+    setReqPasswordEmail,
+    mutateRequestPassword,
   };
 };
 

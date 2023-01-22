@@ -1,14 +1,20 @@
-import { Button, Form, Input, Divider, Space } from "antd";
+import { Button, Form, Input, Divider, notification } from "antd";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 
-import "../../../style/SignInForm.css";
 import useSignIn from "../hooks/useSignIn";
-import FormItem from "antd/es/form/FormItem";
+
+import "../../../style/SignInForm.css";
 
 const { Search } = Input;
 
 const SignInForm = () => {
-  const { setEmail, setPassword, mutateLoginUser } = useSignIn();
+  const {
+    setEmail,
+    setPassword,
+    setReqPasswordEmail,
+    mutateLoginUser,
+    mutateRequestPassword,
+  } = useSignIn();
 
   return (
     <div className="sign-in-form-container">
@@ -82,6 +88,19 @@ const SignInForm = () => {
         allowClear
         enterButton="Request password"
         size="large"
+        onChange={(e) => {
+          setReqPasswordEmail(e.target.value);
+        }}
+        onSearch={(value, e) => {
+          if (!value.length) {
+            notification.error({
+              message: "Ooops ...",
+              description:
+                "Please fill out your email before requesting your password!",
+              duration: 2,
+            });
+          } else mutateRequestPassword();
+        }}
       />
     </div>
   );
