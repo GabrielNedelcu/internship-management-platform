@@ -14,20 +14,16 @@ const accountsSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: {
-        values: ["student", "company", "admin"],
+        values: ["student", "company", "admin", "teacher"],
         message: "{VALUE} is not supported",
       },
       required: [true, "The account's role must be specified"],
     },
-    password_changed: {
+    passwordChanged: {
       type: Boolean,
       default: false,
     },
-    activated: {
-      type: Boolean,
-      default: false,
-    },
-    refresh_token: {
+    refreshToken: {
       type: String,
       default: null,
     },
