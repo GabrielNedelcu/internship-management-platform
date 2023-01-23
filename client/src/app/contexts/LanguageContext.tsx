@@ -1,4 +1,14 @@
-import { createContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useState,
+  ReactNode,
+  useEffect,
+  useContext,
+} from "react";
+
+import { UserContext } from "./UserContext";
+
+import { updateUserLanguage } from "./api";
 
 const initialState = {
   language: "en",
@@ -17,7 +27,15 @@ interface ILanguageContextWrapperProps {
 const LanguageContext = createContext<ILanguagerContext>(initialState);
 
 const LanguageContextWrapper = ({ children }: ILanguageContextWrapperProps) => {
+  const { userID } = useContext(UserContext);
+
   const [language, setLanguage] = useState<string>("en");
+
+  useEffect(() => {
+    if (userID) {
+      updateUserLanguage(language);
+    }
+  }, [language]);
 
   return (
     <LanguageContext.Provider
