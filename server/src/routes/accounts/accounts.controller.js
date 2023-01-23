@@ -1,6 +1,7 @@
 const {
   getOneAccount,
   queryAccounts,
+  updateOneAccount,
   updateAccountPassword,
 } = require("../../models/accounts/accounts.model");
 
@@ -67,7 +68,23 @@ async function httpGetPasswordConfirmation(req, res) {
   return res.status(200).send();
 }
 
+/**
+ *
+ * @api {PATCH} /accounts/self
+ * @apiDescription Update the logged-in account
+ *
+ * @apiParam    {String}    token       Token associated with the request
+ */
+async function httpPatchSelf(req, res) {
+  const userId = req.userId;
+  const newData = req.body;
+
+  await updateOneAccount(userId, newData);
+  return res.status(204).send();
+}
+
 module.exports = {
+  httpPatchSelf,
   httpPatchPassword,
   httpGetPasswordConfirmation,
 };
