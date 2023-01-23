@@ -6,6 +6,10 @@ import {
   useContext,
 } from "react";
 
+import { notification } from "antd";
+
+import { useMutation } from "@tanstack/react-query";
+
 import { UserContext } from "./UserContext";
 
 import { updateUserLanguage } from "./api";
@@ -31,9 +35,24 @@ const LanguageContextWrapper = ({ children }: ILanguageContextWrapperProps) => {
 
   const [language, setLanguage] = useState<string>("en");
 
+  const { mutate: mutateUpdateUserLanguage } = useMutation(
+    ["updateUserLanguage"],
+    () => updateUserLanguage(language),
+    {
+      onError: () => {
+        notification.error({
+          message: "Ooops ...",
+          description:
+            "We've encountered an error while updating the language preference in you account! The change was not saved!",
+          duration: 2,
+        });
+      },
+    }
+  );
+
   useEffect(() => {
     if (userID) {
-      updateUserLanguage(language);
+      mutateUpdateUserLanguage();
     }
   }, [language]);
 
