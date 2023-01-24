@@ -13,6 +13,7 @@ import { useMutation } from "@tanstack/react-query";
 import { UserContext } from "./UserContext";
 
 import { updateUserLanguage } from "./api";
+import { useLocalStorage } from "common/hooks";
 
 const initialState = {
   language: "en",
@@ -33,7 +34,7 @@ const LanguageContext = createContext<ILanguagerContext>(initialState);
 const LanguageContextWrapper = ({ children }: ILanguageContextWrapperProps) => {
   const { userID } = useContext(UserContext);
 
-  const [language, setLanguage] = useState<string>("en");
+  const [language, setLanguage] = useLocalStorage("lang", "en");
 
   const { mutate: mutateUpdateUserLanguage } = useMutation(
     ["updateUserLanguage"],

@@ -1,15 +1,18 @@
+import { useContext } from "react";
+import jwt_decode from "jwt-decode";
 import { Navigate, Outlet } from "react-router";
 
+import { UserContext } from "app/contexts/UserContext";
+
 type TProtectedRouteProps = {
-  user: string;
   authorizedRoles: string[];
 };
 
-const ProtectedRoutes = ({ user, authorizedRoles }: TProtectedRouteProps) => {
-  // verify everything is ok
-  const bOK = true;
+const ProtectedRoutes = ({ authorizedRoles }: TProtectedRouteProps) => {
+  const { accessToken } = useContext(UserContext);
+  const decodedToken: any = jwt_decode(accessToken);
 
-  if (bOK) return <Outlet />;
+  if (authorizedRoles.includes(decodedToken.role)) return <Outlet />;
 
   return <Navigate to={"/not-permitted"} />;
 };

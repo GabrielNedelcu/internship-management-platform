@@ -1,20 +1,17 @@
-import { createContext, useState, ReactNode } from "react";
+import { useLocalStorage } from "common/hooks";
+import { createContext, ReactNode } from "react";
 
 const initialState = {
   userID: "",
-  userRole: "",
   accessToken: "",
   setUserID: (_: string) => {},
-  setUserRole: (_: string) => {},
   setAccessToken: (_: string) => {},
 };
 
 interface IUserContext {
   userID: string;
-  userRole: string;
   accessToken: string;
   setUserID: (userID: string) => void;
-  setUserRole: (userRole: string) => void;
   setAccessToken: (accessToken: string) => void;
 }
 
@@ -25,18 +22,15 @@ interface IUserContextWrapperProps {
 const UserContext = createContext<IUserContext>(initialState);
 
 const UserContextWrapper = ({ children }: IUserContextWrapperProps) => {
-  const [userID, setUserID] = useState<string>("");
-  const [userRole, setUserRole] = useState<string>("");
-  const [accessToken, setAccessToken] = useState<string>("");
+  const [userID, setUserID] = useLocalStorage("userID", "");
+  const [accessToken, setAccessToken] = useLocalStorage("accessToken", "");
 
   return (
     <UserContext.Provider
       value={{
         userID,
-        userRole,
         accessToken,
         setUserID,
-        setUserRole,
         setAccessToken,
       }}
     >

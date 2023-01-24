@@ -10,7 +10,7 @@ import { LanguageContext } from "app/contexts/LanguageContext";
 const useSignIn = () => {
   const navigate = useNavigate();
 
-  const { setUserID, setUserRole, setAccessToken } = useContext(UserContext);
+  const { setUserID, setAccessToken } = useContext(UserContext);
   const { setLanguage } = useContext(LanguageContext);
 
   const [email, setEmail] = useState("");
@@ -30,11 +30,12 @@ const useSignIn = () => {
 
   const { mutate: mutateLoginUser } = useMutation(
     ["loginUser"],
-    () => loginUser(email, password),
+    () => {
+      return loginUser(email, password);
+    },
     {
       onSuccess: (data) => {
         setAccessToken(data?.accessToken);
-        setUserRole(data?.accountRole);
         setUserID(data?.accountId);
 
         setLanguage(data?.accountLanguage);

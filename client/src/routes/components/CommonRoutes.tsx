@@ -12,6 +12,10 @@ const CommonRoutes = () => {
         path="*"
         element={<ErrorPage errorCode={ErrorPageCode.NotFound} />}
       />
+      <Route
+        path="/not-permitted"
+        element={<ErrorPage errorCode={ErrorPageCode.NotPermitted} />}
+      />
     </Routes>
   );
 };
