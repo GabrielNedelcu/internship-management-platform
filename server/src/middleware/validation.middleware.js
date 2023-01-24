@@ -89,8 +89,75 @@ async function validatePatchSelfAccount(req, res, next) {
   }
 }
 
+/**
+ * Validate the request body in order to create a company
+ * Endpoint in scope: {POST} /companies/
+ *
+ * @param {*} req       http request
+ * @param {*} res       http response
+ * @param {*} next      next middleware in the chain
+ */
+async function validateCompanyCreation(req, res, next) {
+  console.log(req.body);
+  const validationRule = {
+    accountEmail: "required|email",
+    accountPassword: "required|confirmed",
+    accountPassword_confirmation: "required",
+
+    name: "required|string",
+    address: "required|string",
+    contactNumber: "required|string|size: 9",
+    description: "required|string",
+    fieldOfWork: "required|string|in:telecom,softwareDev,electronics,other",
+    legalRep: {
+      name: "required|string",
+      jobTitle: "required|string",
+      phoneNumber: "required|string|size: 9",
+      email: "required|email",
+    },
+    handler: {
+      name: "required|string",
+      jobTitle: "required|string",
+      phoneNumber: "required|string|size: 9",
+      email: "required|email",
+    },
+
+    internshipCompensation: "required|boolean",
+    internshipContract: "required|boolean",
+    internshipMainAddress: "required|string",
+    internshipOtherAddresses: "string",
+    internshipOtherAdvantages: "string",
+
+    offers: "required|array",
+    "offers.*.title": "required|string",
+    "offers.*.availablePos": "required|min:1",
+    "offers.*.departament": "required|string",
+    "offers.*.description": "required|string",
+    "offers.*.mentions": "string",
+    "offers.*.requirements": "string",
+    "offers.*.supervisor": {
+      name: "required|string",
+      jobTitle: "required|string",
+      phoneNumber: "required|string|size:9",
+      email: "required|email",
+    },
+  };
+
+  await validator(req.body, validationRule, {}, (err, success) => {
+    if (success) {
+      next();
+    } else {
+      res.status(412).send({
+        message: "Validation failed",
+        data: err,
+      });
+    }
+  });
+}
+
 module.exports = {
   validateLogin,
   validatePasswordReset,
   validatePatchSelfAccount,
+  validateCompanyCreation,
 };
