@@ -64,14 +64,15 @@ async function validatePasswordReset(req, res, next) {
 async function validatePatchSelfAccount(req, res, next) {
   const validationRule = {
     password: "string",
-    language: "string|in:en, ro",
+    language: "string|in:en,ro",
   };
 
   const allowedFields = ["password", "language"];
+  const reqFields = Object.keys(req.body);
 
-  for (key of allowedFields) {
-    if (!req.body.hasOwnProperty(key)) {
-      res.status(412).send({
+  for (key of reqFields) {
+    if (!allowedFields.includes(key)) {
+      return res.status(412).send({
         message: "Validation failed",
       });
     }
