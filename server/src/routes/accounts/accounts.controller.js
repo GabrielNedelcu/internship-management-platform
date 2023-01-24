@@ -83,8 +83,28 @@ async function httpPatchSelf(req, res) {
   return res.status(204).send();
 }
 
+/**
+ *
+ * @api {HEAD} /accounts/:accountEmail
+ * @apiDescription Check if an account with the given email exists
+ *
+ * @apiParam    {String}    accountEmail       email to check
+ */
+async function httpHeadCheckEmailUnique(req, res) {
+  const accountEmail = req.params.accountEmail;
+  const account = await queryAccounts({ email: accountEmail });
+  if (!account.length) {
+    const err = new Error("Account not found!");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  return res.status(200).send();
+}
+
 module.exports = {
   httpPatchSelf,
   httpPatchPassword,
+  httpHeadCheckEmailUnique,
   httpGetPasswordConfirmation,
 };
