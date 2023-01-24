@@ -29,7 +29,13 @@ const SignInForm = () => {
       <Form layout="vertical" size="large" onFinish={(e) => mutateLoginUser()}>
         <Form.Item
           name="email"
-          rules={[{ required: true, message: "Please input your email!" }]}
+          rules={[
+            {
+              type: "email",
+              message: "Please input a valid email address!",
+            },
+            { required: true, message: "Please input your email!" },
+          ]}
         >
           <Input
             placeholder="Type in you email address"

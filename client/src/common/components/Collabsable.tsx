@@ -5,6 +5,7 @@ const { Panel } = Collapse;
 type TCollapsableProps = {
   panelTitle: string;
   contentElement: ReactElement;
+  key: string | number;
   extraButton?: ReactElement;
 };
 
@@ -12,10 +13,11 @@ const Collabsable = ({
   panelTitle,
   contentElement,
   extraButton,
+  key,
 }: TCollapsableProps) => {
   return (
     <Collapse collapsible="icon" defaultActiveKey={["1"]}>
-      <Panel header={panelTitle} key="1" extra={extraButton}>
+      <Panel header={panelTitle} key={key} extra={extraButton}>
         {contentElement}
       </Panel>
     </Collapse>

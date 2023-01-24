@@ -25,6 +25,8 @@ const useSignUpForm = (steps: ReactElement[]) => {
     steps,
     currentStepIdx,
     step: steps[currentStepIdx],
+    isFirstStep: currentStepIdx === 0,
+    isLastStep: currentStepIdx === steps.length - 1,
     goTo,
     next,
     back,

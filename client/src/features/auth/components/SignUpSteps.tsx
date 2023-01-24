@@ -2,7 +2,7 @@ import { Steps } from "antd";
 
 type SignUpStepsProps = {
   currentStepIdx: number;
-  onChangeHandler: (current: number) => void;
+  onChangeHandler?: (current: number) => void;
 };
 
 const SignUpSteps = ({ currentStepIdx, onChangeHandler }: SignUpStepsProps) => {
@@ -39,7 +39,7 @@ const SignUpSteps = ({ currentStepIdx, onChangeHandler }: SignUpStepsProps) => {
   return (
     <Steps
       current={currentStepIdx}
-      onChange={onChangeHandler}
+      // onChange={onChangeHandler}
       direction="vertical"
       items={steps}
     />

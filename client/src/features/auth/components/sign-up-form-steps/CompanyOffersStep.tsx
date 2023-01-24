@@ -7,18 +7,16 @@ import { OfferForm } from "../";
 const CompanyOffersStep = () => {
   return (
     <>
-      <Form.List name="company-offers">
+      <Form.List name="offers">
         {(fields, { add, remove }) => (
           <>
             {fields.map((field, index) => {
-              console.log(fields.length);
-              console.log(index);
-
               return (
-                <Form.Item>
+                <>
                   <Collabsable
+                    key={index}
                     panelTitle={`Offer #${index}`}
-                    contentElement={<OfferForm />}
+                    contentElement={<OfferForm field={field} />}
                     extraButton={
                       <MinusCircleOutlined
                         onClick={() => {
@@ -27,7 +25,8 @@ const CompanyOffersStep = () => {
                       />
                     }
                   />
-                </Form.Item>
+                  <br />
+                </>
               );
             })}
             <Form.Item>
