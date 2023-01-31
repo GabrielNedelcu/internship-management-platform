@@ -67,11 +67,9 @@ async function validatePatchSelfAccount(req, res, next) {
     language: "string|in:en,ro",
   };
 
-  const allowedFields = ["password", "language"];
   const reqFields = Object.keys(req.body);
-
   for (key of reqFields) {
-    if (!allowedFields.includes(key)) {
+    if (!Object.keys(validationRule).includes(key)) {
       return res.status(412).send({
         message: "Validation failed",
       });
@@ -99,7 +97,6 @@ async function validatePatchSelfAccount(req, res, next) {
  * @param {*} next      next middleware in the chain
  */
 async function validateCompanyCreation(req, res, next) {
-  console.log(req.body);
   const validationRule = {
     accountEmail: "required|email",
     accountPassword: "required|confirmed",
@@ -156,9 +153,49 @@ async function validateCompanyCreation(req, res, next) {
   });
 }
 
+/**
+ * Validate the request body in order to create a student
+ * Endpoint in scope: {POST} /students/
+ *
+ * @param {*} req       http request
+ * @param {*} res       http response
+ * @param {*} next      next middleware in the chain
+ */
+async function validateStudentCreation(req, res, next) {
+  const validationRule = {
+    email: "required|email",
+    name: "required|string",
+    group: "required|string",
+    cnp: "required|string|size:13",
+    passport: "string",
+  };
+
+  // verify user sends only accepted fields
+  const reqFields = Object.keys(req.body);
+  for (key of reqFields) {
+    if (!Object.keys(validationRule).includes(key)) {
+      return res.status(412).send({
+        message: "Validation failed",
+      });
+    }
+  }
+
+  await validator(req.body, validationRule, {}, (err, success) => {
+    if (success) {
+      next();
+    } else {
+      res.status(412).send({
+        message: "Validation failed",
+        data: err,
+      });
+    }
+  });
+}
+
 module.exports = {
   validateLogin,
   validatePasswordReset,
-  validatePatchSelfAccount,
   validateCompanyCreation,
+  validateStudentCreation,
+  validatePatchSelfAccount,
 };

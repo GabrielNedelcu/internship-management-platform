@@ -7,6 +7,7 @@ const { hashPassword } = require("../../utils/auth.utils");
  * @param {JSON} accountData    - the data needed to create a new account
  */
 async function createAccount(accountData) {
+  //TODO: Move the password generation in the controller
   const encryptedPass = await hashPassword(accountData.password);
   accountData.password = encryptedPass;
 
