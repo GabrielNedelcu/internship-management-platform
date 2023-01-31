@@ -17,7 +17,7 @@ const useSignUp = () => {
           message: "Account created",
           description:
             "Great! Your account has been created successfully. You will not have access on the platform until a faculty will review your account and approve your request! We will notify you on your email ass soon as possible! You will be redirected to the login page in 5 seconds!",
-          duration: 5,
+          duration: 10,
         });
 
         wait(5000).then(() => navigate("/"));
@@ -27,7 +27,7 @@ const useSignUp = () => {
           message: "Ooops ...",
           description:
             "Error occured while creating your account! Please try again later!",
-          duration: 5,
+          duration: 10,
         });
 
         wait(5000).then(() => navigate("/"));

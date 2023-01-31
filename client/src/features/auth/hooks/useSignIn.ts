@@ -46,7 +46,7 @@ const useSignIn = () => {
         notification.error({
           message: "Ooops ...",
           description: "Invalid credentials ... please try again!",
-          duration: 2,
+          duration: 10,
         });
       },
     }
@@ -56,20 +56,20 @@ const useSignIn = () => {
     ["requestPassword"],
     () => requestPassword(reqPasswordEmail),
     {
-      onSuccess: (data) => {
+      onSuccess: () => {
         notification.success({
           message: "Great!",
           description:
             "We have sent you your email containing the instructions you need to follow in order to successfully. Please check your inbox!",
-          duration: 4,
+          duration: 10,
         });
       },
-      onError: (error) => {
+      onError: () => {
         notification.error({
           message: "Something went wrong ...",
           description:
             "An error occured while resetting your password! Please try again later ...",
-          duration: 4,
+          duration: 10,
         });
       },
     }
