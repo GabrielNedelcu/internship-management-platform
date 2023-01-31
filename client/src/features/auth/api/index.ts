@@ -34,9 +34,3 @@ export const signUpCompany = async (data: any) => {
 
   return res.data;
 };
-
-export const checkAccountEmail = async (email: string) => {
-  const res = await axiosClient.head(`${API_ACCOUNTS_URL}/${email}`);
-
-  return res.data;
-};

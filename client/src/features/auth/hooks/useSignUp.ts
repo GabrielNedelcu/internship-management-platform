@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-
-import { signUpCompany, checkAccountEmail } from "../api";
-import { useState } from "react";
 import { wait } from "@testing-library/user-event/dist/utils";
+
+import { signUpCompany } from "../api";
+import { checkAccountEmail } from "common";
 
 const useSignUp = () => {
   const [formData, setFormData] = useState({});

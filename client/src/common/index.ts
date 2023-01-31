@@ -9,3 +9,5 @@ export { ErrorPage };
 export { ErrorPageCode };
 export { NavBar, getNavBarMenuItem };
 export type { TTab };
+
+export { checkAccountEmail } from "./api";

@@ -6,7 +6,7 @@ import useSignUp from "features/auth/hooks/useSignUp";
 const AccountSetupStep = () => {
   const { mutateCheckUniqueEmail, emailCheckResult } = useSignUp();
 
-  const handleEmailChange = (rule: any, value: any, callback: any) => {
+  const validateEmail = (rule: any, value: any, callback: any) => {
     mutateCheckUniqueEmail(value);
 
     if (emailCheckResult === "success")
@@ -25,7 +25,7 @@ const AccountSetupStep = () => {
             message: "Please provide a valid email address!",
           },
           { required: true, message: "Please provide your email!" },
-          { validator: handleEmailChange },
+          { validator: validateEmail },
         ]}
         hasFeedback
       >

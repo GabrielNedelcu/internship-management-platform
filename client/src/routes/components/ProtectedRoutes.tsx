@@ -11,7 +11,7 @@ type TProtectedRouteProps = {
 const ProtectedRoutes = ({ authorizedRoles }: TProtectedRouteProps) => {
   const { accessToken } = useContext(UserContext);
   const decodedToken: any = jwt_decode(accessToken);
-
+  //TODO: verify if token is expired
   if (authorizedRoles.includes(decodedToken.role)) return <Outlet />;
 
   return <Navigate to={"/not-permitted"} />;
