@@ -44,7 +44,7 @@ const studentsSchema = new mongoose.Schema(
     major: {
       type: String,
       enum: {
-        values: ["ELA", "RST", "TST", "MON", "ELA_EN", "TST_EN", "UNK"],
+        values: ["ELA", "RST", "TST", "MON", "ELA_EN", "TST_EN", "CTI", "UNK"],
         message: "{VALUE} is not supported",
       },
       default: null,

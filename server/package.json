@@ -30,6 +30,7 @@
     "mongoose-encryption": "^2.1.2",
     "pino": "^8.8.0",
     "pino-pretty": "^9.1.1",
+    "read-excel-file": "^5.6.0",
     "validatorjs": "^3.22.1"
   }
 }
