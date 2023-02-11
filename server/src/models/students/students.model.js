@@ -30,7 +30,18 @@ async function getOneStudent(studentId) {
  * @returns {Array}             - the retrieved students
  */
 async function getAllStudents() {
-  return await Student.find({});
+  return await Student.find(
+    {},
+    {
+      _id: 1,
+      email: 1,
+      name: 1,
+      group: 1,
+      major: 1,
+      cnp: 1,
+      passport: 1,
+    }
+  );
 }
 
 /**

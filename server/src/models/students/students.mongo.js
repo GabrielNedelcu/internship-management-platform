@@ -33,6 +33,11 @@ const addressSchema = new mongoose.Schema({
 
 const studentsSchema = new mongoose.Schema(
   {
+    email: {
+      type: String,
+      required: [true, "account email is mandatory"],
+      unique: true,
+    },
     name: {
       type: String,
       required: [true, "Student's name is required"],

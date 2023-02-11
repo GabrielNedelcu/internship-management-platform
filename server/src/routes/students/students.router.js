@@ -9,6 +9,7 @@ const {
 
 const {
   httpCreateStudent,
+  httpGetAllStudents,
   httpCreateMultipleStudents,
 } = require("./students.controller");
 
@@ -26,6 +27,12 @@ studentsRouter.post(
   authz("admin"),
   expressFileUpload(),
   asyncHandler(httpCreateMultipleStudents)
+);
+
+studentsRouter.get(
+  "/",
+  authz(["admin", "company"]),
+  asyncHandler(httpGetAllStudents)
 );
 
 module.exports = studentsRouter;

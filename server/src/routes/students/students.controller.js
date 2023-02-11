@@ -1,4 +1,7 @@
-const { createStudent } = require("../../models/students/students.model");
+const {
+  createStudent,
+  getAllStudents,
+} = require("../../models/students/students.model");
 const {
   createAccount,
   deleteOneAccount,
@@ -36,9 +39,6 @@ async function httpCreateStudent(req, res) {
   }
 
   logger.info(`Created account with id ${account._id}`);
-
-  // remove the email from the student data
-  delete studentData.email;
 
   // create the student
   const student = await createStudent({
@@ -95,6 +95,7 @@ async function httpCreateMultipleStudents(req, res) {
       }
 
       const dataForStudentCreation = {
+        email: studentData.email,
         name: studentData.name,
         group: studentData.group,
         major: getStudentMajor(studentData.group),
@@ -131,7 +132,31 @@ async function httpCreateMultipleStudents(req, res) {
     .json({ data: result, detected: students.length, success, fails });
 }
 
+/**
+ * @api {GET} /students/
+ * @apiDescription Get all the students, depending on the user role
+ * For ADMIN, no restrictions are applied; For COMPANY gets all the students
+ * that have applied to offers of the company
+ *
+ * @apiSuccess array with the requested data or 204 if no student was found
+ */
+async function httpGetAllStudents(req, res) {
+  const userId = req.account;
+  const userRole = req.userRole;
+
+  let students;
+  console.log(userRole);
+  if (userRole === "admin") students = await getAllStudents();
+  else {
+  }
+
+  if (!students.length) return res.status(204).send();
+
+  return res.status(200).json(students);
+}
+
 module.exports = {
   httpCreateStudent,
+  httpGetAllStudents,
   httpCreateMultipleStudents,
 };
