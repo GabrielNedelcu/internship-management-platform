@@ -14,7 +14,7 @@ const accountsSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: {
-        values: ["student", "company", "admin", "teacher"],
+        values: ["student", "company", "admin", "professor"],
         message: "{VALUE} is not supported",
       },
       required: [true, "The account's role must be specified"],

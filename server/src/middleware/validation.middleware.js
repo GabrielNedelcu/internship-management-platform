@@ -192,10 +192,52 @@ async function validateStudentCreation(req, res, next) {
   });
 }
 
+/**
+ * Validate the request body in order to create a professor
+ * Endpoint in scope: {POST} /professors/
+ *
+ * @param {*} req       http request
+ * @param {*} res       http response
+ * @param {*} next      next middleware in the chain
+ */
+async function validateProfessorCreation(req, res, next) {
+  const validationRule = {
+    name: "required|string",
+    email: "required|email",
+    title: "required|string",
+    privatePhone: "required|string",
+    publicPhone: "required|string",
+    departament: "required|string",
+    numPositions: "required|integer|min:1",
+  };
+
+  // verify user sends only accepted fields
+  const reqFields = Object.keys(req.body);
+  for (key of reqFields) {
+    if (!Object.keys(validationRule).includes(key)) {
+      return res.status(412).send({
+        message: "Validation failed",
+      });
+    }
+  }
+
+  await validator(req.body, validationRule, {}, (err, success) => {
+    if (success) {
+      next();
+    } else {
+      res.status(412).send({
+        message: "Validation failed",
+        data: err,
+      });
+    }
+  });
+}
+
 module.exports = {
   validateLogin,
   validatePasswordReset,
   validateCompanyCreation,
   validateStudentCreation,
   validatePatchSelfAccount,
+  validateProfessorCreation,
 };
