@@ -1,36 +1,40 @@
 import { axiosClient } from "app/axiosClient";
 
-const API_URL = "/students";
+const API_URL = "/professors";
 
-interface ICreateStudentData {
+interface ICreateProfessorData {
   name: string;
   email: string;
-  group: string;
-  cnp: string;
-  passport: string;
+  title: string;
+  privatePhone: string;
+  publicPhone: string;
+  departament: string;
+  numPositions: number;
 }
 
 /**
- * Call create student endpoint
+ * Call create professor endpoint
  *
- * @param data student data
+ * @param data professor data
  * @returns server reponse
  */
-export const createStudent = async (data: ICreateStudentData) => {
+export const createProfessor = async (data: ICreateProfessorData) => {
+  console.log(data);
+
   const res = await axiosClient.post(`${API_URL}`, data);
 
   return res.data;
 };
 
 /**
- * Upload the excel file containing the students to the server
+ * Upload the excel file containing the professors to the server
  *
  * @param file - file to upload
  * @param onSucces - callback for the antd file uploader
  * @param onError - callback for the antd file uploader
  * @returns query response
  */
-export const uploadStudentsFile = async (
+export const uploadProfessorsFile = async (
   file: any,
   onSucces: () => void,
   onError: () => void
@@ -50,11 +54,11 @@ export const uploadStudentsFile = async (
 };
 
 /**
- * Retrieve all the students from the server
+ * Retrieve all the professors from the server
  *
- * @returns array containing a list with all the students
+ * @returns array containing a list with all the professors
  */
-export const getAllStudents = async () => {
+export const getAllProfessors = async () => {
   const res = await axiosClient.get(`${API_URL}`);
 
   return res.data;
