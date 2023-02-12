@@ -1,64 +1,19 @@
-import { useState, useEffect } from "react";
 import useStudentsTable from "../../hooks/useStudentsTable";
-import { Row, Col, Table, Input } from "antd";
-//import AdminEditStudentModal from "./AdminEditStudentModal";
+import { Row, Col, Table, Input, Button } from "antd";
 
 const { Search } = Input;
 
-const onSearch = (value: string) => console.log(value);
-
-const dummyTableData = [
-  {
-    key: "1",
-    name: "A Nedelcu P. Gabriel",
-    group: "443B",
-    major: "ELA",
-    email: "gabriel.nedelcu@stud.upb.ro",
-    id: "1234123412343452345",
-  },
-  {
-    key: "2",
-    name: "C Nedelcu P. Gabriel",
-    group: "443B",
-    major: "ELA",
-    email: "gabriel.nedelcu@stud.upb.ro",
-    id: "1234123412343452345",
-  },
-  {
-    key: "3",
-    name: "B Nedelcu P. Gabriel",
-    group: "443B",
-    major: "ELA",
-    email: "gabriel.nedelcu@stud.upb.ro",
-    id: "1234123412343452345",
-  },
-  {
-    key: "4",
-    name: "D Nedelcu P. Gabriel",
-    group: "443B",
-    major: "ELA",
-    email: "gabriel.nedelcu@stud.upb.ro",
-    id: "1234123412343452345",
-  },
-  {
-    key: "5",
-    name: "E Nedelcu P. Gabriel",
-    group: "443B",
-    major: "RST",
-    email: "gabriel.nedelcu@stud.upb.ro",
-    id: "1234123412343452345",
-  },
-];
-
 const AdminBrowseStudents = () => {
-  const { columns, handleChange } = useStudentsTable();
-  const [tableData, setTableData] = useState<any[]>();
-
-  // On Component Mount retrieve table data
-  useEffect(() => {
-    console.log("get data");
-    setTableData(dummyTableData);
-  }, []);
+  const {
+    tableData,
+    columns,
+    status,
+    searchText,
+    handleChange,
+    setSearchText,
+    handleSearchBy,
+    handleClearSearch,
+  } = useStudentsTable();
 
   return (
     <>
@@ -66,19 +21,28 @@ const AdminBrowseStudents = () => {
         <Col span="12">
           <Search
             placeholder="Search for students by name or email"
-            onSearch={onSearch}
+            onSearch={handleSearchBy}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
             enterButton
             size="large"
+            value={searchText}
           />
+        </Col>
+        <Col style={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button size="large" type="primary" onClick={handleClearSearch}>
+            Clear Search
+          </Button>
         </Col>
         <Col>
           <Table
             columns={columns}
             dataSource={tableData}
+            loading={status === "loading"}
             onChange={handleChange}
             bordered
           />
-          {/* <AdminEditStudentModal></AdminEditStudentModal> */}
         </Col>
       </Row>
     </>

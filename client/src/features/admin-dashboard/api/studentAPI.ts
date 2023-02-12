@@ -10,6 +10,12 @@ interface ICreateStudentData {
   passport: string;
 }
 
+/**
+ * Call create student endpoint
+ *
+ * @param data student data
+ * @returns server reponse
+ */
 export const createStudent = async (data: ICreateStudentData) => {
   const res = await axiosClient.post(`${API_URL}`, data);
 
@@ -40,5 +46,11 @@ export const uploadStudentsFile = async (
   if (res.data.data.length !== 0) onSucces();
   else onError();
 
+  return res.data;
+};
+
+export const getAllStudents = async () => {
+  const res = await axiosClient.get(`${API_URL}`);
+  console.log(res.data);
   return res.data;
 };

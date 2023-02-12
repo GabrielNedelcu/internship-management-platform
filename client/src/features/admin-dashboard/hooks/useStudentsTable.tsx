@@ -1,39 +1,55 @@
 import { useState } from "react";
-import { TableProps, Popconfirm } from "antd";
+import { TableProps, Popconfirm, notification } from "antd";
 import type {
   ColumnsType,
   FilterValue,
   SorterResult,
 } from "antd/es/table/interface";
+import { useQuery } from "@tanstack/react-query";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { getAllStudents } from "../api/studentAPI";
 
-type TStudentRowData = {
+interface IStudentData {
   key: string;
   name: string;
   group: string;
   major: string;
   email: string;
-  id: string;
-};
+  cnp: string;
+}
 
 const useStudentsTable = () => {
+  const [tableData, setTableData] = useState<IStudentData[]>();
+  const [searchText, setSearchText] = useState("");
   const [filteredInfo, setFilteredInfo] = useState<
     Record<string, FilterValue | null>
   >({});
-  const [sortedInfo, setSortedInfo] = useState<SorterResult<TStudentRowData>>(
-    {}
-  );
+  const [sortedInfo, setSortedInfo] = useState<SorterResult<IStudentData>>({});
 
-  const handleChange: TableProps<TStudentRowData>["onChange"] = (
+  const { data, status } = useQuery(["getAllStudents"], getAllStudents, {
+    onSuccess: (data: IStudentData[]) => {
+      setTableData(data);
+    },
+    onError: () => {
+      notification.error({
+        message: "Ooops ...",
+        description:
+          "Cannot retrieve the students from the server ... please try again!",
+        duration: 10,
+      });
+    },
+  });
+
+  const handleChange: TableProps<IStudentData>["onChange"] = (
     pagination,
     filters,
     sorter
   ) => {
     setFilteredInfo(filters);
-    setSortedInfo(sorter as SorterResult<TStudentRowData>);
+    setSortedInfo(sorter as SorterResult<IStudentData>);
   };
 
-  const columns: ColumnsType<TStudentRowData> = [
+  const columns: ColumnsType<IStudentData> = [
     {
       title: "Name",
       dataIndex: "name",
@@ -76,11 +92,11 @@ const useStudentsTable = () => {
       ellipsis: true,
     },
     {
-      title: "CNP/Passport",
-      dataIndex: "id",
-      key: "id",
-      sorter: (a, b) => a.id.localeCompare(b.id),
-      sortOrder: sortedInfo.columnKey === "id" ? sortedInfo.order : null,
+      title: "CNP",
+      dataIndex: "cnp",
+      key: "cnp",
+      sorter: (a, b) => a.cnp.localeCompare(b.cnp),
+      sortOrder: sortedInfo.columnKey === "cnp" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
@@ -107,9 +123,31 @@ const useStudentsTable = () => {
     console.log(`Se sterge ${key}`);
   };
 
+  const handleSearchBy = (value: string) => {
+    setTableData(
+      tableData?.filter((student: IStudentData) => {
+        return (
+          student.name.toLowerCase().includes(value.toLowerCase()) ||
+          student.email.toLowerCase().includes(value.toLowerCase())
+        );
+      })
+    );
+  };
+
+  const handleClearSearch = () => {
+    setTableData(data);
+    setSearchText("");
+  };
+
   return {
+    status,
     columns,
+    tableData,
+    searchText,
     handleChange,
+    setSearchText,
+    handleSearchBy,
+    handleClearSearch,
   };
 };
 
