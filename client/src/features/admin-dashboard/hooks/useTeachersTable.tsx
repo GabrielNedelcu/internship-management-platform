@@ -1,41 +1,57 @@
 import { useState } from "react";
-import { TableProps, Popconfirm } from "antd";
+import { TableProps, Popconfirm, notification } from "antd";
 import type {
   ColumnsType,
   FilterValue,
   SorterResult,
 } from "antd/es/table/interface";
+import { useQuery } from "@tanstack/react-query";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-
-type TTeacherRowData = {
-  key: string;
+import { getAllProfessors } from "../api/professorsAPI";
+interface ITeacherData {
+  _id: string;
   name: string;
   email: string;
-  jobTitle: string;
+  title: string;
   departament: string;
-  phone: string;
-  studentsNo: number;
-  availableStudentsNo: number;
-};
+  privatePhone: string;
+  publicPhone: string;
+  numPositions: number;
+  numAvailablePositions: number;
+}
 
 const useTeachersTable = () => {
+  const [tableData, setTableData] = useState<ITeacherData[]>();
+  const [searchText, setSearchText] = useState("");
   const [filteredInfo, setFilteredInfo] = useState<
     Record<string, FilterValue | null>
   >({});
-  const [sortedInfo, setSortedInfo] = useState<SorterResult<TTeacherRowData>>(
-    {}
-  );
+  const [sortedInfo, setSortedInfo] = useState<SorterResult<ITeacherData>>({});
 
-  const handleChange: TableProps<TTeacherRowData>["onChange"] = (
+  const { data, status } = useQuery(["getAllProfessors"], getAllProfessors, {
+    onSuccess: (data: ITeacherData[]) => {
+      setTableData(data);
+    },
+    onError: () => {
+      notification.error({
+        message: "Ooops ...",
+        description:
+          "Cannot retrieve the professors from the server ... please try again!",
+        duration: 10,
+      });
+    },
+  });
+
+  const handleChange: TableProps<ITeacherData>["onChange"] = (
     pagination,
     filters,
     sorter
   ) => {
     setFilteredInfo(filters);
-    setSortedInfo(sorter as SorterResult<TTeacherRowData>);
+    setSortedInfo(sorter as SorterResult<ITeacherData>);
   };
 
-  const columns: ColumnsType<TTeacherRowData> = [
+  const columns: ColumnsType<ITeacherData> = [
     {
       title: "Name",
       dataIndex: "name",
@@ -54,10 +70,10 @@ const useTeachersTable = () => {
     },
     {
       title: "Job Title",
-      dataIndex: "jobTitle",
-      key: "jobTitle",
-      sorter: (a, b) => a.jobTitle.localeCompare(b.jobTitle),
-      sortOrder: sortedInfo.columnKey === "jobTitle" ? sortedInfo.order : null,
+      dataIndex: "title",
+      key: "title",
+      sorter: (a, b) => a.title.localeCompare(b.title),
+      sortOrder: sortedInfo.columnKey === "title" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
@@ -71,7 +87,7 @@ const useTeachersTable = () => {
         { text: "MON", value: "MON" },
         { text: "CTI", value: "CTI" },
       ],
-      filteredValue: filteredInfo.major || null,
+      filteredValue: filteredInfo.departament || null,
       onFilter: (value, record) => record.departament === value,
       sorter: (a, b) => a.departament.localeCompare(b.departament),
       sortOrder:
@@ -80,28 +96,38 @@ const useTeachersTable = () => {
     },
     {
       title: "Private Phone Number",
-      dataIndex: "phone",
-      key: "phone",
-      sorter: (a, b) => a.phone.localeCompare(b.phone),
-      sortOrder: sortedInfo.columnKey === "phone" ? sortedInfo.order : null,
+      dataIndex: "privatePhone",
+      key: "privatePhone",
+      sorter: (a, b) => a.privatePhone.localeCompare(b.privatePhone),
+      sortOrder:
+        sortedInfo.columnKey === "privatePhone" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
-      title: "Total No. Student Spots",
-      dataIndex: "studentsNo",
-      key: "studentsNo",
-      sorter: (a, b) => a.studentsNo - b.studentsNo,
+      title: "Public Phone Number",
+      dataIndex: "publicPhone",
+      key: "publicPhone",
+      sorter: (a, b) => a.publicPhone.localeCompare(b.publicPhone),
       sortOrder:
-        sortedInfo.columnKey === "studentsNo" ? sortedInfo.order : null,
+        sortedInfo.columnKey === "publicPhone" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
-      title: "Available Student Spots",
-      dataIndex: "availableStudentsNo",
-      key: "availableStudentsNo",
-      sorter: (a, b) => a.availableStudentsNo - b.availableStudentsNo,
+      title: "Positions No.",
+      dataIndex: "numPositions",
+      key: "numPositions",
+      sorter: (a, b) => a.numPositions - b.numPositions,
       sortOrder:
-        sortedInfo.columnKey === "availableStudentsNo"
+        sortedInfo.columnKey === "numPositions" ? sortedInfo.order : null,
+      ellipsis: true,
+    },
+    {
+      title: "Available Positions No.",
+      dataIndex: "numAvailablePositions",
+      key: "numAvailablePositions",
+      sorter: (a, b) => a.numAvailablePositions - b.numAvailablePositions,
+      sortOrder:
+        sortedInfo.columnKey === "numAvailablePositions"
           ? sortedInfo.order
           : null,
       ellipsis: true,
@@ -130,9 +156,31 @@ const useTeachersTable = () => {
     console.log(`Se sterge ${key}`);
   };
 
+  const handleSearchBy = (value: string) => {
+    setTableData(
+      tableData?.filter((student: ITeacherData) => {
+        return (
+          student.name.toLowerCase().includes(value.toLowerCase()) ||
+          student.email.toLowerCase().includes(value.toLowerCase())
+        );
+      })
+    );
+  };
+
+  const handleClearSearch = () => {
+    setTableData(data);
+    setSearchText("");
+  };
+
   return {
+    status,
     columns,
+    tableData,
+    searchText,
     handleChange,
+    setSearchText,
+    handleSearchBy,
+    handleClearSearch,
   };
 };
 
