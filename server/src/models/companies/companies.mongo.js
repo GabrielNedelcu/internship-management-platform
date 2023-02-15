@@ -21,6 +21,11 @@ const employeeSchema = new mongoose.Schema({
 
 const companiesSchema = new mongoose.Schema(
   {
+    email: {
+      type: String,
+      required: [true, "Company email is required"],
+      unique: true,
+    },
     name: {
       type: String,
       unique: true,

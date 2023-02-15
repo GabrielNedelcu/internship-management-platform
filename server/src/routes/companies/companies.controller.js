@@ -1,7 +1,10 @@
 const logger = require("../../config/logger.config");
 
 const { createAccount } = require("../../models/accounts/accounts.model");
-const { createCompany } = require("../../models/companies/companies.model");
+const {
+  createCompany,
+  queryCompanies,
+} = require("../../models/companies/companies.model");
 const { createOffer } = require("../../models/offers/offers.model");
 
 /**
@@ -50,6 +53,7 @@ async function httpCreateCompany(req, res) {
     ...companyData,
     numOffers: offers.length,
     numPositions,
+    email: accountData.email,
   });
   logger.info(`Created company with id ${account._id}`);
 
@@ -68,4 +72,45 @@ async function httpCreateCompany(req, res) {
   return res.status(201).json({ ...company._doc, offers: createdOffers });
 }
 
-module.exports = { httpCreateCompany };
+/**
+ * @api {GET} /companies/
+ * @apiDescription Get all the companies
+ * @apiParam validated - if the company has been validated or not
+ * parameter available only for ADMIN
+ *
+ *
+ * @apiSuccess array with the requested data or 204 if no company was found
+ */
+async function httpGetAllCompanies(req, res) {
+  const userRole = req.userRole;
+  const validated = req.query.validated || true;
+
+  console.log(userRole);
+
+  if (userRole !== "admin" && validated === false) {
+    return res
+      .status(403)
+      .send({ err: "You are not permitted to access this resource!" });
+  }
+
+  let companies;
+  if (userRole === "admin")
+    companies = await queryCompanies(
+      { validated },
+      {
+        _id: 1,
+        name: 1,
+        email: 1,
+        fieldOfWork: 1,
+        numOffers: 1,
+        numPositions: 1,
+        createdAt: 1,
+      }
+    );
+
+  if (!companies.length) return res.status(204).send();
+
+  return res.status(200).json(companies);
+}
+
+module.exports = { httpCreateCompany, httpGetAllCompanies };
