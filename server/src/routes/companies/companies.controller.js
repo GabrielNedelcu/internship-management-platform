@@ -39,8 +39,18 @@ async function httpCreateCompany(req, res) {
   const offers = companyData.offers;
   delete companyData.offers;
 
+  let numPositions = 0;
+  offers.forEach((offer) => {
+    numPositions += offer.availablePos;
+  });
+
   // create the company
-  const company = await createCompany({ _id: account._id, ...companyData });
+  const company = await createCompany({
+    _id: account._id,
+    ...companyData,
+    numOffers: offers.length,
+    numPositions,
+  });
   logger.info(`Created company with id ${account._id}`);
 
   // create the associated offers
