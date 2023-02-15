@@ -1,41 +1,63 @@
 import { useState } from "react";
-import { TableProps, Popconfirm } from "antd";
+import moment from "moment";
 import type {
   ColumnsType,
   FilterValue,
   SorterResult,
 } from "antd/es/table/interface";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import moment from "moment";
+import { useQuery } from "@tanstack/react-query";
+import { getAllCompanies } from "../api/companiesAPI";
+import { TableProps, Space, Button, Tooltip, notification } from "antd";
+import { CloseOutlined, CheckOutlined, EditOutlined } from "@ant-design/icons";
 
-type TRequestsRowData = {
-  key: string;
+type ICompanyData = {
+  _id: string;
   name: string;
   email: string;
   fieldOfWork: string;
-  offers: number;
-  positions: number;
+  numOffers: number;
+  numPositions: number;
   onboardingDate: string;
 };
 
 const useSignUpTable = () => {
+  const [tableData, setTableData] = useState<ICompanyData[]>();
+  const [searchText, setSearchText] = useState("");
   const [filteredInfo, setFilteredInfo] = useState<
     Record<string, FilterValue | null>
   >({});
-  const [sortedInfo, setSortedInfo] = useState<SorterResult<TRequestsRowData>>(
-    {}
+  const [sortedInfo, setSortedInfo] = useState<SorterResult<ICompanyData>>({});
+
+  const validated = false;
+
+  const { data, status } = useQuery(
+    ["getAllCompanies", validated],
+    () => getAllCompanies(validated),
+    {
+      onSuccess: (data: ICompanyData[]) => {
+        setTableData(data);
+      },
+      onError: () => {
+        notification.error({
+          message: "Ooops ...",
+          description:
+            "Cannot retrieve the companies from the server ... please try again!",
+          duration: 10,
+        });
+      },
+    }
   );
 
-  const handleChange: TableProps<TRequestsRowData>["onChange"] = (
+  const handleChange: TableProps<ICompanyData>["onChange"] = (
     pagination,
     filters,
     sorter
   ) => {
     setFilteredInfo(filters);
-    setSortedInfo(sorter as SorterResult<TRequestsRowData>);
+    setSortedInfo(sorter as SorterResult<ICompanyData>);
   };
 
-  const columns: ColumnsType<TRequestsRowData> = [
+  const columns: ColumnsType<ICompanyData> = [
     {
       title: "Company Name",
       dataIndex: "name",
@@ -45,7 +67,7 @@ const useSignUpTable = () => {
       ellipsis: true,
     },
     {
-      title: "Email",
+      title: "Account Email",
       dataIndex: "email",
       key: "email",
       sorter: (a, b) => a.email.localeCompare(b.email),
@@ -57,10 +79,10 @@ const useSignUpTable = () => {
       dataIndex: "fieldOfWork",
       key: "fieldOfWork",
       filters: [
-        { text: "Telecom", value: "Telecom" },
-        { text: "Software Developement", value: "Software Developement" },
-        { text: "Electronics", value: "Electronics" },
-        { text: "Other", value: "Other" },
+        { text: "Telecom", value: "telecom" },
+        { text: "Software Developement", value: "softwareDev" },
+        { text: "Electronics", value: "electronics" },
+        { text: "Other", value: "other" },
       ],
       filteredValue: filteredInfo.fieldOfWork || null,
       onFilter: (value, record) => record.fieldOfWork === value,
@@ -68,21 +90,46 @@ const useSignUpTable = () => {
       sortOrder:
         sortedInfo.columnKey === "fieldOfWork" ? sortedInfo.order : null,
       ellipsis: true,
+      render: (record: String) => {
+        let fow = "";
+        switch (record) {
+          case "telecom":
+            fow = "Telecom";
+            break;
+          case "softwareDev":
+            fow = "Software Developement";
+            break;
+          case "electronics":
+            fow = "Electronics";
+            break;
+          case "other":
+            fow = "Other";
+            break;
+          default:
+            break;
+        }
+        return (
+          <div>
+            <p>{fow}</p>
+          </div>
+        );
+      },
     },
     {
       title: "Number Of Offers",
-      dataIndex: "offers",
-      key: "offers",
-      sorter: (a, b) => a.offers - b.offers,
-      sortOrder: sortedInfo.columnKey === "offers" ? sortedInfo.order : null,
+      dataIndex: "numOffers",
+      key: "numOffers",
+      sorter: (a, b) => a.numOffers - b.numOffers,
+      sortOrder: sortedInfo.columnKey === "numOffers" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
       title: "Number Of Positions",
-      dataIndex: "positions",
-      key: "positions",
-      sorter: (a, b) => a.positions - b.positions,
-      sortOrder: sortedInfo.columnKey === "positions" ? sortedInfo.order : null,
+      dataIndex: "numPositions",
+      key: "numPositions",
+      sorter: (a, b) => a.numPositions - b.numPositions,
+      sortOrder:
+        sortedInfo.columnKey === "numPositions" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
@@ -96,7 +143,6 @@ const useSignUpTable = () => {
         sortedInfo.columnKey === "onboardingDate" ? sortedInfo.order : null,
       ellipsis: true,
       render: (record) => {
-        console.log(record);
         return (
           <div>
             <p>{moment(record).format("DD-MM-YYYY")}</p>
@@ -110,7 +156,33 @@ const useSignUpTable = () => {
       render: (record) => {
         return (
           <>
-            <EditOutlined onClick={() => {}} />
+            <Space size="small">
+              <Tooltip title="Review Company">
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon={<EditOutlined />}
+                  onClick={() => handleReview(record._id)}
+                />
+              </Tooltip>
+              <Tooltip title="Quick Accept">
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon={<CheckOutlined />}
+                  onClick={() => handleAccept(record._id)}
+                />
+              </Tooltip>
+              <Tooltip title="Quick Decline">
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon={<CloseOutlined />}
+                  danger
+                  onClick={() => handleDecline(record._id)}
+                />
+              </Tooltip>
+            </Space>
           </>
         );
       },
@@ -118,13 +190,43 @@ const useSignUpTable = () => {
     },
   ];
 
-  const handleDelete = (key: string) => {
+  const handleDecline = (key: string) => {
     console.log(`Se sterge ${key}`);
   };
 
+  const handleAccept = (key: string) => {
+    console.log(`Se accepta ${key}`);
+  };
+
+  const handleReview = (key: string) => {
+    console.log(`Se deschide ${key}`);
+  };
+
+  const handleSearchBy = (value: string) => {
+    setTableData(
+      tableData?.filter((company: ICompanyData) => {
+        return (
+          company.name.toLowerCase().includes(value.toLowerCase()) ||
+          company.email.toLowerCase().includes(value.toLowerCase())
+        );
+      })
+    );
+  };
+
+  const handleClearSearch = () => {
+    setTableData(data);
+    setSearchText("");
+  };
+
   return {
+    status,
     columns,
+    tableData,
+    searchText,
     handleChange,
+    setSearchText,
+    handleSearchBy,
+    handleClearSearch,
   };
 };
 
