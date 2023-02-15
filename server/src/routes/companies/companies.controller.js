@@ -3,7 +3,9 @@ const logger = require("../../config/logger.config");
 const { createAccount } = require("../../models/accounts/accounts.model");
 const {
   createCompany,
+  getOneCompany,
   queryCompanies,
+  updateOneCompany,
 } = require("../../models/companies/companies.model");
 const { createOffer } = require("../../models/offers/offers.model");
 
@@ -113,4 +115,26 @@ async function httpGetAllCompanies(req, res) {
   return res.status(200).json(companies);
 }
 
-module.exports = { httpCreateCompany, httpGetAllCompanies };
+/**
+ *
+ * @api {PATCH} /companies/:companyID
+ * @apiDescription Update a company. Available only for ADMIN
+ *
+ * @apiParam    {String}    companyID       id of the company to be updated
+ */
+async function httpPatchCompany(req, res) {
+  const companyId = req.params.companyId;
+  const newData = req.body;
+
+  const company = await getOneCompany(companyId);
+  if (!company) {
+    const err = new Error("Company not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  await updateOneCompany(companyId, newData);
+  return res.status(204).send();
+}
+
+module.exports = { httpCreateCompany, httpGetAllCompanies, httpPatchCompany };

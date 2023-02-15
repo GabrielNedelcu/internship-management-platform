@@ -233,8 +233,68 @@ async function validateProfessorCreation(req, res, next) {
   });
 }
 
+/**
+ * Validate the request body in order to patch a company
+ * Endpoint in scope: {PATCH} /companies/:companyId
+ *
+ * @param {*} req       http request
+ * @param {*} res       http response
+ * @param {*} next      next middleware in the chain
+ */
+async function validatePatchCompany(req, res, next) {
+  const validationRule = {
+    name: "string",
+    address: "string",
+    contactNumber: "string|size: 9",
+    description: "string",
+    fieldOfWork: "string|in:telecom,softwareDev,electronics,other",
+    legalRep: {
+      name: "string",
+      jobTitle: "string",
+      phoneNumber: "string|size: 9",
+      email: "email",
+    },
+    handler: {
+      name: "string",
+      jobTitle: "string",
+      phoneNumber: "string|size: 9",
+      email: "email",
+    },
+
+    internshipCompensation: "boolean",
+    internshipContract: "boolean",
+    internshipMainAddress: "string",
+    internshipOtherAddresses: "string",
+    internshipOtherAdvantages: "string",
+
+    validated: "boolean",
+  };
+
+  // verify user sends only accepted fields
+  const reqFields = Object.keys(req.body);
+  for (key of reqFields) {
+    if (!Object.keys(validationRule).includes(key)) {
+      return res.status(412).send({
+        message: "Validation failed",
+      });
+    }
+  }
+
+  await validator(req.body, validationRule, {}, (err, success) => {
+    if (success) {
+      next();
+    } else {
+      res.status(412).send({
+        message: "Validation failed",
+        data: err,
+      });
+    }
+  });
+}
+
 module.exports = {
   validateLogin,
+  validatePatchCompany,
   validatePasswordReset,
   validateCompanyCreation,
   validateStudentCreation,

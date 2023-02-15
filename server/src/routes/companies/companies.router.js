@@ -4,10 +4,12 @@ const authz = require("../../middleware/authz.middleware");
 const auth = require("../../middleware/auth.middleware");
 
 const {
+  httpPatchCompany,
   httpCreateCompany,
   httpGetAllCompanies,
 } = require("./companies.controller");
 const {
+  validatePatchCompany,
   validateCompanyCreation,
 } = require("../../middleware/validation.middleware");
 
@@ -24,6 +26,14 @@ companiesRouter.get(
   auth,
   authz(["admin", "student"]),
   asyncHandler(httpGetAllCompanies)
+);
+
+companiesRouter.patch(
+  "/:companyId",
+  auth,
+  authz(["admin"]),
+  validatePatchCompany,
+  asyncHandler(httpPatchCompany)
 );
 
 module.exports = companiesRouter;
