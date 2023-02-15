@@ -13,3 +13,17 @@ export const getAllCompanies = async (validated: boolean) => {
 
   return res.data;
 };
+
+/**
+ * Accept a company to the platform
+ *
+ * @param companyId id of the company to accept
+ * @returns server response
+ */
+export const acceptCompany = async (companyId: string) => {
+  const res = await axiosClient.patch(`${API_URL}/${companyId}`, {
+    validated: true,
+  });
+
+  return res.data;
+};

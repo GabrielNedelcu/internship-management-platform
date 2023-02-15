@@ -5,8 +5,8 @@ import type {
   FilterValue,
   SorterResult,
 } from "antd/es/table/interface";
-import { useQuery } from "@tanstack/react-query";
-import { getAllCompanies } from "../api/companiesAPI";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getAllCompanies, acceptCompany } from "../api/companiesAPI";
 import { TableProps, Space, Button, Tooltip, notification } from "antd";
 import { CloseOutlined, CheckOutlined, EditOutlined } from "@ant-design/icons";
 
@@ -21,6 +21,8 @@ type ICompanyData = {
 };
 
 const useCompanyTable = (companyValidated: boolean) => {
+  const queryClient = useQueryClient();
+
   const [tableData, setTableData] = useState<ICompanyData[]>();
   const [searchText, setSearchText] = useState("");
   const [filteredInfo, setFilteredInfo] = useState<
@@ -40,6 +42,32 @@ const useCompanyTable = (companyValidated: boolean) => {
           message: "Ooops ...",
           description:
             "Cannot retrieve the companies from the server ... please try again!",
+          duration: 10,
+        });
+      },
+    }
+  );
+
+  const { mutate: mutateAcceptCompany } = useMutation(
+    ["acceptCompany"],
+    (companyId: string) => acceptCompany(companyId),
+    {
+      onSuccess: () => {
+        // Invalidate query in order to fetch all the companies excepting the one that has been
+        // accepted on the platform
+        queryClient.invalidateQueries(["getAllCompanies"]);
+
+        notification.success({
+          message: "Great!",
+          description: "The company has just been accepted on the platform!",
+          duration: 10,
+        });
+      },
+      onError: () => {
+        notification.error({
+          message: "Something went wrong ...",
+          description:
+            "An error occured while accepting the company on the platform! Please try again later ...",
           duration: 10,
         });
       },
@@ -170,7 +198,7 @@ const useCompanyTable = (companyValidated: boolean) => {
                     shape="circle"
                     icon={<CheckOutlined />}
                     style={{ backgroundColor: "#52c41a" }}
-                    onClick={() => handleAccept(record._id)}
+                    onClick={() => mutateAcceptCompany(record._id)}
                   />
                 </Tooltip>
                 <Tooltip title="Quick Decline">
@@ -216,10 +244,6 @@ const useCompanyTable = (companyValidated: boolean) => {
 
   const handleDecline = (key: string) => {
     console.log(`Se sterge ${key}`);
-  };
-
-  const handleAccept = (key: string) => {
-    console.log(`Se accepta ${key}`);
   };
 
   const handleReview = (key: string) => {
