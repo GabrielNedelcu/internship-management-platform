@@ -101,9 +101,10 @@ async function httpPostTokens(req, res) {
  * @apiBody     {Object}                "token"
  */
 async function httpDeleteLogout(req, res) {
-  const refreshToken = req.body.token;
+  const cookies = req.cookies;
+  const refreshToken = cookies["etti-internships-auth-jwt"];
 
-  const queryRes = await queryAccounts({ refresh_token: refreshToken });
+  const queryRes = await queryAccounts({ refreshToken: refreshToken });
   if (!queryRes.length) {
     const error = new Error("Invalid refresh token");
     error.statusCode = 403;
@@ -112,6 +113,7 @@ async function httpDeleteLogout(req, res) {
 
   const account = queryRes[0];
   deleteRefreshToken(account._id);
+  res.clearCookie("etti-internships-auth-jwt");
   return res.status(204).send();
 }
 

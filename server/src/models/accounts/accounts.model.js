@@ -95,7 +95,7 @@ async function updateAccountRefreshToken(accountId, refreshToken) {
     throw error;
   }
   await updateOneAccount(accountId, {
-    refresh_token: refreshToken,
+    refreshToken: refreshToken,
   });
 }
 
