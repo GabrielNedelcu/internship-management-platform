@@ -1,5 +1,5 @@
 import { Typography, Button } from "antd";
-import useSignUpTable from "../hooks/useSignUpTable";
+import useCompanyTable from "../hooks/useCompanyTable";
 import { Row, Col, Table, Input } from "antd";
 
 const { Search } = Input;
@@ -14,7 +14,7 @@ const AdminSignUpRequestsPage = () => {
     setSearchText,
     handleSearchBy,
     handleClearSearch,
-  } = useSignUpTable();
+  } = useCompanyTable(false);
 
   return (
     <>

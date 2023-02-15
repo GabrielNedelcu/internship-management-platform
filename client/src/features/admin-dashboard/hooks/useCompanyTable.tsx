@@ -20,7 +20,7 @@ type ICompanyData = {
   onboardingDate: string;
 };
 
-const useSignUpTable = () => {
+const useCompanyTable = (companyValidated: boolean) => {
   const [tableData, setTableData] = useState<ICompanyData[]>();
   const [searchText, setSearchText] = useState("");
   const [filteredInfo, setFilteredInfo] = useState<
@@ -28,11 +28,9 @@ const useSignUpTable = () => {
   >({});
   const [sortedInfo, setSortedInfo] = useState<SorterResult<ICompanyData>>({});
 
-  const validated = false;
-
   const { data, status } = useQuery(
-    ["getAllCompanies", validated],
-    () => getAllCompanies(validated),
+    ["getAllCompanies", companyValidated],
+    () => getAllCompanies(companyValidated),
     {
       onSuccess: (data: ICompanyData[]) => {
         setTableData(data);
@@ -154,37 +152,63 @@ const useSignUpTable = () => {
       key: "5",
       title: "Actions",
       render: (record) => {
-        return (
-          <>
-            <Space size="small">
-              <Tooltip title="Review Company">
-                <Button
-                  type="primary"
-                  shape="circle"
-                  icon={<EditOutlined />}
-                  onClick={() => handleReview(record._id)}
-                />
-              </Tooltip>
-              <Tooltip title="Quick Accept">
-                <Button
-                  type="primary"
-                  shape="circle"
-                  icon={<CheckOutlined />}
-                  onClick={() => handleAccept(record._id)}
-                />
-              </Tooltip>
-              <Tooltip title="Quick Decline">
-                <Button
-                  type="primary"
-                  shape="circle"
-                  icon={<CloseOutlined />}
-                  danger
-                  onClick={() => handleDecline(record._id)}
-                />
-              </Tooltip>
-            </Space>
-          </>
-        );
+        if (!companyValidated)
+          return (
+            <>
+              <Space size="small">
+                <Tooltip title="Review Company">
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<EditOutlined />}
+                    onClick={() => handleReview(record._id)}
+                  />
+                </Tooltip>
+                <Tooltip title="Quick Accept">
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<CheckOutlined />}
+                    style={{ backgroundColor: "#52c41a" }}
+                    onClick={() => handleAccept(record._id)}
+                  />
+                </Tooltip>
+                <Tooltip title="Quick Decline">
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<CloseOutlined />}
+                    danger
+                    onClick={() => handleDecline(record._id)}
+                  />
+                </Tooltip>
+              </Space>
+            </>
+          );
+        else
+          return (
+            <>
+              <Space size="small">
+                <Tooltip title="Edit Company">
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<EditOutlined />}
+                    onClick={() => handleEditCompany(record._id)}
+                  />
+                </Tooltip>
+                <Tooltip title="Delete Company">
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<CheckOutlined />}
+                    danger
+                    onClick={() => handleDeleteCompany(record._id)}
+                  />
+                </Tooltip>
+              </Space>
+            </>
+          );
       },
       ellipsis: true,
     },
@@ -200,6 +224,14 @@ const useSignUpTable = () => {
 
   const handleReview = (key: string) => {
     console.log(`Se deschide ${key}`);
+  };
+
+  const handleEditCompany = (key: string) => {
+    console.log(`Se editeaza ${key}`);
+  };
+
+  const handleDeleteCompany = (key: string) => {
+    console.log(`Se sterge ${key}`);
   };
 
   const handleSearchBy = (value: string) => {
@@ -230,4 +262,4 @@ const useSignUpTable = () => {
   };
 };
 
-export default useSignUpTable;
+export default useCompanyTable;
