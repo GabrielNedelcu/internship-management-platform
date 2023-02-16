@@ -23,6 +23,7 @@ type ICompanyData = {
 const useCompanyTable = (companyValidated: boolean) => {
   const queryClient = useQueryClient();
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [tableData, setTableData] = useState<ICompanyData[]>();
   const [searchText, setSearchText] = useState("");
   const [filteredInfo, setFilteredInfo] = useState<
@@ -32,12 +33,17 @@ const useCompanyTable = (companyValidated: boolean) => {
 
   const { data, status } = useQuery(
     ["getAllCompanies", companyValidated],
-    () => getAllCompanies(companyValidated),
+    () => {
+      setLoading(true);
+      return getAllCompanies(companyValidated);
+    },
     {
       onSuccess: (data: ICompanyData[]) => {
+        setLoading(false);
         setTableData(data);
       },
       onError: () => {
+        setLoading(false);
         notification.error({
           message: "Ooops ...",
           description:
@@ -50,7 +56,10 @@ const useCompanyTable = (companyValidated: boolean) => {
 
   const { mutate: mutateAcceptCompany } = useMutation(
     ["acceptCompany"],
-    (companyId: string) => acceptCompany(companyId),
+    (companyId: string) => {
+      setLoading(true);
+      return acceptCompany(companyId);
+    },
     {
       onSuccess: () => {
         // Invalidate query in order to fetch all the companies excepting the one that has been
@@ -64,6 +73,7 @@ const useCompanyTable = (companyValidated: boolean) => {
         });
       },
       onError: () => {
+        setLoading(false);
         notification.error({
           message: "Something went wrong ...",
           description:
@@ -275,7 +285,7 @@ const useCompanyTable = (companyValidated: boolean) => {
   };
 
   return {
-    status,
+    loading,
     columns,
     tableData,
     searchText,

@@ -8,7 +8,7 @@ const AdminSignUpRequestsPage = () => {
   const {
     tableData,
     columns,
-    status,
+    loading,
     searchText,
     handleChange,
     setSearchText,
@@ -45,7 +45,7 @@ const AdminSignUpRequestsPage = () => {
           <Table
             columns={columns}
             dataSource={tableData}
-            loading={status === "loading"}
+            loading={loading}
             onChange={handleChange}
             bordered
             rowKey="_id"

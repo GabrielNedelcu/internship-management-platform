@@ -6,9 +6,9 @@ const { Search } = Input;
 
 const AdminCompaniesPage = () => {
   const {
-    tableData,
+    loading,
     columns,
-    status,
+    tableData,
     searchText,
     handleChange,
     setSearchText,
@@ -45,7 +45,7 @@ const AdminCompaniesPage = () => {
           <Table
             columns={columns}
             dataSource={tableData}
-            loading={status === "loading"}
+            loading={loading}
             onChange={handleChange}
             bordered
             rowKey="_id"

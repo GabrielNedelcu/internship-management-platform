@@ -19,6 +19,8 @@ interface IStudentData {
 }
 
 const useStudentsTable = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+
   const [tableData, setTableData] = useState<IStudentData[]>();
   const [searchText, setSearchText] = useState("");
   const [filteredInfo, setFilteredInfo] = useState<
@@ -26,19 +28,28 @@ const useStudentsTable = () => {
   >({});
   const [sortedInfo, setSortedInfo] = useState<SorterResult<IStudentData>>({});
 
-  const { data, status } = useQuery(["getAllStudents"], getAllStudents, {
-    onSuccess: (data: IStudentData[]) => {
-      setTableData(data);
+  const { data } = useQuery(
+    ["getAllStudents"],
+    () => {
+      setLoading(true);
+      return getAllStudents();
     },
-    onError: () => {
-      notification.error({
-        message: "Ooops ...",
-        description:
-          "Cannot retrieve the students from the server ... please try again!",
-        duration: 10,
-      });
-    },
-  });
+    {
+      onSuccess: (data: IStudentData[]) => {
+        setLoading(false);
+        setTableData(data);
+      },
+      onError: () => {
+        setLoading(false);
+        notification.error({
+          message: "Ooops ...",
+          description:
+            "Cannot retrieve the students from the server ... please try again!",
+          duration: 10,
+        });
+      },
+    }
+  );
 
   const handleChange: TableProps<IStudentData>["onChange"] = (
     pagination,
@@ -140,7 +151,7 @@ const useStudentsTable = () => {
   };
 
   return {
-    status,
+    loading,
     columns,
     tableData,
     searchText,

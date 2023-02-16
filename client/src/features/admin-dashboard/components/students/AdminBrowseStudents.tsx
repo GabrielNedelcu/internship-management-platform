@@ -7,7 +7,7 @@ const AdminBrowseStudents = () => {
   const {
     tableData,
     columns,
-    status,
+    loading,
     searchText,
     handleChange,
     setSearchText,
@@ -39,7 +39,7 @@ const AdminBrowseStudents = () => {
           <Table
             columns={columns}
             dataSource={tableData}
-            loading={status === "loading"}
+            loading={loading}
             onChange={handleChange}
             bordered
           />

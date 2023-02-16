@@ -1,51 +1,81 @@
 import { useState } from "react";
-import { TableProps, Popconfirm } from "antd";
+import { notification, TableProps, Space, Tooltip, Button } from "antd";
 import type {
   ColumnsType,
   FilterValue,
   SorterResult,
 } from "antd/es/table/interface";
+import { useQuery } from "@tanstack/react-query";
+import { getAllOffers } from "../api/offersAPI";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
-type TOfferRowData = {
-  key: string;
-  jobTitle: string;
-  company: string;
+type IOfferData = {
+  _id: string;
+  title: string;
+  companyName: string;
   departament: string;
-  offeredPositions: number;
-  availablePositions: number;
+  availablePos: number;
+  remainingAvailablePos: number;
+  applications: number;
 };
 
 const useOffersTable = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [tableData, setTableData] = useState<IOfferData[]>();
+  const [searchText, setSearchText] = useState("");
   const [filteredInfo, setFilteredInfo] = useState<
     Record<string, FilterValue | null>
   >({});
-  const [sortedInfo, setSortedInfo] = useState<SorterResult<TOfferRowData>>({});
+  const [sortedInfo, setSortedInfo] = useState<SorterResult<IOfferData>>({});
 
-  const handleChange: TableProps<TOfferRowData>["onChange"] = (
+  const handleChange: TableProps<IOfferData>["onChange"] = (
     pagination,
     filters,
     sorter
   ) => {
     setFilteredInfo(filters);
-    setSortedInfo(sorter as SorterResult<TOfferRowData>);
+    setSortedInfo(sorter as SorterResult<IOfferData>);
   };
 
-  const columns: ColumnsType<TOfferRowData> = [
+  const { data } = useQuery(
+    ["getAllOffers"],
+    () => {
+      setLoading(true);
+      return getAllOffers();
+    },
+    {
+      onSuccess: (data: IOfferData[]) => {
+        setLoading(false);
+        setTableData(data);
+      },
+      onError: () => {
+        setLoading(false);
+        notification.error({
+          message: "Ooops ...",
+          description:
+            "Cannot retrieve the offers from the server ... please try again!",
+          duration: 10,
+        });
+      },
+    }
+  );
+
+  const columns: ColumnsType<IOfferData> = [
     {
       title: "Job Title",
-      dataIndex: "jobTitle",
-      key: "jobTitle",
-      sorter: (a, b) => a.jobTitle.localeCompare(b.jobTitle),
-      sortOrder: sortedInfo.columnKey === "jobTitle" ? sortedInfo.order : null,
+      dataIndex: "title",
+      key: "title",
+      sorter: (a, b) => a.title.localeCompare(b.title),
+      sortOrder: sortedInfo.columnKey === "title" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
       title: "Company",
-      dataIndex: "company",
-      key: "company",
-      sorter: (a, b) => a.company.localeCompare(b.company),
-      sortOrder: sortedInfo.columnKey === "company" ? sortedInfo.order : null,
+      dataIndex: "companyName",
+      key: "companyName",
+      sorter: (a, b) => a.companyName.localeCompare(b.companyName),
+      sortOrder:
+        sortedInfo.columnKey === "companyName" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
@@ -58,21 +88,32 @@ const useOffersTable = () => {
       ellipsis: true,
     },
     {
-      title: "Number Of Offered Positions",
-      dataIndex: "offeredPositions",
-      key: "offeredPositions",
-      sorter: (a, b) => a.offeredPositions - b.offeredPositions,
+      title: "Offered Positions",
+      dataIndex: "availablePos",
+      key: "availablePos",
+      sorter: (a, b) => a.availablePos - b.availablePos,
       sortOrder:
-        sortedInfo.columnKey === "offeredPositions" ? sortedInfo.order : null,
+        sortedInfo.columnKey === "availablePos" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
-      title: "Number Of Available Positions",
-      dataIndex: "availablePositions",
-      key: "availablePositions",
-      sorter: (a, b) => a.availablePositions - b.availablePositions,
+      title: "Available Positions",
+      dataIndex: "remainingAvailablePos",
+      key: "remainingAvailablePos",
+      sorter: (a, b) => a.remainingAvailablePos - b.remainingAvailablePos,
       sortOrder:
-        sortedInfo.columnKey === "availablePositions" ? sortedInfo.order : null,
+        sortedInfo.columnKey === "remainingAvailablePos"
+          ? sortedInfo.order
+          : null,
+      ellipsis: true,
+    },
+    {
+      title: "Applications",
+      dataIndex: "applications",
+      key: "applications",
+      sorter: (a, b) => a.applications - b.applications,
+      sortOrder:
+        sortedInfo.columnKey === "applications" ? sortedInfo.order : null,
       ellipsis: true,
     },
     {
@@ -81,13 +122,25 @@ const useOffersTable = () => {
       render: (record) => {
         return (
           <>
-            <EditOutlined onClick={() => {}} />
-            <Popconfirm
-              title="Delete this offer? This may imply further issues"
-              onConfirm={() => handleDelete(record.key)}
-            >
-              <DeleteOutlined style={{ color: "red", marginLeft: 12 }} />
-            </Popconfirm>
+            <Space size="small">
+              <Tooltip title="Edit Offer">
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon={<EditOutlined />}
+                  onClick={() => handleEditOffer(record._id)}
+                />
+              </Tooltip>
+              <Tooltip title="Delete Offer">
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon={<DeleteOutlined />}
+                  danger
+                  onClick={() => handleDelete(record._id)}
+                />
+              </Tooltip>
+            </Space>
           </>
         );
       },
@@ -95,13 +148,39 @@ const useOffersTable = () => {
     },
   ];
 
+  const handleEditOffer = (key: string) => {
+    console.log(`Se editeaza ${key}`);
+  };
+
   const handleDelete = (key: string) => {
     console.log(`Se sterge ${key}`);
   };
 
+  const handleSearchBy = (value: string) => {
+    setTableData(
+      tableData?.filter((offer: IOfferData) => {
+        return (
+          offer.title.toLowerCase().includes(value.toLowerCase()) ||
+          offer.companyName.toLowerCase().includes(value.toLowerCase())
+        );
+      })
+    );
+  };
+
+  const handleClearSearch = () => {
+    setTableData(data);
+    setSearchText("");
+  };
+
   return {
+    loading,
     columns,
+    tableData,
+    searchText,
     handleChange,
+    setSearchText,
+    handleSearchBy,
+    handleClearSearch,
   };
 };
 

@@ -1,80 +1,20 @@
-import { Typography } from "antd";
-import { useState, useEffect } from "react";
+import { Typography, Button } from "antd";
 import useOffersTable from "../hooks/useOffersTable";
 import { Row, Col, Table, Input } from "antd";
 
 const { Search } = Input;
 
-const onSearch = (value: string) => console.log(value);
-
-const dummyTableData = [
-  {
-    key: "1",
-    jobTitle: "A Job Title",
-    company: "Company 1",
-    departament: "R&D",
-    offeredPositions: 5,
-    availablePositions: 2,
-  },
-  {
-    key: "2",
-    jobTitle: "A Job Title",
-    company: "Company 2",
-    departament: "R&D",
-    offeredPositions: 5,
-    availablePositions: 2,
-  },
-  {
-    key: "3",
-    jobTitle: "A Job Title",
-    company: "Company 3",
-    departament: "R&D",
-    offeredPositions: 5,
-    availablePositions: 2,
-  },
-  {
-    key: "4",
-    jobTitle: "A Job Title",
-    company: "Company 4",
-    departament: "R&D",
-    offeredPositions: 5,
-    availablePositions: 2,
-  },
-  {
-    key: "5",
-    jobTitle: "A Job Title",
-    company: "Company 5",
-    departament: "R&D",
-    offeredPositions: 5,
-    availablePositions: 2,
-  },
-  {
-    key: "6",
-    jobTitle: "A Job Title",
-    company: "Company 6",
-    departament: "R&D",
-    offeredPositions: 5,
-    availablePositions: 2,
-  },
-  {
-    key: "7",
-    jobTitle: "A Job Title",
-    company: "Company 7",
-    departament: "R&D",
-    offeredPositions: 5,
-    availablePositions: 2,
-  },
-];
-
 const AdminCompanyOffersPage = () => {
-  const { columns, handleChange } = useOffersTable();
-  const [tableData, setTableData] = useState<any[]>();
-
-  // On Component Mount retrieve table data
-  useEffect(() => {
-    console.log("get data");
-    setTableData(dummyTableData);
-  }, []);
+  const {
+    loading,
+    tableData,
+    columns,
+    searchText,
+    handleChange,
+    setSearchText,
+    handleSearchBy,
+    handleClearSearch,
+  } = useOffersTable();
 
   return (
     <>
@@ -87,17 +27,28 @@ const AdminCompanyOffersPage = () => {
         <Col span="12">
           <Search
             placeholder="Search for offers by job title or company name"
-            onSearch={onSearch}
+            onSearch={handleSearchBy}
             enterButton
             size="large"
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
+            value={searchText}
           />
+        </Col>
+        <Col style={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button size="large" type="primary" onClick={handleClearSearch}>
+            Clear Search
+          </Button>
         </Col>
         <Col>
           <Table
             columns={columns}
             dataSource={tableData}
             onChange={handleChange}
+            loading={loading}
             bordered
+            rowKey="_id"
           />
         </Col>
       </Row>

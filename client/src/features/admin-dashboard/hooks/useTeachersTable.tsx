@@ -21,6 +21,8 @@ interface ITeacherData {
 }
 
 const useTeachersTable = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+
   const [tableData, setTableData] = useState<ITeacherData[]>();
   const [searchText, setSearchText] = useState("");
   const [filteredInfo, setFilteredInfo] = useState<
@@ -28,19 +30,28 @@ const useTeachersTable = () => {
   >({});
   const [sortedInfo, setSortedInfo] = useState<SorterResult<ITeacherData>>({});
 
-  const { data, status } = useQuery(["getAllProfessors"], getAllProfessors, {
-    onSuccess: (data: ITeacherData[]) => {
-      setTableData(data);
+  const { data, status } = useQuery(
+    ["getAllProfessors"],
+    () => {
+      setLoading(true);
+      return getAllProfessors();
     },
-    onError: () => {
-      notification.error({
-        message: "Ooops ...",
-        description:
-          "Cannot retrieve the professors from the server ... please try again!",
-        duration: 10,
-      });
-    },
-  });
+    {
+      onSuccess: (data: ITeacherData[]) => {
+        setLoading(false);
+        setTableData(data);
+      },
+      onError: () => {
+        setLoading(false);
+        notification.error({
+          message: "Ooops ...",
+          description:
+            "Cannot retrieve the professors from the server ... please try again!",
+          duration: 10,
+        });
+      },
+    }
+  );
 
   const handleChange: TableProps<ITeacherData>["onChange"] = (
     pagination,
@@ -173,7 +184,7 @@ const useTeachersTable = () => {
   };
 
   return {
-    status,
+    loading,
     columns,
     tableData,
     searchText,
