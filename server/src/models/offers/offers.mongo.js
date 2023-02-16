@@ -25,6 +25,10 @@ const offersSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: [true, "The offer has to pe mapped to a company"],
     },
+    companyName: {
+      type: String,
+      required: [true, "The Company title is required"],
+    },
     title: {
       type: String,
       required: [true, "Job title is required"],
@@ -54,6 +58,10 @@ const offersSchema = new mongoose.Schema(
       required: [true, "The number of available positions is required"],
     },
     remainingAvailablePos: {
+      type: Number,
+      default: 0,
+    },
+    applications: {
       type: Number,
       default: 0,
     },

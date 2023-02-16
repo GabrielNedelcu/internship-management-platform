@@ -1,7 +1,8 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
+const authz = require("../../middleware/authz.middleware");
 
-const { httpCreateOffer } = require("./offers.controller");
+const { httpCreateOffer, httpGetAllOffers } = require("./offers.controller");
 
 const {
   validateOfferCreation,
@@ -12,8 +13,14 @@ const offersRouter = express.Router();
 offersRouter.post(
   "/",
   authz("admin"),
-  validateOfferCreation,
+  // validateOfferCreation,
   asyncHandler(httpCreateOffer)
+);
+
+offersRouter.get(
+  "/",
+  authz(["admin", "student"]),
+  asyncHandler(httpGetAllOffers)
 );
 
 module.exports = offersRouter;

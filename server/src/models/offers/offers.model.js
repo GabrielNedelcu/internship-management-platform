@@ -45,14 +45,14 @@ async function updateOneOffer(offerId, offerData) {
 }
 
 /**
- * Query the companies collection
+ * Query the offers collection
  *
  * @param {Object} query              - query parameters
  * @param {Object} options            - additional options
  *
  * @returns {Array}                 - Array of JSON objects resulting after the query
  */
-async function queryCompanies(query, options) {
+async function queryOffers(query, options) {
   return await Offer.find(query, options);
 }
 
@@ -61,5 +61,5 @@ module.exports = {
   getOneOffer,
   getAllOffers,
   updateOneOffer,
-  queryCompanies,
+  queryOffers,
 };

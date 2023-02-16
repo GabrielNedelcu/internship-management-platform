@@ -62,7 +62,11 @@ async function httpCreateCompany(req, res) {
   // create the associated offers
   let createdOffers = [];
   for await (const offer of offers) {
-    const offerData = { companyID: account._id, ...offer };
+    const offerData = {
+      companyID: account._id,
+      ...offer,
+      companyName: companyData.name,
+    };
     const createdOffer = await createOffer(offerData);
 
     createdOffers.push(createdOffer);
@@ -134,6 +138,9 @@ async function httpPatchCompany(req, res) {
   }
 
   await updateOneCompany(companyId, newData);
+
+  //TODO: if "validated" field has changed, send email
+
   return res.status(204).send();
 }
 
