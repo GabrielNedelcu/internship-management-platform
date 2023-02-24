@@ -41,7 +41,6 @@ companiesRouter.get(
   "/:companyId",
   auth,
   authz(["admin"]),
-  validatePatchCompany,
   asyncHandler(httpGetOneCompany)
 );
 

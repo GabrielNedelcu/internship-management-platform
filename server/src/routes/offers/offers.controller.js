@@ -56,4 +56,31 @@ async function httpGetAllOffers(req, res) {
   return res.status(200).json(validatedOffers);
 }
 
-module.exports = { httpCreateOffer, httpGetAllOffers };
+/**
+ *
+ * @api {GET} /offers/:offerId
+ * @apiDescription Get one offer
+ *
+ * @apiParam    {String}    offerId       id of the offer to be fetched
+ */
+async function httpGetOneOffer(req, res) {
+  const offerId = req.params.offerId;
+  const userRole = req.userRole;
+
+  let projection = {};
+  let offer = {};
+
+  if (userRole === "admin") {
+    offer = await getOneOffer(offerId, projection);
+  }
+
+  if (!offer) {
+    const err = new Error("Offer not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  return res.status(200).json(offer);
+}
+
+module.exports = { httpCreateOffer, httpGetAllOffers, httpGetOneOffer };
