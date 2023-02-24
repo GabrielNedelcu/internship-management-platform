@@ -1,6 +1,6 @@
 import { Typography, Row, Col, Divider } from "antd";
-import EmployeeInfo from "./EmployeeInfo";
-import { IEmployeeData } from "./EmployeeInfo";
+import EmployeeInfo from "../EmployeeInfo";
+import { IEmployeeData } from "../EmployeeInfo";
 
 interface CompanyEmployeesInfoProps {
   legalRep: IEmployeeData;

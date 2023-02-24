@@ -11,5 +11,5 @@ export {
   AdminCompaniesPage,
   AdminSignUpRequestsPage,
   AdminCompanyProfile,
-  AdminOfferPage,
+  AdminOfferProfile,
 } from "./admin-dashboard";

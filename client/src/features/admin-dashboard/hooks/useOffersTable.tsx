@@ -8,6 +8,7 @@ import type {
 import { useQuery } from "@tanstack/react-query";
 import { getAllOffers, getCompanyOffers } from "../api/offersAPI";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 type IOfferData = {
   _id: string;
@@ -20,6 +21,8 @@ type IOfferData = {
 };
 
 const useOffersTable = (companyId?: string) => {
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState<boolean>(false);
   const [tableData, setTableData] = useState<IOfferData[]>();
   const [searchText, setSearchText] = useState("");
@@ -151,7 +154,7 @@ const useOffersTable = (companyId?: string) => {
   ];
 
   const handleEditOffer = (key: string) => {
-    console.log(`Se editeaza ${key}`);
+    return navigate(`/dashboard/admin/offer/${key}`);
   };
 
   const handleDelete = (key: string) => {

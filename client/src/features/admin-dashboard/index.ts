@@ -8,4 +8,4 @@ export { default as AdminCompanyOffersPage } from "./pages/AdminCompanyOffersPag
 export { default as AdminCompaniesPage } from "./pages/AdminCompaniesPage";
 export { default as AdminSignUpRequestsPage } from "./pages/AdminSignUpRequestsPage";
 export { default as AdminCompanyProfile } from "./pages/AdminCompanyProfile";
-export { default as AdminOfferPage } from "./pages/AdminOfferPage";
+export { default as AdminOfferProfile } from "./pages/AdminOfferProfile";

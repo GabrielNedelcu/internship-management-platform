@@ -12,7 +12,7 @@ import {
   AdminCompaniesPage,
   AdminSignUpRequestsPage,
   AdminCompanyProfile,
-  AdminOfferPage,
+  AdminOfferProfile,
 } from "../../features";
 import ProtectedRoutes from "./ProtectedRoutes";
 
@@ -116,7 +116,7 @@ const AdminRoutes = () => {
             element={
               <Layout
                 sider={<AdminNavBar selectedKey={"-1"} />}
-                content={<AdminOfferPage />}
+                content={<AdminOfferProfile />}
               />
             }
           />

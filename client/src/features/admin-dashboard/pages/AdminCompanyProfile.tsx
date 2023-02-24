@@ -40,14 +40,12 @@ const AdminCompanyProfile = () => {
   const { data } = useQuery(
     ["getCompany", companyID],
     () => {
-      console.log("get data");
       setLoading(true);
       return getCompany(companyID);
     },
     {
       onSuccess: (data) => {
         setLoading(false);
-        console.log(data);
       },
       onError: () => {
         setLoading(false);
