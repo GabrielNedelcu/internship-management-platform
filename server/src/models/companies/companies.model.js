@@ -17,11 +17,11 @@ async function createCompany(companyData) {
  * associated account's id
  *
  * @param {ObjectId} companyId  - the id corresponding to the company
- *
+ * @param {Object} projection -projection
  * @returns {JSON}              - the retrieved company
  */
-async function getOneCompany(companyId) {
-  return await Company.findById(companyId);
+async function getOneCompany(companyId, projection) {
+  return await Company.findById(companyId, projection);
 }
 
 /**

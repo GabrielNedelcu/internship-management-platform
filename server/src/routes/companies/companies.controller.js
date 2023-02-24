@@ -144,4 +144,36 @@ async function httpPatchCompany(req, res) {
   return res.status(204).send();
 }
 
-module.exports = { httpCreateCompany, httpGetAllCompanies, httpPatchCompany };
+/**
+ *
+ * @api {GET} /companies/:companyID
+ * @apiDescription Get one company
+ *
+ * @apiParam    {String}    companyID       id of the company to be fetched
+ */
+async function httpGetOneCompany(req, res) {
+  const companyId = req.params.companyId;
+  const userRole = req.userRole;
+
+  let projection = {};
+  let company = {};
+
+  if (userRole === "admin") {
+    company = await getOneCompany(companyId, projection);
+  }
+
+  if (!company) {
+    const err = new Error("Company not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  return res.status(200).json(company);
+}
+
+module.exports = {
+  httpCreateCompany,
+  httpGetAllCompanies,
+  httpPatchCompany,
+  httpGetOneCompany,
+};

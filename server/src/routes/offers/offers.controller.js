@@ -29,22 +29,20 @@ async function httpCreateOffer(req, res) {
 
 async function httpGetAllOffers(req, res) {
   const userRole = req.userRole;
+  const companyID = req.query.company;
 
   let offers;
   if (userRole === "admin")
-    offers = await queryOffers(
-      {},
-      {
-        _id: 1,
-        companyID: 1,
-        companyName: 1,
-        title: 1,
-        departament: 1,
-        availablePos: 1,
-        remainingAvailablePos: 1,
-        applications: 1,
-      }
-    );
+    offers = await queryOffers(companyID && { companyID }, {
+      _id: 1,
+      companyID: 1,
+      companyName: 1,
+      title: 1,
+      departament: 1,
+      availablePos: 1,
+      remainingAvailablePos: 1,
+      applications: 1,
+    });
 
   const validatedOffers = [];
 

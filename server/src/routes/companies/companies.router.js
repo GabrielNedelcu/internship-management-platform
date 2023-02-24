@@ -6,6 +6,7 @@ const auth = require("../../middleware/auth.middleware");
 const {
   httpPatchCompany,
   httpCreateCompany,
+  httpGetOneCompany,
   httpGetAllCompanies,
 } = require("./companies.controller");
 const {
@@ -34,6 +35,14 @@ companiesRouter.patch(
   authz(["admin"]),
   validatePatchCompany,
   asyncHandler(httpPatchCompany)
+);
+
+companiesRouter.get(
+  "/:companyId",
+  auth,
+  authz(["admin"]),
+  validatePatchCompany,
+  asyncHandler(httpGetOneCompany)
 );
 
 module.exports = companiesRouter;
