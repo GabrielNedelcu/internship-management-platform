@@ -7,3 +7,5 @@ export { default as AdminDocumentsPage } from "./pages/AdminDocumentsPage";
 export { default as AdminCompanyOffersPage } from "./pages/AdminCompanyOffersPage";
 export { default as AdminCompaniesPage } from "./pages/AdminCompaniesPage";
 export { default as AdminSignUpRequestsPage } from "./pages/AdminSignUpRequestsPage";
+export { default as AdminCompanyProfile } from "./pages/AdminCompanyProfile";
+export { default as AdminOfferPage } from "./pages/AdminOfferPage";

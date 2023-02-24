@@ -9,6 +9,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getAllCompanies, acceptCompany } from "../api/companiesAPI";
 import { TableProps, Space, Button, Tooltip, notification } from "antd";
 import { CloseOutlined, CheckOutlined, EditOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 type ICompanyData = {
   _id: string;
@@ -21,6 +22,7 @@ type ICompanyData = {
 };
 
 const useCompanyTable = (companyValidated: boolean) => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -232,7 +234,7 @@ const useCompanyTable = (companyValidated: boolean) => {
                     type="primary"
                     shape="circle"
                     icon={<EditOutlined />}
-                    onClick={() => handleEditCompany(record._id)}
+                    onClick={() => handleReview(record._id)}
                   />
                 </Tooltip>
                 <Tooltip title="Delete Company">
@@ -257,11 +259,7 @@ const useCompanyTable = (companyValidated: boolean) => {
   };
 
   const handleReview = (key: string) => {
-    console.log(`Se deschide ${key}`);
-  };
-
-  const handleEditCompany = (key: string) => {
-    console.log(`Se editeaza ${key}`);
+    return navigate(`/dashboard/admin/company/${key}`);
   };
 
   const handleDeleteCompany = (key: string) => {

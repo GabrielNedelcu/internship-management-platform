@@ -27,3 +27,15 @@ export const acceptCompany = async (companyId: string) => {
 
   return res.data;
 };
+
+/**
+ * Fetch a company's data
+ *
+ * @param companyId id of the company to fetch data
+ * @returns server response
+ */
+export const getCompany = async (companyId: string) => {
+  const res = await axiosClient.get(`${API_URL}/${companyId}`);
+
+  return res.data;
+};

@@ -12,3 +12,14 @@ export const getAllOffers = async () => {
 
   return res.data;
 };
+
+/**
+ * Retrieve all the ofers of a company
+ * @param companyId id of the company
+ * @returns array containing a list with all the company offers
+ */
+export const getCompanyOffers = async (companyId: string) => {
+  const res = await axiosClient.get(`${API_URL}?company=${companyId}`);
+
+  return res.data;
+};

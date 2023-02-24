@@ -6,7 +6,7 @@ import type {
   SorterResult,
 } from "antd/es/table/interface";
 import { useQuery } from "@tanstack/react-query";
-import { getAllOffers } from "../api/offersAPI";
+import { getAllOffers, getCompanyOffers } from "../api/offersAPI";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 type IOfferData = {
@@ -19,7 +19,7 @@ type IOfferData = {
   applications: number;
 };
 
-const useOffersTable = () => {
+const useOffersTable = (companyId?: string) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [tableData, setTableData] = useState<IOfferData[]>();
   const [searchText, setSearchText] = useState("");
@@ -38,9 +38,11 @@ const useOffersTable = () => {
   };
 
   const { data } = useQuery(
-    ["getAllOffers"],
+    ["getAllOffers", companyId],
     () => {
       setLoading(true);
+      console.log(companyId);
+      if (companyId) return getCompanyOffers(companyId);
       return getAllOffers();
     },
     {

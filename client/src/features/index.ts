@@ -10,4 +10,6 @@ export {
   AdminCompanyOffersPage,
   AdminCompaniesPage,
   AdminSignUpRequestsPage,
+  AdminCompanyProfile,
+  AdminOfferPage,
 } from "./admin-dashboard";
