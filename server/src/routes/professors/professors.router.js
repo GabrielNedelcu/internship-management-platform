@@ -9,7 +9,9 @@ const {
 
 const {
   httpCreateProfessor,
+  httpGetOneProfessor,
   httpGetAllProfessors,
+  httpPatchOneProfessor,
   httpCreateMultipleProfessors,
 } = require("./professors.controller");
 
@@ -30,5 +32,17 @@ professorsRouter.post(
 );
 
 professorsRouter.get("/", authz(["admin"]), asyncHandler(httpGetAllProfessors));
+
+professorsRouter.get(
+  "/:professorId",
+  authz(["admin"]),
+  asyncHandler(httpGetOneProfessor)
+);
+
+professorsRouter.patch(
+  "/:professorId",
+  authz(["admin"]),
+  asyncHandler(httpPatchOneProfessor)
+);
 
 module.exports = professorsRouter;

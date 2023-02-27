@@ -292,10 +292,53 @@ async function validatePatchCompany(req, res, next) {
   });
 }
 
+/**
+ * Validate the request body in order to patch a professor
+ * Endpoint in scope: {PATCH} /professors/:professorId
+ *
+ * @param {*} req       http request
+ * @param {*} res       http response
+ * @param {*} next      next middleware in the chain
+ */
+async function validatePatchProfessor(req, res, next) {
+  const validationRule = {
+    name: "string",
+    email: "email",
+    title: "string",
+    privatePhone: "string",
+    publicPhone: "string",
+    departament: "string",
+    numPositions: "integer|min:1",
+    admin: "boolean",
+  };
+
+  // verify user sends only accepted fields
+  const reqFields = Object.keys(req.body);
+  for (key of reqFields) {
+    if (!Object.keys(validationRule).includes(key)) {
+      return res.status(412).send({
+        message: "Validation failed",
+      });
+    }
+  }
+
+  await validator(req.body, validationRule, {}, (err, success) => {
+    if (success) {
+      next();
+    } else {
+      res.status(412).send({
+        message: "Validation failed",
+        data: err,
+      });
+    }
+  });
+}
+
 module.exports = {
   validateLogin,
   validatePatchCompany,
   validatePasswordReset,
+  validatePatchProfessor,
   validateCompanyCreation,
   validateStudentCreation,
   validatePatchSelfAccount,

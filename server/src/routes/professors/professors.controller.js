@@ -1,10 +1,13 @@
 const {
   createProfessor,
   getAllProfessors,
+  getOneProfessor,
+  updateOneProfessor,
 } = require("../../models/professors/professors.model");
 const {
   createAccount,
   deleteOneAccount,
+  updateOneAccount,
 } = require("../../models/accounts/accounts.model");
 
 const { generatePassword } = require("../../utils/auth.utils");
@@ -155,8 +158,74 @@ async function httpGetAllProfessors(req, res) {
   return res.status(200).json(professors);
 }
 
+/**
+ *
+ * @api {GET} /professors/:professorId
+ * @apiDescription Get one professor
+ *
+ * @apiParam    {String}    professorId       id of the professor to be fetched
+ */
+async function httpGetOneProfessor(req, res) {
+  const professorId = req.params.professorId;
+  const userRole = req.userRole;
+
+  let projection = {};
+  let professor = {};
+
+  if (userRole === "admin") {
+    professor = await getOneProfessor(professorId, projection);
+  }
+
+  if (!professor) {
+    const err = new Error("Professor not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  return res.status(200).json(professor);
+}
+
+/**
+ *
+ * @api {PATCH} /professors/:professorId
+ * @apiDescription Update professor data
+ *
+ * @apiParam    {String}    professorId       id of the professor to be updated
+ */
+async function httpPatchOneProfessor(req, res) {
+  const professorId = req.params.professorId;
+  const newData = req.body;
+
+  // if number of positions is modified, update also the available positions
+  if (newData["numPositions"]) {
+    const oldData = await getOneProfessor(professorId);
+    const computedAvailablePos =
+      oldData.numAvailablePositions +
+      (newData.numPositions - oldData.numPositions);
+
+    await updateOneProfessor(professorId, {
+      ...newData,
+      numAvailablePositions: computedAvailablePos,
+    });
+  } else await updateOneProfessor(professorId, newData);
+
+  // if master admin sets professor as admin, change account role
+  if (newData["admin"] !== undefined) {
+    const newRole = newData.admin === true ? "admin" : "professor";
+    await updateOneAccount(professorId, { role: newRole });
+  }
+
+  // if email is changed, also change the account's email
+  if (newData["email"])
+    await updateOneAccount(professorId, { email: newData.email });
+
+  return res.status(204).send();
+}
+
 module.exports = {
   httpCreateProfessor,
+  httpGetOneProfessor,
   httpGetAllProfessors,
+  httpPatchOneProfessor,
   httpCreateMultipleProfessors,
 };

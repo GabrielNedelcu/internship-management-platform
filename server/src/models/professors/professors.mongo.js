@@ -38,6 +38,10 @@ const professorsSchema = new mongoose.Schema(
     students: {
       type: [mongoose.Schema.Types.ObjectId],
     },
+    admin: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
