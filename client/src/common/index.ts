@@ -11,3 +11,4 @@ export { NavBar, getNavBarMenuItem };
 export type { TTab };
 
 export { checkAccountEmail } from "./api";
+export { default as useCheckUniqueEmail } from "./hooks/useCheckUniqueEmail";

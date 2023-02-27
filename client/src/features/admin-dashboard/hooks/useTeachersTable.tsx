@@ -1,11 +1,19 @@
 import { useState } from "react";
-import { TableProps, Popconfirm, notification } from "antd";
+import {
+  TableProps,
+  Popconfirm,
+  notification,
+  Space,
+  Tooltip,
+  Button,
+} from "antd";
 import type {
   ColumnsType,
   FilterValue,
   SorterResult,
 } from "antd/es/table/interface";
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { getAllProfessors } from "../api/professorsAPI";
 interface ITeacherData {
@@ -21,6 +29,7 @@ interface ITeacherData {
 }
 
 const useTeachersTable = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
 
   const [tableData, setTableData] = useState<ITeacherData[]>();
@@ -149,19 +158,35 @@ const useTeachersTable = () => {
       render: (record) => {
         return (
           <>
-            <EditOutlined onClick={() => {}} />
-            <Popconfirm
-              title="Delete this teacher? This may imply further issues"
-              onConfirm={() => handleDelete(record.key)}
-            >
-              <DeleteOutlined style={{ color: "red", marginLeft: 12 }} />
-            </Popconfirm>
+            <Space size="small">
+              <Tooltip title="Edit Teacher">
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon={<EditOutlined />}
+                  onClick={() => handleEditTeacher(record._id)}
+                />
+              </Tooltip>
+              <Tooltip title="Delete Teacher">
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon={<DeleteOutlined />}
+                  danger
+                  onClick={() => handleDelete(record._id)}
+                />
+              </Tooltip>
+            </Space>
           </>
         );
       },
       ellipsis: true,
     },
   ];
+
+  const handleEditTeacher = (key: string) => {
+    return navigate(`/dashboard/admin/teacher/${key}`);
+  };
 
   const handleDelete = (key: string) => {
     console.log(`Se sterge ${key}`);

@@ -7,3 +7,4 @@ export { default as CompanyEmployeesInfo } from "./companies/CompanyEmployeesInf
 export { default as CompanyInternshipInfo } from "./companies/CompanyInternshipInfo";
 export { default as CompanyOffersInfo } from "./companies/CompanyOffersInfo";
 export { default as OfferGeneralInfo } from "./offers/OfferGeneralInfo";
+export { default as TeacherInfo } from "./teachers/TeacherInfo";

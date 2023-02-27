@@ -63,3 +63,27 @@ export const getAllProfessors = async () => {
 
   return res.data;
 };
+
+/**
+ * Retrieve professor data from the server
+ * @param professorId
+ * @returns server response
+ */
+export const getProfessor = async (professorId: string) => {
+  const res = await axiosClient.get(`${API_URL}/${professorId}`);
+
+  return res.data;
+};
+
+/**
+ * Update professor data
+ *
+ * @param professorId professor to update
+ * @param data new data to update with
+ * @returns server response
+ */
+export const patchProfessor = async (professorId: string, data: any) => {
+  const res = await axiosClient.patch(`${API_URL}/${professorId}`, data);
+
+  return res.data;
+};

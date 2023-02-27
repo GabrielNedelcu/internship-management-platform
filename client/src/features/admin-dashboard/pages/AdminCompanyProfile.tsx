@@ -177,7 +177,13 @@ const AdminCompanyProfile = () => {
                 >
                   Accept Company
                 </Button>
-                <Button danger size="large">
+                <Button
+                  danger
+                  size="large"
+                  onClick={() => {
+                    //TODO
+                  }}
+                >
                   Reject Company
                 </Button>
               </Space>

@@ -42,6 +42,7 @@ const AdminBrowseTeachers = () => {
             loading={loading}
             onChange={handleChange}
             bordered
+            rowKey="_id"
           />
         </Col>
       </Row>

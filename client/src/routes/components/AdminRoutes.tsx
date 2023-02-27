@@ -13,6 +13,7 @@ import {
   AdminSignUpRequestsPage,
   AdminCompanyProfile,
   AdminOfferProfile,
+  AdminTeacherProfile,
 } from "../../features";
 import ProtectedRoutes from "./ProtectedRoutes";
 
@@ -117,6 +118,15 @@ const AdminRoutes = () => {
               <Layout
                 sider={<AdminNavBar selectedKey={"-1"} />}
                 content={<AdminOfferProfile />}
+              />
+            }
+          />
+          <Route
+            path="teacher/:teacherId"
+            element={
+              <Layout
+                sider={<AdminNavBar selectedKey={"-1"} />}
+                content={<AdminTeacherProfile />}
               />
             }
           />

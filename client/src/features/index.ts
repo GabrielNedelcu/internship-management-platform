@@ -12,4 +12,5 @@ export {
   AdminSignUpRequestsPage,
   AdminCompanyProfile,
   AdminOfferProfile,
+  AdminTeacherProfile,
 } from "./admin-dashboard";
