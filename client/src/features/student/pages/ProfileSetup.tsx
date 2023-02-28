@@ -19,7 +19,7 @@ import {
   UploadOutlined,
 } from "@ant-design/icons";
 import "../../../style/SignInPage.css";
-import { IEditableStudentData } from "../types";
+import { IEditableStudentData } from "../../../common";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { updateStudentData } from "../api";

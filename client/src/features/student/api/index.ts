@@ -1,5 +1,5 @@
 import { axiosClient } from "app/axiosClient";
-import { IEditableStudentData } from "../types";
+import { IEditableStudentData } from "../../../common/types";
 
 const API_URL = "/students";
 
