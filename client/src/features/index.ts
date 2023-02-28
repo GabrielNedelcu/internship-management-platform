@@ -14,3 +14,5 @@ export {
   AdminOfferProfile,
   AdminTeacherProfile,
 } from "./admin-dashboard";
+
+export { Overview, ProfileSetup } from "./student";

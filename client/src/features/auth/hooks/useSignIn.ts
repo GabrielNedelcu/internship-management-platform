@@ -22,7 +22,7 @@ const useSignIn = () => {
       case "admin":
         return navigate("/dashboard/admin");
       case "student":
-        return navigate("/dashboard/admin");
+        return navigate("student/overview");
       case "company":
         return navigate("/dashboard/admin");
     }
@@ -40,7 +40,8 @@ const useSignIn = () => {
 
         setLanguage(data?.accountLanguage);
 
-        redirectAfterLogin(data?.accountRole);
+        if (data.profileCompleted) redirectAfterLogin(data?.accountRole);
+        else return navigate("/student/profile-setup");
       },
       onError: () => {
         notification.error({
