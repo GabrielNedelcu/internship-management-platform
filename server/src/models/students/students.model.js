@@ -17,11 +17,11 @@ async function createStudent(studentData) {
  * associated account's id
  *
  * @param {ObjectId} studentId  - the id corresponding to the student
- *
+ * @param {Object} projection - projection for the query
  * @returns {JSON}              - the retrieved student
  */
-async function getOneStudent(studentId) {
-  return await Student.findById(studentId);
+async function getOneStudent(studentId, projection) {
+  return await Student.findById(studentId, projection);
 }
 
 /**

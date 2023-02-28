@@ -193,6 +193,46 @@ async function validateStudentCreation(req, res, next) {
 }
 
 /**
+ * Validate the request body in order to self patch student
+ * Endpoint in scope: {PATCH} /students/self
+ *
+ * @param {*} req       http request
+ * @param {*} res       http response
+ * @param {*} next      next middleware in the chain
+ */
+async function validateStudentSelfPatch(req, res, next) {
+  const validationRule = {
+    legalAddress: "string",
+    address: "string",
+    birthPlace: "string",
+    birthDay: "date",
+    phone: "string",
+    citizenship: "string",
+  };
+
+  // verify user sends only accepted fields
+  const reqFields = Object.keys(req.body);
+  for (key of reqFields) {
+    if (!Object.keys(validationRule).includes(key) && key !== "cv") {
+      return res.status(412).send({
+        message: "Validation failed",
+      });
+    }
+  }
+
+  await validator(req.body, validationRule, {}, (err, success) => {
+    if (success) {
+      next();
+    } else {
+      res.status(412).send({
+        message: "Validation failed",
+        data: err,
+      });
+    }
+  });
+}
+
+/**
  * Validate the request body in order to create a professor
  * Endpoint in scope: {POST} /professors/
  *
@@ -341,6 +381,7 @@ module.exports = {
   validatePatchProfessor,
   validateCompanyCreation,
   validateStudentCreation,
+  validateStudentSelfPatch,
   validatePatchSelfAccount,
   validateProfessorCreation,
 };

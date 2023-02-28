@@ -11,6 +11,7 @@ const {
   generateRefreshToken,
   generateAccessTokenFromRefresh,
 } = require("../../utils/jwt.utils");
+const { getOneStudent } = require("../../models/students/students.model");
 
 /**
  *
@@ -53,12 +54,23 @@ async function httpPostLogin(req, res) {
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    return res.status(200).json({
+    const resData = {
       accountId: account._id,
       accountRole: account.role,
       accountLanguage: account.language,
       accessToken: accessToken,
-    });
+    };
+
+    if (account.role === "student") {
+      //get the profileCompleted field from the student account
+      const studentData = await getOneStudent(account._id, {
+        profileCompleted: 1,
+      });
+
+      resData["profileCompleted"] = studentData.profileCompleted;
+    }
+
+    return res.status(200).json(resData);
   } else {
     const error = new Error("Invalid email or password");
     error.statusCode = 401;

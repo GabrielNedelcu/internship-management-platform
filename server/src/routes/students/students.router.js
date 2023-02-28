@@ -5,11 +5,14 @@ const expressFileUpload = require("express-fileupload");
 const authz = require("../../middleware/authz.middleware");
 const {
   validateStudentCreation,
+  validateStudentSelfPatch,
 } = require("../../middleware/validation.middleware");
 
 const {
   httpCreateStudent,
   httpGetAllStudents,
+  httpGetSelfStudent,
+  httpPatchSelfStudent,
   httpCreateMultipleStudents,
 } = require("./students.controller");
 
@@ -34,5 +37,15 @@ studentsRouter.get(
   authz(["admin", "company"]),
   asyncHandler(httpGetAllStudents)
 );
+
+studentsRouter.patch(
+  "/self",
+  authz("student"),
+  validateStudentSelfPatch,
+  expressFileUpload(),
+  asyncHandler(httpPatchSelfStudent)
+);
+
+studentsRouter.get("/self", authz("student"), asyncHandler(httpGetSelfStudent));
 
 module.exports = studentsRouter;

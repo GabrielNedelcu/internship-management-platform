@@ -1,6 +1,9 @@
 const {
   createStudent,
   getAllStudents,
+  getOneStudent,
+  queryStudents,
+  updateOneStudent,
 } = require("../../models/students/students.model");
 const {
   createAccount,
@@ -9,7 +12,10 @@ const {
 
 const { generatePassword } = require("../../utils/auth.utils");
 const { getStudentMajor } = require("../../utils/models.utils");
-const { uploadFilesFromRequest } = require("../../utils/files.utils");
+const {
+  uploadFilesFromRequest,
+  deleteUploadedFile,
+} = require("../../utils/files.utils");
 const { parseExcel, studentSchema } = require("../../utils/excel.utils");
 
 const logger = require("../../config/logger.config");
@@ -155,8 +161,63 @@ async function httpGetAllStudents(req, res) {
   return res.status(200).json(students);
 }
 
+/**
+ * @api {PATCH} /students/self
+ * @apiDescription Update the data for the logged in student
+ *
+ * @apiSuccess 204
+ */
+async function httpPatchSelfStudent(req, res) {
+  const studentId = req.userId;
+  const newData = req.body;
+
+  const student = await queryStudents({ _id: studentId }, { cv: 1 });
+  if (student.cv) await deleteUploadedFile("cv", student.cv);
+
+  const fileName = `${studentId}.pdf`;
+  await uploadFilesFromRequest(req, "cv", fileName);
+  await updateOneStudent(studentId, { ...newData, cv: fileName });
+
+  return res.status(204).send();
+}
+
+/**
+ * @api {GET} /students/self
+ * @apiDescription Get the data of the logged in student
+ *
+ * @apiSuccess 204
+ */
+async function httpGetSelfStudent(req, res) {
+  const studentId = req.userId;
+  const projectionFields = req.query.fields;
+
+  let studentData = {};
+
+  if (!projectionFields) studentData = await getOneStudent(studentId);
+  else {
+    const projectionFieldsFormatted = projectionFields.replace(/ /g, "");
+    const projectionFieldsArray = projectionFieldsFormatted.split(",");
+
+    const projection = {};
+    projectionFieldsArray.forEach((key) => {
+      projection[key] = 1;
+    });
+
+    studentData = await getOneStudent(studentId, projection);
+  }
+  if (!studentData) {
+    const err = new Error("Student not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  return res.status(200).json(studentData);
+}
+
 module.exports = {
   httpCreateStudent,
   httpGetAllStudents,
+  httpGetSelfStudent,
+  httpPatchSelfStudent,
   httpCreateMultipleStudents,
 };
