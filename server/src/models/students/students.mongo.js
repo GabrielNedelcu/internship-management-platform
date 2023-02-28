@@ -3,34 +3,6 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const encrypt = require("mongoose-encryption");
 
-const addressSchema = new mongoose.Schema({
-  county: {
-    type: String,
-    required: [true, "County name is required"],
-  },
-  town: {
-    type: String,
-    required: [true, "Town name is required"],
-  },
-  street: {
-    type: String,
-    required: [true, "Street name is required"],
-  },
-  number: {
-    type: String,
-    required: [true, "Street number is required"],
-  },
-  building: {
-    type: String,
-  },
-  staircase: {
-    type: String,
-  },
-  appartament: {
-    type: String,
-  },
-});
-
 const studentsSchema = new mongoose.Schema(
   {
     email: {
@@ -78,11 +50,11 @@ const studentsSchema = new mongoose.Schema(
       default: null,
     },
     legalAddress: {
-      type: addressSchema,
+      type: String,
       default: null,
     },
     address: {
-      type: addressSchema,
+      type: String,
       default: null,
     },
     birthPlace: {
@@ -103,10 +75,6 @@ const studentsSchema = new mongoose.Schema(
     },
     stats: {
       applications: {
-        type: Number,
-        default: 0,
-      },
-      interviews: {
         type: Number,
         default: 0,
       },
