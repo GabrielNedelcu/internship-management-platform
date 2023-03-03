@@ -10,7 +10,7 @@ export interface IEditableStudentData {
 }
 
 export interface IStudentData {
-  stats: {
+  stats?: {
     applications: number;
     acceptances: number;
   };
@@ -29,4 +29,53 @@ export interface IStudentData {
   birthDay?: Date;
   phone?: string;
   citizenship?: string;
+}
+
+export interface ICompanyCardData {
+  _id: string;
+  name: string;
+  fieldOfWork: string;
+  description: string;
+  numOffers: number;
+  numPositions: number;
+}
+
+export interface IEmployeeData {
+  _id?: string;
+  name?: string;
+  jobTitle?: string;
+  phoneNumber?: string;
+  email?: string;
+}
+
+export interface ICompanyData {
+  _id?: string;
+  email?: string;
+  name?: string;
+  address?: string;
+  contactNumber?: string;
+  description?: string;
+  fieldOfWork?: string;
+  legalRep?: IEmployeeData;
+  handler?: IEmployeeData;
+  internshipMainAddress?: string;
+  internshipOtherAddresses?: string;
+  internshipOtherAdvantages?: string;
+  internshipCompensation?: string;
+  internshipContract?: string;
+  validated?: boolean;
+  numOffers?: number;
+  numPositions?: number;
+  createdAt?: Date;
+}
+
+export interface IPagination {
+  page: number;
+  pageSize: number;
+}
+
+export interface IQueryParameters {
+  fields?: string;
+  pagination?: IPagination;
+  sort?: string;
 }

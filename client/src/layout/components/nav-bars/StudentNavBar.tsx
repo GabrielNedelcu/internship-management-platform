@@ -14,10 +14,10 @@ const menuItems = [
 ];
 
 const keyToRedirectPath = new Map<string, string>([
-  ["1", "overview"],
-  ["2", "companies"],
-  ["3", "offers"],
-  ["4", "internship"],
+  ["1", "/student/overview"],
+  ["2", "/student/companies"],
+  ["3", "/student/offers"],
+  ["4", "/student/internship"],
 ]);
 
 interface IStudentNavBarProps {

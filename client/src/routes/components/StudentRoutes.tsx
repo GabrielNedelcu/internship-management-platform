@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { Layout, StudentNavBar } from "layout";
 
 import ProtectedRoutes from "./ProtectedRoutes";
-import { Overview, ProfileSetup } from "features/student";
+import { Companies, Overview, ProfileSetup } from "features/student";
 
 const AdminRoutes = () => {
   return (
@@ -16,6 +16,15 @@ const AdminRoutes = () => {
               <Layout
                 sider={<StudentNavBar selectedKey={"1"} />}
                 content={<Overview />}
+              />
+            }
+          />
+          <Route
+            path="/companies"
+            element={
+              <Layout
+                sider={<StudentNavBar selectedKey={"2"} />}
+                content={<Companies />}
               />
             }
           />
