@@ -1,12 +1,16 @@
-const logger = require("../../config/logger.config");
-
 const { getOneCompany } = require("../../models/companies/companies.model");
 
 const {
   createOffer,
   queryOffers,
   getOneOffer,
+  getValidatedOffers,
 } = require("../../models/offers/offers.model");
+const {
+  getSort,
+  getPagination,
+  getProjection,
+} = require("../../utils/query.utils");
 
 /**
  *
@@ -30,6 +34,11 @@ async function httpCreateOffer(req, res) {
 async function httpGetAllOffers(req, res) {
   const userRole = req.userRole;
   const companyID = req.query.company;
+  const searchFor = req.query.search;
+
+  const { sortOrder, sortBy } = getSort(req.query);
+  const { pageSize, skipCount } = getPagination(req.query);
+  const projection = getProjection(req.query);
 
   let offers;
   if (userRole === "admin")
@@ -43,11 +52,24 @@ async function httpGetAllOffers(req, res) {
       remainingAvailablePos: 1,
       applications: 1,
     });
+  else {
+    const resp = await getValidatedOffers(
+      searchFor,
+      projection,
+      sortBy,
+      sortOrder,
+      skipCount,
+      pageSize
+    );
+
+    if (!resp.totalOffers) return res.status(204).send();
+
+    return res.status(200).json(resp);
+  }
 
   const validatedOffers = [];
-
   for await (const offer of offers) {
-    const company = await getOneCompany(offer.companyID);
+    const company = await getOneCompany(offer.companyID, { validated: 1 });
     if (company.validated) validatedOffers.push(offer);
   }
 

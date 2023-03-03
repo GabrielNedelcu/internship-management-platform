@@ -56,10 +56,105 @@ async function queryOffers(query, options) {
   return await Offer.find(query, options);
 }
 
+/**
+ * Retrieve all the offers of the validated companies
+ * @param {*} searchFilter search for company name or for job title
+ * @param {*} projection query projection
+ * @param {*} sortBy field to sort by
+ * @param {*} sortOrder sort order
+ * @param {*} skipCount number of documents to skip
+ * @param {*} pageSize number of documents to retrieve
+ * @returns object containing the total documents and the requested number of documents
+ */
+async function getValidatedOffers(
+  searchFilter,
+  projection,
+  sortBy,
+  sortOrder,
+  skipCount,
+  pageSize
+) {
+  const pipeline = [
+    {
+      $lookup: {
+        from: "companies",
+        localField: "companyID",
+        foreignField: "_id",
+        as: "companyData",
+        pipeline: [
+          {
+            $project: {
+              validated: 1,
+            },
+          },
+        ],
+      },
+    },
+    {
+      $match: {
+        "companyData.0.validated": true,
+      },
+    },
+    {
+      $match: {
+        $or: [
+          { companyName: { $regex: new RegExp(searchFilter, "i") } },
+          { title: { $regex: new RegExp(searchFilter, "i") } },
+        ],
+      },
+    },
+    {
+      $count: "totalDocuments",
+    },
+  ];
+
+  const countResult = await Offer.aggregate(pipeline).exec();
+  const totalCount = countResult[0] ? countResult[0].totalDocuments : 0;
+
+  const mainPipeline = [
+    ...pipeline.slice(0, -1),
+    {
+      $project: projection,
+    },
+    {
+      $match: {
+        $or: [
+          { companyName: { $regex: new RegExp(searchFilter, "i") } },
+          { title: { $regex: new RegExp(searchFilter, "i") } },
+        ],
+      },
+    },
+    ...(sortBy && sortOrder
+      ? [
+          {
+            $sort: {
+              [`${sortBy}`]: sortOrder === "asc" ? 1 : -1,
+            },
+          },
+        ]
+      : []),
+    {
+      $skip: Number(skipCount),
+    },
+    {
+      $limit: Number(pageSize),
+    },
+  ];
+
+  const result = await Offer.aggregate(mainPipeline).exec();
+  const response = {
+    totalOffers: totalCount,
+    offers: result,
+  };
+
+  return response;
+}
+
 module.exports = {
   createOffer,
   getOneOffer,
   getAllOffers,
   updateOneOffer,
   queryOffers,
+  getValidatedOffers,
 };
