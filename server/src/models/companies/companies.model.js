@@ -56,8 +56,18 @@ async function updateOneCompany(companyId, companyData) {
  *
  * @returns {Array}                 - Array of JSON objects resulting after the query
  */
-async function queryCompanies(query, options) {
-  return await Company.find(query, options);
+async function queryCompanies(
+  query,
+  options,
+  sortBy,
+  sortOrder,
+  skipCount,
+  pageSize
+) {
+  return await Company.find(query, options)
+    .sort({ [`${sortBy}`]: sortOrder })
+    .skip(skipCount)
+    .limit(pageSize);
 }
 
 module.exports = {

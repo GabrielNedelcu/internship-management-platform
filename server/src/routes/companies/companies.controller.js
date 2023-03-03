@@ -8,6 +8,11 @@ const {
   updateOneCompany,
 } = require("../../models/companies/companies.model");
 const { createOffer } = require("../../models/offers/offers.model");
+const {
+  getSort,
+  getPagination,
+  getProjection,
+} = require("../../utils/query.utils");
 
 /**
  *
@@ -90,8 +95,11 @@ async function httpCreateCompany(req, res) {
 async function httpGetAllCompanies(req, res) {
   const userRole = req.userRole;
   const validated = req.query.validated || true;
+  const companyName = req.query.company;
 
-  console.log(userRole);
+  const { sortOrder, sortBy } = getSort(req.query);
+  const { pageSize, skipCount } = getPagination(req.query);
+  const projection = getProjection(req.query);
 
   if (userRole !== "admin" && validated === false) {
     return res
@@ -111,8 +119,23 @@ async function httpGetAllCompanies(req, res) {
         numOffers: 1,
         numPositions: 1,
         createdAt: 1,
-      }
+      },
+      sortBy,
+      sortOrder,
+      skipCount,
+      pageSize
     );
+  else {
+    const regex = new RegExp(companyName, "i");
+    companies = await queryCompanies(
+      { validated, name: { $regex: regex } },
+      projection,
+      sortBy,
+      sortOrder,
+      skipCount,
+      pageSize
+    );
+  }
 
   if (!companies.length) return res.status(204).send();
 
