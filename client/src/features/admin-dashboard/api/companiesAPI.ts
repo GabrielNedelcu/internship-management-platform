@@ -1,4 +1,5 @@
 import { axiosClient } from "app/axiosClient";
+import { addParameterToQuery } from "common/utils";
 
 const API_URL = "/companies";
 
@@ -9,7 +10,15 @@ const API_URL = "/companies";
  * @returns array containing a list with all the companies
  */
 export const getAllCompanies = async (validated: boolean) => {
-  const res = await axiosClient.get(`${API_URL}?validated=${validated}`);
+  let url: string = `${API_URL}?`;
+  url = addParameterToQuery(url, "validated", validated ? "true" : "false");
+  url = addParameterToQuery(
+    url,
+    "fields",
+    "name,email,fieldOfWork,numOffers,numPositions,createdAt"
+  );
+
+  const res = await axiosClient.get(url);
 
   return res.data;
 };
