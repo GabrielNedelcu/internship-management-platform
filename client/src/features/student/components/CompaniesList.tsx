@@ -32,7 +32,7 @@ const CompaniesList = () => {
 
       <Spin spinning={loading} tip="Fetching companies ..." size="large">
         <Row gutter={[16, 16]}>
-          {data.map((cardData: ICompanyCardData) => {
+          {data.companies.map((cardData: ICompanyCardData) => {
             return (
               <Col span={8} key={cardData._id}>
                 <CompanyCard companyData={cardData} />
@@ -42,7 +42,7 @@ const CompaniesList = () => {
         </Row>
 
         <Pagination
-          total={data.length}
+          total={data.totalCompanies}
           handleChange={(page: number, pageSize: number) =>
             setPagination({
               page,
