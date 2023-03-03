@@ -117,7 +117,7 @@ async function httpGetAllCompanies(req, res) {
     pageSize
   );
 
-  if (!companies.length) return res.status(204).send();
+  if (!companies.totalCompanies) return res.status(204).send();
 
   return res.status(200).json(companies);
 }
