@@ -95,7 +95,7 @@ async function httpCreateCompany(req, res) {
 async function httpGetAllCompanies(req, res) {
   const userRole = req.userRole;
   const validated = req.query.validated || true;
-  const companyName = req.query.company;
+  const companyName = req.query.company || "";
 
   const { sortOrder, sortBy } = getSort(req.query);
   const { pageSize, skipCount } = getPagination(req.query);
@@ -107,35 +107,15 @@ async function httpGetAllCompanies(req, res) {
       .send({ err: "You are not permitted to access this resource!" });
   }
 
-  let companies;
-  if (userRole === "admin")
-    companies = await queryCompanies(
-      { validated },
-      {
-        _id: 1,
-        name: 1,
-        email: 1,
-        fieldOfWork: 1,
-        numOffers: 1,
-        numPositions: 1,
-        createdAt: 1,
-      },
-      sortBy,
-      sortOrder,
-      skipCount,
-      pageSize
-    );
-  else {
-    const regex = new RegExp(companyName, "i");
-    companies = await queryCompanies(
-      { validated, name: { $regex: regex } },
-      projection,
-      sortBy,
-      sortOrder,
-      skipCount,
-      pageSize
-    );
-  }
+  const regex = new RegExp(companyName, "i");
+  const companies = await queryCompanies(
+    { validated, name: { $regex: regex } },
+    projection,
+    sortBy,
+    sortOrder,
+    skipCount,
+    pageSize
+  );
 
   if (!companies.length) return res.status(204).send();
 
