@@ -1,5 +1,5 @@
 import { Typography } from "antd";
-import CompaniesList from "../components/CompaniesList";
+import { CompaniesList } from "../components";
 
 const Companies = () => {
   return (

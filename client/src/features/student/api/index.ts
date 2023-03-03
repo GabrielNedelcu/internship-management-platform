@@ -4,6 +4,7 @@ import { IEditableStudentData, IQueryParameters } from "../../../common/types";
 
 const STUDENTS_API_URL = "/students";
 const COMPANIES_API_URL = "/companies";
+const OFFERS_API_URL = "/offers";
 
 /**
  * Update the logged in student data
@@ -35,7 +36,7 @@ export const getSelfStudent = async (fields?: string) => {
 
 /**
  * Retrieve all the companies from the server
- * @param queryParams fquery parameters
+ * @param queryParams query parameters
  * @returns server response
  */
 export const getCompanies = async (
@@ -44,6 +45,21 @@ export const getCompanies = async (
 ) => {
   const paramURL: string = buildQuery(`${COMPANIES_API_URL}`, queryParams);
   const url: string = addParameterToQuery(paramURL, "company", companyName);
+  const res = await axiosClient.get(url);
+  return res.data;
+};
+
+/**
+ * Retrieve all the offers from the server
+ * @param queryParams query parameters
+ * @returns server response
+ */
+export const getOffers = async (
+  offerTitle: string,
+  queryParams: IQueryParameters
+) => {
+  const paramURL: string = buildQuery(`${OFFERS_API_URL}`, queryParams);
+  const url: string = addParameterToQuery(paramURL, "search", offerTitle);
   const res = await axiosClient.get(url);
   return res.data;
 };

@@ -79,3 +79,30 @@ export interface IQueryParameters {
   pagination?: IPagination;
   sort?: string;
 }
+
+export interface IOfferCardData {
+  _id: string;
+  title: string;
+  companyName: string;
+  description: string;
+  departament: string;
+  availablePos: number;
+  remainingAvailablePos: number;
+  applications: number;
+}
+
+export interface IOfferData {
+  _id?: string;
+  companyID?: string;
+  companyName?: string;
+  title?: string;
+  description?: string;
+  departament?: string;
+  requirements?: string;
+  mentions?: string;
+  supervisor?: IEmployeeData;
+  availablePos?: number;
+  remainingAvailablePos?: number;
+  applications?: number;
+  createdAt?: Date;
+}
