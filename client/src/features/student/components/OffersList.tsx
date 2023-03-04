@@ -17,7 +17,8 @@ const sortOptions = [
 ];
 
 const OffersList = () => {
-  const { data, loading, setPagination, setSort, setFilter } = useOffersList();
+  const { data, loading, pagination, setPagination, setSort, setFilter } =
+    useOffersList();
 
   if (!data) return <LoadingPage message="Fetching offers .." />;
 
@@ -25,8 +26,14 @@ const OffersList = () => {
     <>
       <FilterSortData
         searchPrompt={"Search for offer title or company name"}
-        handleSearch={setFilter}
-        handleClearSearch={() => setFilter("")}
+        handleSearch={(value: string) => {
+          setFilter(value);
+          setPagination({ ...pagination, page: 1 });
+        }}
+        handleClearSearch={() => {
+          setFilter("");
+          setPagination({ ...pagination, page: 1 });
+        }}
         sortOptions={sortOptions}
         handleSortChange={setSort}
       />

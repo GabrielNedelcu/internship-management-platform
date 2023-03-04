@@ -44,7 +44,7 @@ const useOffersList = () => {
     refetch();
   }, [pagination, sort, filter]);
 
-  return { data, loading, setPagination, setSort, setFilter };
+  return { data, loading, pagination, setPagination, setSort, setFilter };
 };
 
 export default useOffersList;
