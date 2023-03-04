@@ -63,3 +63,18 @@ export const getOffers = async (
   const res = await axiosClient.get(url);
   return res.data;
 };
+
+/**
+ * Retrieve offer data from the server
+ * @param offerID id of the offer
+ * @param queryParams query parameters
+ * @returns server response
+ */
+export const getOffer = async (
+  offerID: string,
+  queryParams: IQueryParameters
+) => {
+  const url: string = buildQuery(`${OFFERS_API_URL}/${offerID}`, queryParams);
+  const res = await axiosClient.get(url);
+  return res.data;
+};

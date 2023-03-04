@@ -2,7 +2,13 @@ import { Routes, Route } from "react-router-dom";
 import { Layout, StudentNavBar } from "layout";
 
 import ProtectedRoutes from "./ProtectedRoutes";
-import { Companies, Overview, ProfileSetup, Offers } from "features/student";
+import {
+  Companies,
+  Overview,
+  ProfileSetup,
+  Offers,
+  OfferProfile,
+} from "features/student";
 
 const AdminRoutes = () => {
   return (
@@ -34,6 +40,15 @@ const AdminRoutes = () => {
               <Layout
                 sider={<StudentNavBar selectedKey={"3"} />}
                 content={<Offers />}
+              />
+            }
+          />
+          <Route
+            path="offer/:offerID"
+            element={
+              <Layout
+                sider={<StudentNavBar selectedKey={"-1"} />}
+                content={<OfferProfile />}
               />
             }
           />
