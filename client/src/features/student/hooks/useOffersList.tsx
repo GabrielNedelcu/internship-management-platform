@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getOffers } from "../api";
 import { IPagination } from "../../../common/types";
 
-const useOffersList = () => {
+const useOffersList = (companyID?: string) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [pagination, setPagination] = useState<IPagination>({
     page: 1,
@@ -17,12 +17,16 @@ const useOffersList = () => {
     ["getAllOffersStudent"],
     () => {
       setLoading(true);
-      return getOffers(filter, {
-        fields:
-          "title,companyName,description,departament,availablePos,remainingAvailablePos,applications",
-        pagination,
-        sort,
-      });
+      return getOffers(
+        filter,
+        {
+          fields:
+            "title,companyName,description,departament,availablePos,remainingAvailablePos,applications",
+          pagination,
+          sort,
+        },
+        companyID
+      );
     },
     {
       onSuccess: () => {

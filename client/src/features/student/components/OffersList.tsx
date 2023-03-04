@@ -4,6 +4,10 @@ import { IOfferCardData } from "common/types";
 import { OfferCard } from "../components";
 import useOffersList from "../hooks/useOffersList";
 
+interface IOffersListProps {
+  companyID?: string;
+}
+
 const sortOptions = [
   { value: "asc.availablePos", label: "Positions Offered Asc." },
   { value: "desc.availablePos", label: "Positions Offered Desc." },
@@ -16,9 +20,9 @@ const sortOptions = [
   { value: "", label: "None" },
 ];
 
-const OffersList = () => {
+const OffersList = ({ companyID }: IOffersListProps) => {
   const { data, loading, pagination, setPagination, setSort, setFilter } =
-    useOffersList();
+    useOffersList(companyID);
 
   if (!data) return <LoadingPage message="Fetching offers .." />;
 

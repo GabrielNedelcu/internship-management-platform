@@ -105,4 +105,5 @@ export interface IOfferData {
   remainingAvailablePos?: number;
   applications?: number;
   createdAt?: Date;
+  application?: string;
 }

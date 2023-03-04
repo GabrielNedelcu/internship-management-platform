@@ -8,6 +8,7 @@ import {
   ProfileSetup,
   Offers,
   OfferProfile,
+  CompanyProfile,
 } from "features/student";
 
 const AdminRoutes = () => {
@@ -49,6 +50,15 @@ const AdminRoutes = () => {
               <Layout
                 sider={<StudentNavBar selectedKey={"-1"} />}
                 content={<OfferProfile />}
+              />
+            }
+          />
+          <Route
+            path="company/:companyID"
+            element={
+              <Layout
+                sider={<StudentNavBar selectedKey={"-1"} />}
+                content={<CompanyProfile />}
               />
             }
           />

@@ -57,10 +57,12 @@ export const getCompanies = async (
  */
 export const getOffers = async (
   offerTitle: string,
-  queryParams: IQueryParameters
+  queryParams: IQueryParameters,
+  companyID?: string
 ) => {
   const paramURL: string = buildQuery(`${OFFERS_API_URL}`, queryParams);
-  const url: string = addParameterToQuery(paramURL, "search", offerTitle);
+  let url: string = addParameterToQuery(paramURL, "search", offerTitle);
+  if (companyID) url = addParameterToQuery(url, "company", companyID);
   const res = await axiosClient.get(url);
   return res.data;
 };
@@ -76,6 +78,24 @@ export const getOffer = async (
   queryParams: IQueryParameters
 ) => {
   const url: string = buildQuery(`${OFFERS_API_URL}/${offerID}`, queryParams);
+  const res = await axiosClient.get(url);
+  return res.data;
+};
+
+/**
+ * Retrieve company data from the server
+ * @param companyID id of the company
+ * @param queryParams query parameters
+ * @returns server response
+ */
+export const getCompany = async (
+  companyID: string,
+  queryParams: IQueryParameters
+) => {
+  const url: string = buildQuery(
+    `${COMPANIES_API_URL}/${companyID}`,
+    queryParams
+  );
   const res = await axiosClient.get(url);
   return res.data;
 };

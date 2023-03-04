@@ -15,4 +15,4 @@ export {
   AdminTeacherProfile,
 } from "./admin-dashboard";
 
-export { Overview, ProfileSetup, Offers } from "./student";
+export { Overview, ProfileSetup, Offers, CompanyProfile } from "./student";

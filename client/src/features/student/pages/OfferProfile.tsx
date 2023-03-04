@@ -52,7 +52,7 @@ const OfferProfile = () => {
           <Card
             title="Positions Offered"
             content={
-              <Typography.Paragraph ellipsis={{ rows: 3 }}>
+              <Typography.Paragraph>
                 <br />
                 {data.availablePos}
               </Typography.Paragraph>
@@ -63,7 +63,7 @@ const OfferProfile = () => {
           <Card
             title="Positions Available"
             content={
-              <Typography.Paragraph ellipsis={{ rows: 3 }}>
+              <Typography.Paragraph>
                 <br />
                 {data.remainingAvailablePos}
               </Typography.Paragraph>
@@ -74,7 +74,7 @@ const OfferProfile = () => {
           <Card
             title="Applications"
             content={
-              <Typography.Paragraph ellipsis={{ rows: 3 }}>
+              <Typography.Paragraph>
                 <br />
                 {data.applications}
               </Typography.Paragraph>
@@ -85,7 +85,7 @@ const OfferProfile = () => {
           <Card
             title="Job description"
             content={
-              <Typography.Paragraph ellipsis={{ rows: 3 }}>
+              <Typography.Paragraph>
                 <br />
                 {data.description}
               </Typography.Paragraph>
@@ -96,7 +96,7 @@ const OfferProfile = () => {
           <Card
             title="Job requirements"
             content={
-              <Typography.Paragraph ellipsis={{ rows: 3 }}>
+              <Typography.Paragraph>
                 <br />
                 {data.requirements}
               </Typography.Paragraph>
@@ -107,7 +107,7 @@ const OfferProfile = () => {
           <Card
             title="Other mentions"
             content={
-              <Typography.Paragraph ellipsis={{ rows: 3 }}>
+              <Typography.Paragraph>
                 <br />
                 {data.mentions}
               </Typography.Paragraph>
