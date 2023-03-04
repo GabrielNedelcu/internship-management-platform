@@ -1,4 +1,5 @@
-import { Row, Col, Typography } from "antd";
+import { SendOutlined } from "@ant-design/icons";
+import { Row, Col, Typography, Button } from "antd";
 import { LoadingPage, Card } from "common";
 import { useParams } from "react-router-dom";
 import useOfferProfile from "../hooks/useOfferProfile";
@@ -6,17 +7,32 @@ import useOfferProfile from "../hooks/useOfferProfile";
 const OfferProfile = () => {
   const params = useParams();
   const offerId = params.offerID;
-  const { data, loading } = useOfferProfile(offerId || "");
+  const { data, loading, handleApply } = useOfferProfile(offerId || "");
 
   if (!data || loading)
     return <LoadingPage message="Fetching offer data ..." />;
 
   return (
     <>
-      <Typography.Title level={1}>{data.title}</Typography.Title>
-      <Typography.Title level={5} type={"secondary"}>
-        {data.companyName} | {data.departament}
-      </Typography.Title>
+      <Row gutter={[16, 16]}>
+        <Col span={18}>
+          <Typography.Title level={1}>{data.title}</Typography.Title>
+          <Typography.Title level={5} type={"secondary"}>
+            {data.companyName} | {data.departament}
+          </Typography.Title>
+        </Col>
+
+        <Col span={6}>
+          <Button
+            size="large"
+            icon={<SendOutlined />}
+            onClick={handleApply}
+            block
+          >
+            Apply to this offer
+          </Button>
+        </Col>
+      </Row>
 
       <Row gutter={[16, 16]}>
         <Col span={8}>
