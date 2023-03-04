@@ -7,6 +7,9 @@ const {
   getValidatedOffers,
 } = require("../../models/offers/offers.model");
 const {
+  queryApplications,
+} = require("../../models/applications/applications.model");
+const {
   getSort,
   getPagination,
   getProjection,
@@ -88,6 +91,8 @@ async function httpGetAllOffers(req, res) {
 async function httpGetOneOffer(req, res) {
   const offerId = req.params.offerId;
   const projection = getProjection(req.query);
+  const userId = req.userId;
+  const userRole = req.userRole;
 
   const offer = await getOneOffer(offerId, projection);
 
@@ -95,6 +100,17 @@ async function httpGetOneOffer(req, res) {
     const err = new Error("Offer not found");
     err.statusCode = 404;
     throw err;
+  }
+
+  // for students, also retrieve his application
+  if (userRole === "student") {
+    const application = await queryApplications(
+      { offer: offerId, student: userId },
+      { _id: 1 }
+    );
+
+    offer._doc.application = application[0]?._id;
+    return res.status(200).json(offer);
   }
 
   return res.status(200).json(offer);
