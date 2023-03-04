@@ -87,14 +87,9 @@ async function httpGetAllOffers(req, res) {
  */
 async function httpGetOneOffer(req, res) {
   const offerId = req.params.offerId;
-  const userRole = req.userRole;
+  const projection = getProjection(req.query);
 
-  let projection = {};
-  let offer = {};
-
-  if (userRole === "admin") {
-    offer = await getOneOffer(offerId, projection);
-  }
+  const offer = await getOneOffer(offerId, projection);
 
   if (!offer) {
     const err = new Error("Offer not found");

@@ -27,6 +27,10 @@ offersRouter.get(
   asyncHandler(httpGetAllOffers)
 );
 
-offersRouter.get("/:offerId", authz(["admin"]), asyncHandler(httpGetOneOffer));
+offersRouter.get(
+  "/:offerId",
+  authz(["admin", "student"]),
+  asyncHandler(httpGetOneOffer)
+);
 
 module.exports = offersRouter;
