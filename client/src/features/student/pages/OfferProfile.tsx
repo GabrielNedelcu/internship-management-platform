@@ -23,14 +23,26 @@ const OfferProfile = () => {
         </Col>
 
         <Col span={6}>
-          <Button
-            size="large"
-            icon={<SendOutlined />}
-            onClick={handleApply}
-            block
-          >
-            Apply to this offer
-          </Button>
+          {data.application ? (
+            <Button
+              size="large"
+              icon={<SendOutlined />}
+              onClick={handleApply}
+              block
+              danger
+            >
+              Remove Application
+            </Button>
+          ) : (
+            <Button
+              size="large"
+              icon={<SendOutlined />}
+              onClick={handleApply}
+              block
+            >
+              Apply to this offer
+            </Button>
+          )}
         </Col>
       </Row>
 
