@@ -57,7 +57,9 @@ const useOfferProfile = (offerId: string) => {
     mutateApply();
   };
 
-  return { data, loading, handleApply };
+  const handleRemoveApplication = () => {};
+
+  return { data, loading, handleApply, handleRemoveApplication };
 };
 
 export default useOfferProfile;

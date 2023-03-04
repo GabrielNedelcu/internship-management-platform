@@ -7,7 +7,8 @@ import useOfferProfile from "../hooks/useOfferProfile";
 const OfferProfile = () => {
   const params = useParams();
   const offerId = params.offerID;
-  const { data, loading, handleApply } = useOfferProfile(offerId || "");
+  const { data, loading, handleApply, handleRemoveApplication } =
+    useOfferProfile(offerId || "");
 
   if (!data || loading)
     return <LoadingPage message="Fetching offer data ..." />;
@@ -27,7 +28,7 @@ const OfferProfile = () => {
             <Button
               size="large"
               icon={<SendOutlined />}
-              onClick={handleApply}
+              onClick={handleRemoveApplication}
               block
               danger
             >
