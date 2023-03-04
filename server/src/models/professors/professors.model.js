@@ -17,11 +17,12 @@ async function createProfessor(professorData) {
  * associated account's id
  *
  * @param {ObjectId} professorId  - the id corresponding to the professor
+ * @param {ObjectId} projection   - the projection for the query
  *
  * @returns {JSON}              - the retrieved professor
  */
-async function getOneProfessor(professorId) {
-  return await Professor.findById(professorId);
+async function getOneProfessor(professorId, projection = {}) {
+  return await Professor.findById(professorId, projection);
 }
 
 /**

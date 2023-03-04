@@ -14,12 +14,13 @@ async function createOffer(offerData) {
 /**
  * Retrieve the offer associated with an id
  *
- * @param {ObjectId} offerId  - the id corresponding to the offer
+ * @param {ObjectId} offerId     - the id corresponding to the offer
+ * @param {ObjectId} projection  - the projection for the query
  *
  * @returns {Object}              - the retrieved offer
  */
-async function getOneOffer(offerId) {
-  return await Offer.findById(offerId);
+async function getOneOffer(offerId, projection = {}) {
+  return await Offer.findById(offerId, projection);
 }
 
 /**

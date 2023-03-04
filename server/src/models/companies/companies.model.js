@@ -20,7 +20,7 @@ async function createCompany(companyData) {
  * @param {Object} projection -projection
  * @returns {JSON}              - the retrieved company
  */
-async function getOneCompany(companyId, projection) {
+async function getOneCompany(companyId, projection = {}) {
   return await Company.findById(companyId, projection);
 }
 

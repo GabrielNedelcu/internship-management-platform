@@ -8,6 +8,7 @@ const studentsRouter = require("./students/students.router");
 const accountsRouter = require("./accounts/accounts.router");
 const companiesRouter = require("./companies/companies.router");
 const professorsRouter = require("./professors/professors.router");
+const applicationsRouter = require("./applications/applications.router");
 
 const api = express.Router();
 
@@ -17,5 +18,6 @@ api.use("/offers", auth, offersRouter);
 api.use("/companies", companiesRouter);
 api.use("/students", auth, studentsRouter);
 api.use("/professors", auth, professorsRouter);
+api.use("/applications", auth, applicationsRouter);
 
 module.exports = api;

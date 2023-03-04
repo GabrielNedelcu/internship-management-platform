@@ -20,7 +20,7 @@ async function createStudent(studentData) {
  * @param {Object} projection - projection for the query
  * @returns {JSON}              - the retrieved student
  */
-async function getOneStudent(studentId, projection) {
+async function getOneStudent(studentId, projection = {}) {
   return await Student.findById(studentId, projection);
 }
 

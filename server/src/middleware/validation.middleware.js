@@ -274,6 +274,42 @@ async function validateProfessorCreation(req, res, next) {
 }
 
 /**
+ * Validate the request body in order to create an application
+ * Endpoint in scope: {POST} /applications/
+ *
+ * @param {*} req       http request
+ * @param {*} res       http response
+ * @param {*} next      next middleware in the chain
+ */
+async function validateApplicationCreation(req, res, next) {
+  const validationRule = {
+    offer: "required|string|offer_exists",
+    company: "required|string|company_exists",
+  };
+
+  // verify user sends only accepted fields
+  const reqFields = Object.keys(req.body);
+  for (key of reqFields) {
+    if (!Object.keys(validationRule).includes(key)) {
+      return res.status(412).send({
+        message: "Validation failed",
+      });
+    }
+  }
+
+  await validator(req.body, validationRule, {}, (err, success) => {
+    if (success) {
+      next();
+    } else {
+      res.status(412).send({
+        message: "Validation failed",
+        data: err,
+      });
+    }
+  });
+}
+
+/**
  * Validate the request body in order to patch a company
  * Endpoint in scope: {PATCH} /companies/:companyId
  *
@@ -384,4 +420,5 @@ module.exports = {
   validateStudentSelfPatch,
   validatePatchSelfAccount,
   validateProfessorCreation,
+  validateApplicationCreation,
 };
