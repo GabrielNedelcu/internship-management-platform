@@ -157,17 +157,19 @@ async function httpPatchCompany(req, res) {
 async function httpGetOneCompany(req, res) {
   const companyId = req.params.companyId;
   const userRole = req.userRole;
+  const projection = getProjection(req.query);
 
-  let projection = {};
-  let company = {};
-
-  if (userRole === "admin") {
-    company = await getOneCompany(companyId, projection);
-  }
+  const company = await getOneCompany(companyId, projection);
 
   if (!company) {
     const err = new Error("Company not found");
     err.statusCode = 404;
+    throw err;
+  }
+
+  if (company.validated === false && userRole === "student") {
+    const err = new Error("You are not allowed to access this resource");
+    err.statusCode = 403;
     throw err;
   }
 

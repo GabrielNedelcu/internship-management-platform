@@ -40,7 +40,7 @@ companiesRouter.patch(
 companiesRouter.get(
   "/:companyId",
   auth,
-  authz(["admin"]),
+  authz(["admin", "student"]),
   asyncHandler(httpGetOneCompany)
 );
 

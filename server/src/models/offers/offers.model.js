@@ -151,6 +151,33 @@ async function getValidatedOffers(
   return response;
 }
 
+/**
+ * Retrieve all the offers of a companies
+ * @param {*} query     query
+ * @param {*} projection query projection
+ * @param {*} sortBy field to sort by
+ * @param {*} sortOrder sort order
+ * @param {*} skipCount number of documents to skip
+ * @param {*} pageSize number of documents to retrieve
+ * @returns object containing the total documents and the requested number of documents
+ */
+async function getCompanyOffers(
+  query,
+  projection,
+  sortBy,
+  sortOrder,
+  skipCount,
+  pageSize
+) {
+  const totalOffers = await Offer.countDocuments(query);
+  const offers = await Offer.find(query, projection)
+    .sort({ [`${sortBy}`]: sortOrder })
+    .skip(skipCount)
+    .limit(pageSize);
+
+  return { totalOffers, offers };
+}
+
 module.exports = {
   createOffer,
   getOneOffer,
@@ -158,4 +185,5 @@ module.exports = {
   updateOneOffer,
   queryOffers,
   getValidatedOffers,
+  getCompanyOffers,
 };

@@ -4,6 +4,7 @@ const {
   createOffer,
   queryOffers,
   getOneOffer,
+  getCompanyOffers,
   getValidatedOffers,
 } = require("../../models/offers/offers.model");
 const {
@@ -56,6 +57,22 @@ async function httpGetAllOffers(req, res) {
       applications: 1,
     });
   else {
+    if (companyID) {
+      const regex = new RegExp(searchFor, "i");
+      const resp = await getCompanyOffers(
+        { companyID, title: { $regex: regex } },
+        projection,
+        sortBy,
+        sortOrder,
+        skipCount,
+        pageSize
+      );
+
+      if (!resp.totalOffers) return res.status(204).send();
+
+      return res.status(200).json(resp);
+    }
+
     const resp = await getValidatedOffers(
       searchFor,
       projection,
