@@ -1,5 +1,5 @@
-import { Card, Typography, Avatar } from "antd";
-import { IconText } from "common";
+import { Typography, Avatar } from "antd";
+import { IconText, Card } from "common";
 import { IOfferCardData } from "common/types";
 import {
   SendOutlined,
@@ -14,8 +14,6 @@ interface OfferCardProps {
 const OfferCard = ({ offerData }: OfferCardProps) => {
   return (
     <Card
-      hoverable
-      style={{ width: 476, marginTop: 16 }}
       actions={[
         <IconText
           icon={SolutionOutlined}
@@ -33,25 +31,24 @@ const OfferCard = ({ offerData }: OfferCardProps) => {
           tooltip={"Total Applications"}
         />,
       ]}
-    >
-      <Card.Meta
-        avatar={
-          <Avatar
-            src={`https://ui-avatars.com/api/?name=${offerData.title}&background=0F1C80&color=FFFFFF&bold=true`}
-          />
-        }
-        title={
-          <a href={`http://localhost:3000/student/offer/${offerData._id}`}>
-            {offerData.title}
-          </a>
-        }
-        description={`${offerData.companyName} | ${offerData.departament}`}
-      />
-      <Typography.Paragraph ellipsis={{ rows: 3 }}>
-        <br />
-        {offerData.description}
-      </Typography.Paragraph>
-    </Card>
+      avatar={
+        <Avatar
+          src={`https://ui-avatars.com/api/?name=${offerData.title}&background=0F1C80&color=FFFFFF&bold=true`}
+        />
+      }
+      title={
+        <a href={`http://localhost:3000/student/offer/${offerData._id}`}>
+          {offerData.title}
+        </a>
+      }
+      description={`${offerData.companyName} | ${offerData.departament}`}
+      content={
+        <Typography.Paragraph ellipsis={{ rows: 3 }}>
+          <br />
+          {offerData.description}
+        </Typography.Paragraph>
+      }
+    />
   );
 };
 

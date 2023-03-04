@@ -1,7 +1,7 @@
-import { Card, Typography, Avatar } from "antd";
+import { Typography, Avatar } from "antd";
 import { ICompanyCardData } from "common/types";
 import { ContainerOutlined, UserOutlined } from "@ant-design/icons";
-import { IconText } from "common";
+import { IconText, Card } from "common";
 import { getFieldOfWork } from "common/utils";
 
 interface CompanyCardProps {
@@ -11,8 +11,6 @@ interface CompanyCardProps {
 const CompanyCard = ({ companyData }: CompanyCardProps) => {
   return (
     <Card
-      hoverable
-      style={{ width: 476, marginTop: 16 }}
       actions={[
         <IconText
           icon={ContainerOutlined}
@@ -25,27 +23,24 @@ const CompanyCard = ({ companyData }: CompanyCardProps) => {
           tooltip={"Positions"}
         />,
       ]}
-    >
-      <Card.Meta
-        avatar={
-          <Avatar
-            src={`https://ui-avatars.com/api/?name=${companyData.name}&background=0F1C80&color=FFFFFF&bold=true`}
-          />
-        }
-        title={
-          <a href={`http://localhost:3000/student/company/${companyData._id}`}>
-            {companyData.name}
-          </a>
-        }
-        description={`Field of work: ${getFieldOfWork(
-          companyData.fieldOfWork
-        )}`}
-      />
-      <Typography.Paragraph ellipsis={{ rows: 3 }}>
-        <br />
-        {companyData.description}
-      </Typography.Paragraph>
-    </Card>
+      avatar={
+        <Avatar
+          src={`https://ui-avatars.com/api/?name=${companyData.name}&background=0F1C80&color=FFFFFF&bold=true`}
+        />
+      }
+      title={
+        <a href={`http://localhost:3000/student/company/${companyData._id}`}>
+          {companyData.name}
+        </a>
+      }
+      description={`Field of work: ${getFieldOfWork(companyData.fieldOfWork)}`}
+      content={
+        <Typography.Paragraph ellipsis={{ rows: 3 }}>
+          <br />
+          {companyData.description}
+        </Typography.Paragraph>
+      }
+    />
   );
 };
 

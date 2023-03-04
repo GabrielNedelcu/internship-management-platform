@@ -17,3 +17,4 @@ export { default as IconText } from "./components/IconText";
 export { default as LoadingPage } from "./pages/LoadingPage";
 export { default as FilterSortData } from "./components/FilterSortData";
 export { default as Pagination } from "./components/PaginationComp";
+export { default as Card } from "./components/CardComp";
