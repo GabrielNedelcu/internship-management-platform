@@ -9,6 +9,8 @@ import {
   Offers,
   OfferProfile,
   CompanyProfile,
+  Applications,
+  Profile,
 } from "features/student";
 
 const AdminRoutes = () => {
@@ -30,7 +32,7 @@ const AdminRoutes = () => {
             path="/companies"
             element={
               <Layout
-                sider={<StudentNavBar selectedKey={"2"} />}
+                sider={<StudentNavBar selectedKey={"3"} />}
                 content={<Companies />}
               />
             }
@@ -39,7 +41,7 @@ const AdminRoutes = () => {
             path="/offers"
             element={
               <Layout
-                sider={<StudentNavBar selectedKey={"3"} />}
+                sider={<StudentNavBar selectedKey={"4"} />}
                 content={<Offers />}
               />
             }
@@ -59,6 +61,24 @@ const AdminRoutes = () => {
               <Layout
                 sider={<StudentNavBar selectedKey={"-1"} />}
                 content={<CompanyProfile />}
+              />
+            }
+          />
+          <Route
+            path="/applications"
+            element={
+              <Layout
+                sider={<StudentNavBar selectedKey={"5"} />}
+                content={<Applications />}
+              />
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <Layout
+                sider={<StudentNavBar selectedKey={"2"} />}
+                content={<Profile />}
               />
             }
           />

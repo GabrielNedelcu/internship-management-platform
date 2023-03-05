@@ -39,9 +39,8 @@ const useSignIn = () => {
         setUserID(data?.accountId);
 
         setLanguage(data?.accountLanguage);
-
-        if (!data.profileCompleted || data.profileCompleted)
-          redirectAfterLogin(data?.accountRole);
+        console.log(data);
+        if (data.profileCompleted) redirectAfterLogin(data?.accountRole);
         else return navigate("/student/profile-setup");
       },
       onError: () => {

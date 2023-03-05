@@ -1,6 +1,10 @@
 import { axiosClient } from "app/axiosClient";
 import { addParameterToQuery, buildQuery } from "common/utils";
-import { IEditableStudentData, IQueryParameters } from "../../../common/types";
+import {
+  IEditableStudentData,
+  IQueryParameters,
+  IStudentData,
+} from "../../../common/types";
 
 const STUDENTS_API_URL = "/students";
 const COMPANIES_API_URL = "/companies";
@@ -12,7 +16,7 @@ const APPLICATIONS_API_URL = "/applications";
  * @param data new data
  * @returns server response
  */
-export const updateStudentData = async (data: IEditableStudentData) => {
+export const updateStudentData = async (data: IStudentData) => {
   const res = await axiosClient.patch(`${STUDENTS_API_URL}/self`, data, {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -26,12 +30,9 @@ export const updateStudentData = async (data: IEditableStudentData) => {
  * Get the data for the logged in student
  * @returns server response
  */
-export const getSelfStudent = async (fields?: string) => {
-  const url: string = fields
-    ? `${STUDENTS_API_URL}/self?fields=${fields}`
-    : `${STUDENTS_API_URL}/self`;
+export const getSelfStudent = async (queryParams: IQueryParameters) => {
+  const url = buildQuery(`${STUDENTS_API_URL}/self`, queryParams);
   const res = await axiosClient.get(url);
-
   return res.data;
 };
 
@@ -44,8 +45,8 @@ export const getCompanies = async (
   companyName: string,
   queryParams: IQueryParameters
 ) => {
-  const paramURL: string = buildQuery(`${COMPANIES_API_URL}`, queryParams);
-  const url: string = addParameterToQuery(paramURL, "company", companyName);
+  const paramURL = buildQuery(`${COMPANIES_API_URL}`, queryParams);
+  const url = addParameterToQuery(paramURL, "company", companyName);
   const res = await axiosClient.get(url);
   return res.data;
 };
@@ -60,7 +61,7 @@ export const getOffers = async (
   queryParams: IQueryParameters,
   companyID?: string
 ) => {
-  const paramURL: string = buildQuery(`${OFFERS_API_URL}`, queryParams);
+  const paramURL = buildQuery(`${OFFERS_API_URL}`, queryParams);
   let url: string = addParameterToQuery(paramURL, "search", offerTitle);
   if (companyID) url = addParameterToQuery(url, "company", companyID);
   const res = await axiosClient.get(url);
@@ -77,7 +78,7 @@ export const getOffer = async (
   offerID: string,
   queryParams: IQueryParameters
 ) => {
-  const url: string = buildQuery(`${OFFERS_API_URL}/${offerID}`, queryParams);
+  const url = buildQuery(`${OFFERS_API_URL}/${offerID}`, queryParams);
   const res = await axiosClient.get(url);
   return res.data;
 };
@@ -92,10 +93,7 @@ export const getCompany = async (
   companyID: string,
   queryParams: IQueryParameters
 ) => {
-  const url: string = buildQuery(
-    `${COMPANIES_API_URL}/${companyID}`,
-    queryParams
-  );
+  const url = buildQuery(`${COMPANIES_API_URL}/${companyID}`, queryParams);
   const res = await axiosClient.get(url);
   return res.data;
 };
