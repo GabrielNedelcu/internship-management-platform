@@ -20,6 +20,8 @@ const { parseExcel, studentSchema } = require("../../utils/excel.utils");
 
 const logger = require("../../config/logger.config");
 
+const { getProjection } = require("../../utils/query.utils");
+
 /**
  *
  * @api {POST} /students/
@@ -174,9 +176,14 @@ async function httpPatchSelfStudent(req, res) {
   const student = await queryStudents({ _id: studentId }, { cv: 1 });
   if (student.cv) await deleteUploadedFile("cv", student.cv);
 
-  const fileName = `${studentId}.pdf`;
-  await uploadFilesFromRequest(req, "cv", fileName);
-  await updateOneStudent(studentId, { ...newData, cv: fileName });
+  let data = newData;
+  if (req.files) {
+    const fileName = `${studentId}.pdf`;
+    await uploadFilesFromRequest(req, "cv", fileName);
+    data = { ...newData, cv: fileName };
+  }
+
+  await updateOneStudent(studentId, data);
 
   return res.status(204).send();
 }
@@ -189,22 +196,10 @@ async function httpPatchSelfStudent(req, res) {
  */
 async function httpGetSelfStudent(req, res) {
   const studentId = req.userId;
-  const projectionFields = req.query.fields;
+  const projection = getProjection(req.query);
 
-  let studentData = {};
+  const studentData = await getOneStudent(studentId, projection);
 
-  if (!projectionFields) studentData = await getOneStudent(studentId);
-  else {
-    const projectionFieldsFormatted = projectionFields.replace(/ /g, "");
-    const projectionFieldsArray = projectionFieldsFormatted.split(",");
-
-    const projection = {};
-    projectionFieldsArray.forEach((key) => {
-      projection[key] = 1;
-    });
-
-    studentData = await getOneStudent(studentId, projection);
-  }
   if (!studentData) {
     const err = new Error("Student not found");
     err.statusCode = 404;
