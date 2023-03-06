@@ -5,7 +5,7 @@ const {
   updateAccountPassword,
 } = require("../../models/accounts/accounts.model");
 
-const { generatePassword } = require("../../utils/auth.utils");
+const { generatePassword, hashPassword } = require("../../utils/auth.utils");
 
 const {
   sendPasswordResetMail,
@@ -16,6 +16,8 @@ const {
   generateResetPasswordToken,
   validateResetPasswordToken,
 } = require("../../utils/jwt.utils");
+
+const bcrypt = require("bcrypt");
 
 /**
  *
@@ -79,7 +81,15 @@ async function httpPatchSelf(req, res) {
   const userId = req.userId;
   const newData = req.body;
 
-  await updateOneAccount(userId, newData);
+  if (newData.accountPassword) {
+    const encryptedPass = await bcrypt.hash(newData.accountPassword, 10);
+    await updateOneAccount(userId, {
+      password: encryptedPass,
+      activated: true,
+    });
+  }
+
+  if (newData.language) await updateOneAccount(userId, newData);
   return res.status(204).send();
 }
 
