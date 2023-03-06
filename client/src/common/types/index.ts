@@ -107,3 +107,8 @@ export interface IOfferData {
   createdAt?: Date;
   application?: string;
 }
+
+export interface IPasswordChangeData {
+  accountPassword: string;
+  accountPassword_confirmation: string;
+}

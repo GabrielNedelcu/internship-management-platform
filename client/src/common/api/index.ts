@@ -1,5 +1,6 @@
 import { axiosClient } from "app/axiosClient";
-const API_ACCOUNTS_URL = "/accounts";
+import { IPasswordChangeData } from "common/types";
+const ACCOUNTS_URL = "/accounts";
 const AUTH_URL = "/auth";
 
 /**
@@ -9,7 +10,7 @@ const AUTH_URL = "/auth";
  * @returns server response
  */
 export const checkAccountEmail = async (email: string) => {
-  const res = await axiosClient.head(`${API_ACCOUNTS_URL}/${email}`);
+  const res = await axiosClient.head(`${ACCOUNTS_URL}/${email}`);
 
   return res.data;
 };
@@ -21,6 +22,17 @@ export const checkAccountEmail = async (email: string) => {
  */
 export const logoutAccount = async () => {
   const res = await axiosClient.delete(`${AUTH_URL}/logout`);
+
+  return res.data;
+};
+
+/**
+ * Change the password for the logged in user
+ * @param newPassData new password and the confirmation password
+ * @returns server response
+ */
+export const changeUserPassword = async (newPassData: IPasswordChangeData) => {
+  const res = await axiosClient.patch(`${ACCOUNTS_URL}/self`, newPassData);
 
   return res.data;
 };
