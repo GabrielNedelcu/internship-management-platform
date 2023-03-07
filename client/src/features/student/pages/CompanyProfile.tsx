@@ -10,9 +10,9 @@ import type { TTab } from "common";
 const CompanyProfile = () => {
   const params = useParams();
   const companyId = params.companyID;
-  const { data, loading } = useCompanyProfile(companyId || "");
+  const { companyData, isLoading } = useCompanyProfile(companyId || "");
 
-  if (!data || loading)
+  if (!companyData || isLoading)
     return <LoadingPage message="Fetching company data ..." />;
 
   const tabs: TTab[] = [
@@ -24,7 +24,7 @@ const CompanyProfile = () => {
         </span>
       ),
       key: "1",
-      children: <CompanyInfo companyData={data} />,
+      children: <CompanyInfo companyData={companyData} />,
     },
     {
       label: (
@@ -40,9 +40,9 @@ const CompanyProfile = () => {
 
   return (
     <>
-      <Typography.Title level={1}>{data.name}</Typography.Title>
+      <Typography.Title level={1}>{companyData.name}</Typography.Title>
       <Typography.Title level={5} type={"secondary"}>
-        {getFieldOfWork(data.fieldOfWork)}
+        {getFieldOfWork(companyData.fieldOfWork)}
       </Typography.Title>
 
       <TabNavigation tabList={tabs} />

@@ -124,3 +124,14 @@ export interface IApplicationData {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface IFetchOptions {
+  paginationParams: IPagination;
+  sortOrder: string;
+  searchValue: string;
+}
+
+export interface IServerResponseMultipleFetch {
+  totalCount: number;
+  data: any;
+}

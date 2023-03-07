@@ -4,11 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 import { getCompany } from "../api";
 
 const useOfferProfile = (companyId: string) => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const { data } = useQuery(
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { data: companyData } = useQuery(
     ["getCompany", companyId],
     () => {
-      setLoading(true);
+      setIsLoading(true);
       return getCompany(companyId, {
         fields:
           "name,description,fieldOfWork,internshipOtherAdvantages,internshipCompensation,internshipContract,numOffers,numPositions",
@@ -16,10 +17,10 @@ const useOfferProfile = (companyId: string) => {
     },
     {
       onSuccess: () => {
-        setLoading(false);
+        setIsLoading(false);
       },
       onError: () => {
-        setLoading(false);
+        setIsLoading(false);
         notification.error({
           message: "Ooops ...",
           description:
@@ -30,7 +31,7 @@ const useOfferProfile = (companyId: string) => {
     }
   );
 
-  return { data, loading };
+  return { companyData, isLoading };
 };
 
 export default useOfferProfile;

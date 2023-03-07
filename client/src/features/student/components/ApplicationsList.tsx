@@ -11,14 +11,8 @@ const sortOptions = [
 ];
 
 const ApplicationsList = () => {
-  const {
-    applications,
-    isPageLoading,
-    paginationParams,
-    setPaginationParams,
-    setSortOrder,
-    setSearchValue,
-  } = useApplicationsList();
+  const { applications, isLoading, fetchOptions, setFetchOptions } =
+    useApplicationsList();
 
   if (!applications) return <LoadingPage message="Fetching applications" />;
 
@@ -27,24 +21,28 @@ const ApplicationsList = () => {
       <FilterSortData
         searchPrompt={"Search for company name or offer title"}
         handleSearch={(value: string) => {
-          setSearchValue(value);
-          setPaginationParams({ ...paginationParams, page: 1 });
+          setFetchOptions({
+            ...fetchOptions,
+            searchValue: value,
+            paginationParams: { ...fetchOptions.paginationParams, page: 1 },
+          });
         }}
         handleClearSearch={() => {
-          setSearchValue("");
-          setPaginationParams({ ...paginationParams, page: 1 });
+          setFetchOptions({
+            ...fetchOptions,
+            searchValue: "",
+            paginationParams: { ...fetchOptions.paginationParams, page: 1 },
+          });
         }}
         sortOptions={sortOptions}
-        handleSortChange={setSortOrder}
+        handleSortChange={(value: string) => {
+          setFetchOptions({ ...fetchOptions, sortOrder: value });
+        }}
       />
 
-      <Spin
-        spinning={isPageLoading}
-        tip="Fetching applications ..."
-        size="large"
-      >
+      <Spin spinning={isLoading} tip="Fetching applications ..." size="large">
         <Row gutter={[16, 16]}>
-          {applications.applications.map((cardData: IApplicationData) => {
+          {applications.data.map((cardData: IApplicationData) => {
             return (
               <Col span={8} key={cardData._id}>
                 <ApplicationCard applicationData={cardData} />
@@ -54,11 +52,14 @@ const ApplicationsList = () => {
         </Row>
 
         <Pagination
-          total={applications.totalApplications}
+          total={applications.totalCount}
           handleChange={(page: number, pageSize: number) =>
-            setPaginationParams({
-              page,
-              pageSize,
+            setFetchOptions({
+              ...fetchOptions,
+              paginationParams: {
+                page,
+                pageSize,
+              },
             })
           }
         />

@@ -2,53 +2,56 @@ import { notification } from "antd";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getOffers } from "../api";
-import { IPagination } from "../../../common/types";
+import { initialFetchOptions } from "common/constants";
+import { IServerResponseMultipleFetch } from "common/types";
 
 const useOffersList = (companyID?: string) => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [pagination, setPagination] = useState<IPagination>({
-    page: 1,
-    pageSize: 20,
-  });
-  const [sort, setSort] = useState<string>("");
-  const [filter, setFilter] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { data, refetch } = useQuery(
-    ["getAllOffersStudent"],
-    () => {
-      setLoading(true);
-      return getOffers(
-        filter,
-        {
-          fields:
-            "title,companyName,description,departament,availablePos,remainingAvailablePos,applications",
-          pagination,
-          sort,
+  const [fetchOptions, setFetchOptions] = useState(initialFetchOptions);
+
+  const { data: offers, refetch: refetchOffers } =
+    useQuery<IServerResponseMultipleFetch>(
+      ["getAllOffersStudent"],
+      () => {
+        setIsLoading(true);
+        return getOffers(
+          fetchOptions.searchValue,
+          {
+            fields:
+              "title,companyName,description,departament,availablePos,remainingAvailablePos,applications",
+            pagination: fetchOptions.paginationParams,
+            sort: fetchOptions.sortOrder,
+          },
+          companyID
+        );
+      },
+      {
+        onSuccess: () => {
+          setIsLoading(false);
         },
-        companyID
-      );
-    },
-    {
-      onSuccess: () => {
-        setLoading(false);
-      },
-      onError: () => {
-        setLoading(false);
-        notification.error({
-          message: "Ooops ...",
-          description:
-            "Cannot retrieve the offers from the server ... please try again!",
-          duration: 10,
-        });
-      },
-    }
-  );
+        onError: () => {
+          setIsLoading(false);
+          notification.error({
+            message: "Ooops ...",
+            description:
+              "Cannot retrieve the offers from the server ... please try again!",
+            duration: 10,
+          });
+        },
+      }
+    );
 
   useEffect(() => {
-    refetch();
-  }, [pagination, sort, filter]);
+    refetchOffers();
+  }, [fetchOptions]);
 
-  return { data, loading, pagination, setPagination, setSort, setFilter };
+  return {
+    offers,
+    isLoading,
+    fetchOptions,
+    setFetchOptions,
+  };
 };
 
 export default useOffersList;

@@ -16,7 +16,7 @@ const PaginationComp = ({ ...props }: IPaginationCompProps) => {
             showTotal={(total, range) =>
               `${range[0]}-${range[1]} of ${total} items`
             }
-            defaultPageSize={20}
+            defaultPageSize={21}
             defaultCurrent={1}
             onChange={props.handleChange}
             style={{ display: "flex", justifyContent: "center" }}

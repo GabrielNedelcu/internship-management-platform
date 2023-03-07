@@ -1,54 +1,50 @@
 import { notification } from "antd";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { IPagination } from "common/types";
 import { getSelfApplications } from "../api";
+import { initialFetchOptions } from "common/constants";
+import { IServerResponseMultipleFetch } from "common/types";
 
 const useApplicationsList = () => {
-  const [isPageLoading, setIsPageLoading] = useState(false);
-  const [paginationParams, setPaginationParams] = useState<IPagination>({
-    page: 1,
-    pageSize: 20,
-  });
-  const [sortOrder, setSortOrder] = useState<string>("");
-  const [searchValue, setSearchValue] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { data: applications, refetch } = useQuery(
-    ["getSelfApplications"],
-    () => {
-      setIsPageLoading(true);
-      return getSelfApplications(searchValue, {
-        pagination: paginationParams,
-        sort: sortOrder,
-      });
-    },
-    {
-      onSuccess: () => {
-        setIsPageLoading(false);
-      },
-      onError: () => {
-        setIsPageLoading(false);
-        notification.error({
-          message: "Ooops ...",
-          description:
-            "Cannot retrieve your applications from the server ... please try again!",
-          duration: 10,
+  const [fetchOptions, setFetchOptions] = useState(initialFetchOptions);
+
+  const { data: applications, refetch: refetchApplications } =
+    useQuery<IServerResponseMultipleFetch>(
+      ["getSelfApplications"],
+      () => {
+        setIsLoading(true);
+        return getSelfApplications(fetchOptions.searchValue, {
+          pagination: fetchOptions.paginationParams,
+          sort: fetchOptions.sortOrder,
         });
       },
-    }
-  );
+      {
+        onSuccess: () => {
+          setIsLoading(false);
+        },
+        onError: () => {
+          setIsLoading(false);
+          notification.error({
+            message: "Ooops ...",
+            description:
+              "Cannot retrieve your applications from the server ... please try again!",
+            duration: 10,
+          });
+        },
+      }
+    );
 
   useEffect(() => {
-    refetch();
-  }, [paginationParams, sortOrder, searchValue]);
+    refetchApplications();
+  }, [fetchOptions]);
 
   return {
     applications,
-    isPageLoading,
-    paginationParams,
-    setPaginationParams,
-    setSortOrder,
-    setSearchValue,
+    isLoading,
+    fetchOptions,
+    setFetchOptions,
   };
 };
 

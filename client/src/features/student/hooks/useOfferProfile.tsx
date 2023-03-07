@@ -4,19 +4,20 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { getOffer, applyToOffer } from "../api";
 
 const useOfferProfile = (offerId: string) => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const { data, refetch: refetchOfferData } = useQuery(
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { data: offerData, refetch: refetchOfferData } = useQuery(
     ["getOffer", offerId],
     () => {
-      setLoading(true);
+      setIsLoading(true);
       return getOffer(offerId, {});
     },
     {
       onSuccess: () => {
-        setLoading(false);
+        setIsLoading(false);
       },
       onError: () => {
-        setLoading(false);
+        setIsLoading(false);
         notification.error({
           message: "Ooops ...",
           description:
@@ -30,12 +31,12 @@ const useOfferProfile = (offerId: string) => {
   const { mutate: mutateApply } = useMutation(
     ["applyToOffer", offerId],
     () => {
-      setLoading(true);
-      return applyToOffer(offerId, data.companyID);
+      setIsLoading(true);
+      return applyToOffer(offerId, offerData.companyID);
     },
     {
-      onSuccess: (res) => {
-        setLoading(false);
+      onSuccess: () => {
+        setIsLoading(false);
         refetchOfferData();
         notification.success({
           message: "Applied successfully",
@@ -44,7 +45,7 @@ const useOfferProfile = (offerId: string) => {
         });
       },
       onError: () => {
-        setLoading(false);
+        setIsLoading(false);
         notification.error({
           message: "Ooops ...",
           description: "An unexpected error occured! Please try again later...",
@@ -60,7 +61,7 @@ const useOfferProfile = (offerId: string) => {
 
   const handleRemoveApplication = () => {};
 
-  return { data, loading, handleApply, handleRemoveApplication };
+  return { offerData, isLoading, handleApply, handleRemoveApplication };
 };
 
 export default useOfferProfile;

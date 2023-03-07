@@ -7,24 +7,24 @@ import useOfferProfile from "../hooks/useOfferProfile";
 const OfferProfile = () => {
   const params = useParams();
   const offerId = params.offerID;
-  const { data, loading, handleApply, handleRemoveApplication } =
+  const { offerData, isLoading, handleApply, handleRemoveApplication } =
     useOfferProfile(offerId || "");
 
-  if (!data || loading)
+  if (!offerData || isLoading)
     return <LoadingPage message="Fetching offer data ..." />;
 
   return (
     <>
       <Row gutter={[16, 16]}>
         <Col span={18}>
-          <Typography.Title level={1}>{data.title}</Typography.Title>
+          <Typography.Title level={1}>{offerData.title}</Typography.Title>
           <Typography.Title level={5} type={"secondary"}>
-            {data.companyName} | {data.departament}
+            {offerData.companyName} | {offerData.departament}
           </Typography.Title>
         </Col>
 
         <Col span={6}>
-          {data.application ? (
+          {offerData.application ? (
             <Button
               size="large"
               icon={<SendOutlined />}
@@ -54,7 +54,7 @@ const OfferProfile = () => {
             content={
               <Typography.Paragraph>
                 <br />
-                {data.availablePos}
+                {offerData.availablePos}
               </Typography.Paragraph>
             }
           />
@@ -65,7 +65,7 @@ const OfferProfile = () => {
             content={
               <Typography.Paragraph>
                 <br />
-                {data.remainingAvailablePos}
+                {offerData.remainingAvailablePos}
               </Typography.Paragraph>
             }
           />
@@ -76,7 +76,7 @@ const OfferProfile = () => {
             content={
               <Typography.Paragraph>
                 <br />
-                {data.applications}
+                {offerData.applications}
               </Typography.Paragraph>
             }
           />
@@ -87,7 +87,7 @@ const OfferProfile = () => {
             content={
               <Typography.Paragraph>
                 <br />
-                {data.description}
+                {offerData.description}
               </Typography.Paragraph>
             }
           />
@@ -98,7 +98,7 @@ const OfferProfile = () => {
             content={
               <Typography.Paragraph>
                 <br />
-                {data.requirements}
+                {offerData.requirements}
               </Typography.Paragraph>
             }
           />
@@ -109,7 +109,7 @@ const OfferProfile = () => {
             content={
               <Typography.Paragraph>
                 <br />
-                {data.mentions}
+                {offerData.mentions}
               </Typography.Paragraph>
             }
           />

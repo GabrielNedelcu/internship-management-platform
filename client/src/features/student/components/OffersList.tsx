@@ -21,30 +21,38 @@ const sortOptions = [
 ];
 
 const OffersList = ({ companyID }: IOffersListProps) => {
-  const { data, loading, pagination, setPagination, setSort, setFilter } =
+  const { offers, isLoading, fetchOptions, setFetchOptions } =
     useOffersList(companyID);
 
-  if (!data) return <LoadingPage message="Fetching offers .." />;
+  if (!offers) return <LoadingPage message="Fetching offers .." />;
 
   return (
     <>
       <FilterSortData
         searchPrompt={"Search for offer title or company name"}
         handleSearch={(value: string) => {
-          setFilter(value);
-          setPagination({ ...pagination, page: 1 });
+          setFetchOptions({
+            ...fetchOptions,
+            searchValue: value,
+            paginationParams: { ...fetchOptions.paginationParams, page: 1 },
+          });
         }}
         handleClearSearch={() => {
-          setFilter("");
-          setPagination({ ...pagination, page: 1 });
+          setFetchOptions({
+            ...fetchOptions,
+            searchValue: "",
+            paginationParams: { ...fetchOptions.paginationParams, page: 1 },
+          });
         }}
         sortOptions={sortOptions}
-        handleSortChange={setSort}
+        handleSortChange={(value: string) => {
+          setFetchOptions({ ...fetchOptions, sortOrder: value });
+        }}
       />
 
-      <Spin spinning={loading} tip="Fetching offers ..." size="large">
+      <Spin spinning={isLoading} tip="Fetching offers ..." size="large">
         <Row gutter={[16, 16]}>
-          {data.offers.map((cardData: IOfferCardData) => {
+          {offers.data.map((cardData: IOfferCardData) => {
             return (
               <Col span={8} key={cardData._id}>
                 <OfferCard offerData={cardData} />
@@ -54,11 +62,14 @@ const OffersList = ({ companyID }: IOffersListProps) => {
         </Row>
 
         <Pagination
-          total={data.totalOffers}
+          total={offers.totalCount}
           handleChange={(page: number, pageSize: number) =>
-            setPagination({
-              page,
-              pageSize,
+            setFetchOptions({
+              ...fetchOptions,
+              paginationParams: {
+                page,
+                pageSize,
+              },
             })
           }
         />
