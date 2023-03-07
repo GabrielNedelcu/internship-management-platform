@@ -112,3 +112,19 @@ export const applyToOffer = async (offer: string, company: string) => {
   });
   return res.data;
 };
+
+/**
+ * Retrieve all the applications from the logged in student
+ * @param queryParams query parameters
+ * @returns server response
+ */
+export const getSelfApplications = async (
+  searchValue: string,
+  queryParams: IQueryParameters
+) => {
+  const paramURL = buildQuery(`${APPLICATIONS_API_URL}`, queryParams);
+  const url = addParameterToQuery(paramURL, "search", searchValue);
+  console.log(url);
+  const res = await axiosClient.get(url);
+  return res.data;
+};

@@ -22,6 +22,35 @@ export const getFieldOfWork = (fow: string) => {
 };
 
 /**
+ * Return the display value of the application's status from the value saved
+ * on the server
+ * @param fow db value for application status
+ * @returns user display value
+ */
+export const getApplicationStatus = (serverStatus: string) => {
+  switch (serverStatus) {
+    case "inReview":
+      return "In review by the company";
+    case "interviewAccepted":
+      return "Accepted for interview";
+    case "companyAccepted":
+      return "Accepted by the company";
+    case "companyDeclined":
+      return "Rejected";
+    case "studentAccepted":
+      return "Accepted by the student";
+    case "studentDeclined":
+      return "Declined by the student";
+    case "waitingProffesor":
+      return "Waiting for a professor to be assigned";
+    case "professorAssgined":
+      return "Professor assigned";
+    default:
+      return "";
+  }
+};
+
+/**
  * Append query parameter to the url
  * @param url initial url
  * @param paramName name of the parameter to add

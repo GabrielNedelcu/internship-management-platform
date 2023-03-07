@@ -5,7 +5,7 @@ import { getOffer, applyToOffer } from "../api";
 
 const useOfferProfile = (offerId: string) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const { data } = useQuery(
+  const { data, refetch: refetchOfferData } = useQuery(
     ["getOffer", offerId],
     () => {
       setLoading(true);
@@ -36,6 +36,7 @@ const useOfferProfile = (offerId: string) => {
     {
       onSuccess: (res) => {
         setLoading(false);
+        refetchOfferData();
         notification.success({
           message: "Applied successfully",
           description: `Great! You have just applied to this offer. Keep an eye on "My Applications" page to see the status of your application`,

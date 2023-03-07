@@ -112,3 +112,15 @@ export interface IPasswordChangeData {
   accountPassword: string;
   accountPassword_confirmation: string;
 }
+
+export interface IApplicationData {
+  _id?: string;
+  student?: string;
+  offer?: string;
+  company?: string;
+  offerTitle?: string;
+  companyName?: string;
+  status?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}

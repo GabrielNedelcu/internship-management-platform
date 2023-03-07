@@ -4,11 +4,11 @@ import { ContainerOutlined, UserOutlined } from "@ant-design/icons";
 import { IconText, Card } from "common";
 import { getFieldOfWork } from "common/utils";
 
-interface CompanyCardProps {
+interface ICompanyCardProps {
   companyData: ICompanyCardData;
 }
 
-const CompanyCard = ({ companyData }: CompanyCardProps) => {
+const CompanyCard = ({ companyData }: ICompanyCardProps) => {
   return (
     <Card
       actions={[
