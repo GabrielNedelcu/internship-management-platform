@@ -126,7 +126,7 @@ async function httpGetOneOffer(req, res) {
       { _id: 1 }
     );
 
-    offer._doc.application = application[0]?._id;
+    offer._doc.application = application.applications[0]?._id;
     return res.status(200).json(offer);
   }
 

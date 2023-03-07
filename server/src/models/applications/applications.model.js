@@ -47,15 +47,30 @@ async function updateOneApplication(applicationId, applicationData) {
 }
 
 /**
- * Query the applications collection
- *
- * @param {JSON} query              - query parameters
- * @param {JSON} projection         - projection for the query
- *
- * @returns {Array}                 - Array of JSON objects resulting after the query
+ * Query applications
+ * @param {*} query     query
+ * @param {*} projection query projection
+ * @param {*} sortBy field to sort by
+ * @param {*} sortOrder sort order
+ * @param {*} skipCount number of documents to skip
+ * @param {*} pageSize number of documents to retrieve
+ * @returns object containing the total documents and the requested number of documents
  */
-async function queryApplications(query, projection = {}) {
-  return await Application.find(query, projection);
+async function queryApplications(
+  query,
+  projection = {},
+  sortBy,
+  sortOrder,
+  skipCount,
+  pageSize
+) {
+  const totalApplications = await Application.countDocuments(query);
+  const applications = await Application.find(query, projection)
+    .sort({ [`${sortBy}`]: sortOrder })
+    .skip(skipCount)
+    .limit(pageSize);
+
+  return { totalApplications, applications };
 }
 
 module.exports = {

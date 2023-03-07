@@ -6,6 +6,11 @@ const {
 } = require("../../models/applications/applications.model");
 const { getOneCompany } = require("../../models/companies/companies.model");
 const { getOneOffer } = require("../../models/offers/offers.model");
+const {
+  getSort,
+  getPagination,
+  getProjection,
+} = require("../../utils/query.utils");
 
 /**
  *
@@ -60,13 +65,37 @@ async function httpCreateApplication(req, res) {
  * @apiSuccess  {Object[]}  All the existing applications
  */
 async function httpGetAllApplications(req, res) {
-  const applications = await getAllApplications();
+  const userId = req.userId;
+  const userRole = req.userRole;
+  const searchFor = req.query.search;
 
-  if (!applications.length) {
-    return res.status(204).send();
-  }
+  const { sortOrder, sortBy } = getSort(req.query);
+  const { pageSize, skipCount } = getPagination(req.query);
+  const projection = getProjection(req.query);
 
-  return res.status(200).json(applications);
+  const regex = new RegExp(searchFor, "i");
+
+  let query = {
+    $or: [
+      { offerTitle: { $regex: regex } },
+      { companyName: { $regex: regex } },
+    ],
+  };
+
+  if (userRole === "student") query = { ...query, student: userId };
+
+  const resp = await queryApplications(
+    query,
+    projection,
+    sortBy,
+    sortOrder,
+    skipCount,
+    pageSize
+  );
+
+  if (!resp.totalApplications) return res.status(204).send();
+
+  return res.status(200).json(resp);
 }
 
 /**

@@ -20,7 +20,11 @@ applicationsRouter.post(
   validateApplicationCreation,
   asyncHandler(httpCreateApplication)
 );
-applicationsRouter.get("/", asyncHandler(httpGetAllApplications));
+applicationsRouter.get(
+  "/",
+  authz(["admin", "student"]),
+  asyncHandler(httpGetAllApplications)
+);
 
 applicationsRouter.get("/:applicationId", asyncHandler(httpGetApplication));
 
