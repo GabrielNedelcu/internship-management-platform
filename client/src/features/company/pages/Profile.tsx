@@ -104,7 +104,7 @@ const Profile = () => {
                     {companyProfileData.internshipCompensation ? "Yes" : "No"}
                   </Descriptions.Item>
                   <Descriptions.Item label="Offers" span={0.5}>
-                    +40{companyProfileData.numOffers}
+                    {companyProfileData.numOffers}
                   </Descriptions.Item>
                   <Descriptions.Item label="Positions" span={0.5}>
                     {companyProfileData.numPositions}
