@@ -159,6 +159,12 @@ async function httpGetOneCompany(req, res) {
   const userRole = req.userRole;
   const projection = getProjection(req.query);
 
+  if (userRole === "company" && companyId !== req.userId) {
+    const err = new Error("You are not allowed to access this resource");
+    err.statusCode = 403;
+    throw err;
+  }
+
   const company = await getOneCompany(companyId, projection);
 
   if (!company) {
