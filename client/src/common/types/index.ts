@@ -135,3 +135,7 @@ export interface IServerResponseMultipleFetch {
   totalCount: number;
   data: any;
 }
+
+export interface INavBarProps {
+  selectedKey: string;
+}

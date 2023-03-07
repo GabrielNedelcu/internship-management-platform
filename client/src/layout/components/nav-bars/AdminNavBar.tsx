@@ -9,6 +9,7 @@ import {
   ProfileOutlined,
   MailOutlined,
 } from "@ant-design/icons";
+import { INavBarProps } from "common/types";
 
 const menuItems = [
   getNavBarMenuItem("Overview", "1", <SettingOutlined />),
@@ -36,11 +37,7 @@ const keyToRedirectPath = new Map<string, string>([
   ["9", "/dashboard/admin/messages"],
 ]);
 
-type TAdminNavBarProps = {
-  selectedKey: string;
-};
-
-const AdminNavBar = ({ selectedKey }: TAdminNavBarProps) => {
+const AdminNavBar = ({ selectedKey }: INavBarProps) => {
   return (
     <NavBar
       items={menuItems}
