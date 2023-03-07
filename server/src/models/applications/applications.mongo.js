@@ -22,25 +22,22 @@ const applicationsSchema = new mongoose.Schema(
       type: String,
       required: [true, "Company name is required"],
     },
-    acceptedForInterview: {
-      type: Boolean,
-      default: false,
-    },
-    acceptedByStudent: {
-      type: Boolean,
-      default: false,
-    },
-    declinedByStudent: {
-      type: Boolean,
-      default: false,
-    },
-    acceptedByCompany: {
-      type: Boolean,
-      default: false,
-    },
-    declinedByCompany: {
-      type: Boolean,
-      default: false,
+    status: {
+      type: String,
+      enum: {
+        values: [
+          "inReview",
+          "interviewAccepted",
+          "companyAccepted",
+          "companyDeclined",
+          "studentAccepted",
+          "studentDeclined",
+          "waitingProffesor",
+          "professorAssgined",
+        ],
+        message: "{VALUE} is not supported",
+      },
+      default: "inReview",
     },
   },
   { timestamps: true }
