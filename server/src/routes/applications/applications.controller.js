@@ -34,7 +34,7 @@ async function httpCreateApplication(req, res) {
     { _id: 1 }
   );
 
-  if (alreadyExistingApplication.length) {
+  if (alreadyExistingApplication.totalCount) {
     const err = new Error("Student has already applied to this offer");
     err.statusCode = 409;
     throw err;
@@ -93,7 +93,7 @@ async function httpGetAllApplications(req, res) {
     pageSize
   );
 
-  if (!resp.totalApplications) return res.status(204).send();
+  if (!resp.totalCount) return res.status(204).send();
 
   return res.status(200).json(resp);
 }

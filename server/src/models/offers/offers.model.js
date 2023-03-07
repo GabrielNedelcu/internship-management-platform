@@ -142,13 +142,12 @@ async function getValidatedOffers(
     },
   ];
 
-  const result = await Offer.aggregate(mainPipeline).exec();
-  const response = {
-    totalOffers: totalCount,
-    offers: result,
-  };
+  const data = await Offer.aggregate(mainPipeline).exec();
 
-  return response;
+  return {
+    totalCount,
+    data,
+  };
 }
 
 /**
@@ -169,13 +168,13 @@ async function getCompanyOffers(
   skipCount,
   pageSize
 ) {
-  const totalOffers = await Offer.countDocuments(query);
-  const offers = await Offer.find(query, projection)
+  const totalCount = await Offer.countDocuments(query);
+  const data = await Offer.find(query, projection)
     .sort({ [`${sortBy}`]: sortOrder })
     .skip(skipCount)
     .limit(pageSize);
 
-  return { totalOffers, offers };
+  return { totalCount, data };
 }
 
 module.exports = {

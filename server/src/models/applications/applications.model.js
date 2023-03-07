@@ -64,13 +64,13 @@ async function queryApplications(
   skipCount,
   pageSize
 ) {
-  const totalApplications = await Application.countDocuments(query);
-  const applications = await Application.find(query, projection)
+  const totalCount = await Application.countDocuments(query);
+  const data = await Application.find(query, projection)
     .sort({ [`${sortBy}`]: sortOrder })
     .skip(skipCount)
     .limit(pageSize);
 
-  return { totalApplications, applications };
+  return { totalCount, data };
 }
 
 module.exports = {

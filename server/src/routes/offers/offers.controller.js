@@ -68,7 +68,7 @@ async function httpGetAllOffers(req, res) {
         pageSize
       );
 
-      if (!resp.totalOffers) return res.status(204).send();
+      if (!resp.totalCount) return res.status(204).send();
 
       return res.status(200).json(resp);
     }
@@ -82,7 +82,7 @@ async function httpGetAllOffers(req, res) {
       pageSize
     );
 
-    if (!resp.totalOffers) return res.status(204).send();
+    if (!resp.totalCount) return res.status(204).send();
 
     return res.status(200).json(resp);
   }
@@ -126,7 +126,7 @@ async function httpGetOneOffer(req, res) {
       { _id: 1 }
     );
 
-    offer._doc.application = application.applications[0]?._id;
+    offer._doc.application = application.data[0]?._id;
     return res.status(200).json(offer);
   }
 

@@ -64,13 +64,13 @@ async function queryCompanies(
   skipCount,
   pageSize
 ) {
-  const totalCompanies = await Company.countDocuments(query);
-  const companies = await Company.find(query, options)
+  const totalCount = await Company.countDocuments(query);
+  const data = await Company.find(query, options)
     .sort({ [`${sortBy}`]: sortOrder })
     .skip(skipCount)
     .limit(pageSize);
 
-  return { totalCompanies, companies };
+  return { totalCount, data };
 }
 
 module.exports = {
