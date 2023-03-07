@@ -5,7 +5,10 @@ const {
   queryApplications,
 } = require("../../models/applications/applications.model");
 const { getOneCompany } = require("../../models/companies/companies.model");
-const { getOneOffer } = require("../../models/offers/offers.model");
+const {
+  getOneOffer,
+  updateOneOffer,
+} = require("../../models/offers/offers.model");
 const {
   getSort,
   getPagination,
@@ -40,7 +43,10 @@ async function httpCreateApplication(req, res) {
     throw err;
   }
 
-  const offer = await getOneOffer(applicationData.offer, { title: 1 });
+  const offer = await getOneOffer(applicationData.offer, {
+    title: 1,
+    applications: 1,
+  });
   const company = await getOneCompany(applicationData.company, { name: 1 });
 
   const application = await createApplication({
@@ -53,6 +59,10 @@ async function httpCreateApplication(req, res) {
     const err = new Error("Unable to create an application");
     throw err;
   }
+
+  await updateOneOffer(applicationData.offer, {
+    applications: ++offer.applications,
+  });
 
   return res.status(201).json(application);
 }
