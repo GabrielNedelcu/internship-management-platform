@@ -1,12 +1,28 @@
 import { Routes, Route } from "react-router-dom";
-import { Layout, StudentNavBar } from "layout";
+import { Layout, CompanyNavBar } from "layout";
 
 import ProtectedRoutes from "./ProtectedRoutes";
+import { Overview } from "features/company";
+import { USER_ROLES } from "common/constants";
 
 const CompanyRoutes = () => {
   return (
     <>
-      <Routes></Routes>
+      <Routes>
+        <Route
+          element={<ProtectedRoutes authorizedRoles={[USER_ROLES.COMPANY]} />}
+        >
+          <Route
+            path="/overview"
+            element={
+              <Layout
+                sider={<CompanyNavBar selectedKey={"1"} />}
+                content={<Overview />}
+              />
+            }
+          />
+        </Route>
+      </Routes>
     </>
   );
 };

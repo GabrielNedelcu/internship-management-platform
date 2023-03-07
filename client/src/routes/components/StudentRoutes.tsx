@@ -12,12 +12,15 @@ import {
   Applications,
   Profile,
 } from "features/student";
+import { USER_ROLES } from "common/constants";
 
 const AdminRoutes = () => {
   return (
     <>
       <Routes>
-        <Route element={<ProtectedRoutes authorizedRoles={["student"]} />}>
+        <Route
+          element={<ProtectedRoutes authorizedRoles={[USER_ROLES.STUDENT]} />}
+        >
           <Route path="/profile-setup" element={<ProfileSetup />} />
           <Route
             path="/overview"

@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { loginUser, requestPassword } from "../api";
 import { UserContext } from "app/contexts/UserContext";
 import { LanguageContext } from "app/contexts/LanguageContext";
+import { USER_ROLES } from "common/constants";
 
 const useSignIn = () => {
   const navigate = useNavigate();
@@ -19,12 +20,12 @@ const useSignIn = () => {
 
   const redirectAfterLogin = (userRole: string) => {
     switch (userRole) {
-      case "admin":
+      case USER_ROLES.ADMIN:
         return navigate("/dashboard/admin");
-      case "student":
+      case USER_ROLES.STUDENT:
         return navigate("student/overview");
-      case "company":
-        return navigate("/dashboard/admin");
+      case USER_ROLES.COMPANY:
+        return navigate("/company/overview");
     }
   };
 
@@ -39,9 +40,28 @@ const useSignIn = () => {
         setUserID(data?.accountId);
 
         setLanguage(data?.accountLanguage);
-        console.log(data);
-        if (data.profileCompleted) redirectAfterLogin(data?.accountRole);
-        else return navigate("/student/profile-setup");
+
+        if (data?.accountRole === USER_ROLES.STUDENT) {
+          if (data.profileCompleted) redirectAfterLogin(data?.accountRole);
+          else return navigate("/student/profile-setup");
+        } else if (data?.accountRole === USER_ROLES.COMPANY) {
+          if (!data.validated)
+            notification.error({
+              message: "Ooops ...",
+              description:
+                "Seems like your profile hasn't been validated yet. You cannot access the platform",
+              duration: 10,
+            });
+          else {
+            if (data?.contractSigned) redirectAfterLogin(data?.accountRole);
+            else
+              notification.error({
+                message: "Ooops ...",
+                description: "N-AI SEMNAT INCA CONTRACTUL",
+                duration: 10,
+              });
+          }
+        } else redirectAfterLogin(data?.accountRole);
       },
       onError: () => {
         notification.error({

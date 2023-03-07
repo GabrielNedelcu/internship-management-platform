@@ -15,3 +15,9 @@ export enum URL_ROUTES {
   OFFERS = "/offers",
   APPLICATIONS = "/applications",
 }
+
+export enum USER_ROLES {
+  ADMIN = "admin",
+  STUDENT = "student",
+  COMPANY = "company",
+}
