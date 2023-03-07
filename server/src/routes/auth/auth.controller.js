@@ -12,6 +12,7 @@ const {
   generateAccessTokenFromRefresh,
 } = require("../../utils/jwt.utils");
 const { getOneStudent } = require("../../models/students/students.model");
+const { getOneCompany } = require("../../models/companies/companies.model");
 
 /**
  *
@@ -68,6 +69,16 @@ async function httpPostLogin(req, res) {
       });
 
       resData["profileCompleted"] = studentData.profileCompleted;
+    }
+
+    if (account.role === "company") {
+      const companyData = await getOneCompany(account._id, {
+        validated: 1,
+        contractSigned: 1,
+      });
+
+      resData["validated"] = companyData.validated;
+      resData["contractSigned"] = companyData.contractSigned;
     }
 
     return res.status(200).json(resData);

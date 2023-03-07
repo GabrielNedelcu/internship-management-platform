@@ -87,6 +87,10 @@ const companiesSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    contractSigned: {
+      type: Boolean,
+      default: false,
+    },
     numOffers: {
       type: Number,
       required: [true, "Company's number of offers is required!"],
