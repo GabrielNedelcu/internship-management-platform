@@ -22,6 +22,10 @@ const applicationsSchema = new mongoose.Schema(
       type: String,
       required: [true, "Company name is required"],
     },
+    studentName: {
+      type: String,
+      required: [true, "Student name is required"],
+    },
     status: {
       type: String,
       enum: {

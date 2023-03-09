@@ -5,6 +5,7 @@ const {
   queryApplications,
 } = require("../../models/applications/applications.model");
 const { getOneCompany } = require("../../models/companies/companies.model");
+const { getOneStudent } = require("../../models/students/students.model");
 const {
   getOneOffer,
   updateOneOffer,
@@ -26,11 +27,11 @@ const {
  */
 async function httpCreateApplication(req, res) {
   const applicationData = req.body;
-  const student = req.userId;
+  const studentId = req.userId;
 
   const alreadyExistingApplication = await queryApplications(
     {
-      student: student,
+      student: studentId,
       offer: applicationData.offer,
       company: applicationData.company,
     },
@@ -48,12 +49,14 @@ async function httpCreateApplication(req, res) {
     applications: 1,
   });
   const company = await getOneCompany(applicationData.company, { name: 1 });
+  const student = await getOneStudent(studentId, { name: 1 });
 
   const application = await createApplication({
     ...applicationData,
-    student,
+    student: studentId,
     companyName: company.name,
     offerTitle: offer.title,
+    studentName: student.name,
   });
   if (!application) {
     const err = new Error("Unable to create an application");
@@ -88,11 +91,13 @@ async function httpGetAllApplications(req, res) {
   let query = {
     $or: [
       { offerTitle: { $regex: regex } },
-      { companyName: { $regex: regex } },
+      ...(userRole === "student" ? [{ companyName: { $regex: regex } }] : []),
+      ...(userRole === "company" ? [{ studentName: { $regex: regex } }] : []),
     ],
   };
 
   if (userRole === "student") query = { ...query, student: userId };
+  if (userRole === "company") query = { ...query, company: userId };
 
   const resp = await queryApplications(
     query,

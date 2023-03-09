@@ -120,6 +120,7 @@ export interface IApplicationData {
   company?: string;
   offerTitle?: string;
   companyName?: string;
+  studentName?: string;
   status?: string;
   createdAt?: Date;
   updatedAt?: Date;

@@ -34,3 +34,18 @@ export const getOffers = async (
   const res = await axiosClient.get(url);
   return res.data;
 };
+
+/**
+ * Retrieve all the applications from the logged in student
+ * @param queryParams query parameters
+ * @returns server response
+ */
+export const getSelfApplications = async (
+  searchValue: string,
+  queryParams: IQueryParameters
+) => {
+  const paramURL = buildQuery(`${URL_ROUTES.APPLICATIONS}`, queryParams);
+  const url = addParameterToQuery(paramURL, "search", searchValue);
+  const res = await axiosClient.get(url);
+  return res.data;
+};

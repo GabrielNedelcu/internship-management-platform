@@ -22,7 +22,7 @@ applicationsRouter.post(
 );
 applicationsRouter.get(
   "/",
-  authz(["admin", "student"]),
+  authz(["admin", "student", "company"]),
   asyncHandler(httpGetAllApplications)
 );
 
