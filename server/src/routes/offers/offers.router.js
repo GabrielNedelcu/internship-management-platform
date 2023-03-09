@@ -23,7 +23,7 @@ offersRouter.post(
 
 offersRouter.get(
   "/",
-  authz(["admin", "student"]),
+  authz(["admin", "student", "company"]),
   asyncHandler(httpGetAllOffers)
 );
 

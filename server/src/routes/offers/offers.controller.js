@@ -37,6 +37,8 @@ async function httpCreateOffer(req, res) {
 
 async function httpGetAllOffers(req, res) {
   const userRole = req.userRole;
+  const userId = req.userId;
+
   const companyID = req.query.company;
   const searchFor = req.query.search;
 
@@ -58,6 +60,12 @@ async function httpGetAllOffers(req, res) {
     });
   else {
     if (companyID) {
+      if (userRole === "company" && userId !== companyID) {
+        const err = new Error("You are not permitted to access this resource!");
+        err.statusCode = 404;
+        throw err;
+      }
+
       const regex = new RegExp(searchFor, "i");
       const resp = await getCompanyOffers(
         { companyID, title: { $regex: regex } },
