@@ -141,4 +141,52 @@ async function httpGetOneOffer(req, res) {
   return res.status(200).json(offer);
 }
 
-module.exports = { httpCreateOffer, httpGetAllOffers, httpGetOneOffer };
+/**
+ *
+ * @api {GET} /offers/:offerId/stats
+ * @apiDescription Get the statistics of one offer
+ *
+ * @apiParam    {String}    offerId       id of the offer to be fetched
+ */
+async function httpGetOneOfferStats(req, res) {
+  const offerId = req.params.offerId;
+  const projection = getProjection(req.query);
+  const userId = req.userId;
+
+  const offer = await getOneOffer(offerId, projection);
+
+  if (!offer) {
+    const err = new Error("Offer not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  const response = {
+    available: offer.remainingAvailablePos,
+    offered: offer.availablePos,
+    applications: offer.applications,
+  };
+
+  const rejectedApplications = await queryApplications(
+    { offer: offerId, company: userId, status: "companyDeclined" },
+    { _id: 1 }
+  );
+
+  const acceptedApplications = await queryApplications(
+    { offer: offerId, company: userId, status: "companyAccepted" },
+    { _id: 1 }
+  );
+
+  return res.status(200).json({
+    ...response,
+    rejected: rejectedApplications.length || 0,
+    accepted: acceptedApplications.length || 0,
+  });
+}
+
+module.exports = {
+  httpCreateOffer,
+  httpGetAllOffers,
+  httpGetOneOffer,
+  httpGetOneOfferStats,
+};

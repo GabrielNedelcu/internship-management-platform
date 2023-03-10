@@ -6,6 +6,7 @@ const {
   httpCreateOffer,
   httpGetAllOffers,
   httpGetOneOffer,
+  httpGetOneOfferStats,
 } = require("./offers.controller");
 
 const {
@@ -29,8 +30,14 @@ offersRouter.get(
 
 offersRouter.get(
   "/:offerId",
-  authz(["admin", "student"]),
+  authz(["admin", "student", "company"]),
   asyncHandler(httpGetOneOffer)
+);
+
+offersRouter.get(
+  "/:offerId/stats",
+  authz(["company"]),
+  asyncHandler(httpGetOneOfferStats)
 );
 
 module.exports = offersRouter;
