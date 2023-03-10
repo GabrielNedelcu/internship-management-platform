@@ -1,6 +1,6 @@
 import { SendOutlined } from "@ant-design/icons";
 import { Row, Col, Typography, Button } from "antd";
-import { LoadingPage, Card } from "common";
+import { LoadingPage, Card, OfferData } from "common";
 import { useParams } from "react-router-dom";
 import useOfferProfile from "../hooks/useOfferProfile";
 
@@ -81,40 +81,9 @@ const OfferProfile = () => {
             }
           />
         </Col>
-        <Col span={24}>
-          <Card
-            title="Job description"
-            content={
-              <Typography.Paragraph>
-                <br />
-                {offerData.description}
-              </Typography.Paragraph>
-            }
-          />
-        </Col>
-        <Col span={24}>
-          <Card
-            title="Job requirements"
-            content={
-              <Typography.Paragraph>
-                <br />
-                {offerData.requirements}
-              </Typography.Paragraph>
-            }
-          />
-        </Col>
-        <Col span={24}>
-          <Card
-            title="Other mentions"
-            content={
-              <Typography.Paragraph>
-                <br />
-                {offerData.mentions}
-              </Typography.Paragraph>
-            }
-          />
-        </Col>
       </Row>
+
+      <OfferData offerData={offerData} companyView={false} />
     </>
   );
 };
