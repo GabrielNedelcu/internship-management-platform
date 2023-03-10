@@ -2,7 +2,13 @@ import { Routes, Route } from "react-router-dom";
 import { Layout, CompanyNavBar } from "layout";
 
 import ProtectedRoutes from "./ProtectedRoutes";
-import { Overview, Profile, Offers, Applications } from "features/company";
+import {
+  Overview,
+  Profile,
+  Offers,
+  Applications,
+  OfferProfile,
+} from "features/company";
 import { USER_ROLES } from "common/constants";
 
 const CompanyRoutes = () => {
@@ -45,6 +51,15 @@ const CompanyRoutes = () => {
               <Layout
                 sider={<CompanyNavBar selectedKey={"4"} />}
                 content={<Applications />}
+              />
+            }
+          />
+          <Route
+            path="/offer/:offerID"
+            element={
+              <Layout
+                sider={<CompanyNavBar selectedKey={"-1"} />}
+                content={<OfferProfile />}
               />
             }
           />

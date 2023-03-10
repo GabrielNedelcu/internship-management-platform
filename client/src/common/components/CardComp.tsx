@@ -6,11 +6,16 @@ interface ICardCompProps {
   title: React.ReactNode | string;
   description?: string;
   content: React.ReactNode;
+  style?: React.CSSProperties;
 }
 
 const CardComp = ({ ...props }: ICardCompProps) => {
   return (
-    <Card hoverable style={{ marginTop: 16 }} actions={props.actions}>
+    <Card
+      hoverable
+      style={{ ...props.style, marginTop: 16 }}
+      actions={props.actions}
+    >
       <Card.Meta
         avatar={props.avatar}
         title={props.title}

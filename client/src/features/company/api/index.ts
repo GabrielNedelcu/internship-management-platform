@@ -49,3 +49,28 @@ export const getSelfApplications = async (
   const res = await axiosClient.get(url);
   return res.data;
 };
+
+/**
+ * Retrieve offer data from the server
+ * @param offerID id of the offer
+ * @param queryParams query parameters
+ * @returns server response
+ */
+export const getOffer = async (
+  offerID: string,
+  queryParams: IQueryParameters
+) => {
+  const url = buildQuery(`${URL_ROUTES.OFFERS}/${offerID}`, queryParams);
+  const res = await axiosClient.get(url);
+  return res.data;
+};
+
+/**
+ * Retrieve offer stats from the server
+ * @param offerID id of the offer
+ * @returns server response
+ */
+export const getOfferStats = async (offerID: string) => {
+  const res = await axiosClient.get(`${URL_ROUTES.OFFERS}/${offerID}/stats`);
+  return res.data;
+};

@@ -140,3 +140,11 @@ export interface IServerResponseMultipleFetch {
 export interface INavBarProps {
   selectedKey: string;
 }
+
+export interface IOfferStats {
+  available: number;
+  offered: number;
+  applications: number;
+  rejected: number;
+  accepted: number;
+}
