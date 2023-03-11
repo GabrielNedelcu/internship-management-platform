@@ -15,6 +15,8 @@ import { UserContext } from "./UserContext";
 import { updateUserLanguage } from "./api";
 import { useLocalStorage } from "common/hooks";
 
+import i18n from "i18n";
+
 const initialState = {
   language: "en",
   setLanguage: (_: string) => {},
@@ -55,6 +57,7 @@ const LanguageContextWrapper = ({ children }: ILanguageContextWrapperProps) => {
     if (userID) {
       mutateUpdateUserLanguage();
     }
+    i18n.changeLanguage(language);
   }, [language]);
 
   return (
