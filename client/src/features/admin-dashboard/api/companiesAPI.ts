@@ -1,4 +1,4 @@
-import { axiosClient } from "app/axiosClient";
+import axiosClient from "app/axiosClient";
 import { addParameterToQuery } from "common/utils";
 
 const API_URL = "/companies";

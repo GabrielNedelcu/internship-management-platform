@@ -1,4 +1,4 @@
-import { axiosClient } from "app/axiosClient";
+import axiosClient from "app/axiosClient";
 
 const API_URL = "/accounts";
 

@@ -1,4 +1,4 @@
-import { axiosClient } from "app/axiosClient";
+import axiosClient from "app/axiosClient";
 
 const API_AUTH_URL = "/auth";
 const API_ACCOUNTS_URL = "/accounts";

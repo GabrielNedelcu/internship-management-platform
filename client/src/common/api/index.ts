@@ -1,4 +1,4 @@
-import { axiosClient } from "app/axiosClient";
+import axiosClient from "app/axiosClient";
 import { IPasswordChangeData } from "common/types";
 const ACCOUNTS_URL = "/accounts";
 const AUTH_URL = "/auth";

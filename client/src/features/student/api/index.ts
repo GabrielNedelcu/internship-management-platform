@@ -1,4 +1,4 @@
-import { axiosClient } from "app/axiosClient";
+import axiosClient from "app/axiosClient";
 import { URL_ROUTES } from "common/constants";
 import { addParameterToQuery, buildQuery } from "common/utils";
 import { IQueryParameters, IStudentData } from "../../../common/types";
