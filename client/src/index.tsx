@@ -3,10 +3,11 @@ import ReactDOM from "react-dom/client";
 import { ConfigProvider } from "antd";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { QueryClient } from "@tanstack/query-core";
 
 import UserContextWrapper from "app/contexts/UserContext";
 import LanguageContextWrapper from "app/contexts/LanguageContext";
+
+import { queryClient } from "app/queryClient";
 
 import App from "./App";
 import "./index.css";
@@ -14,10 +15,6 @@ import "./index.css";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-
-const queryClient = new QueryClient({
-  defaultOptions: { queries: { refetchOnWindowFocus: false } },
-});
 
 root.render(
   <QueryClientProvider client={queryClient}>
