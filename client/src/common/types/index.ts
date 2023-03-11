@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface IEditableStudentData {
   legalAddress: string;
   address: string;
@@ -161,4 +163,9 @@ export interface IOfferStats {
 export interface IComboEntry {
   text: string;
   value: string;
+}
+
+export interface ILayoutProps {
+  sider: React.ReactElement;
+  content?: React.ReactElement;
 }
