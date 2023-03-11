@@ -169,3 +169,9 @@ export interface ILayoutProps {
   sider: React.ReactElement;
   content?: React.ReactElement;
 }
+
+export interface ITabProps {
+  label: React.ReactElement | string;
+  key: string;
+  children: React.ReactElement | string;
+}

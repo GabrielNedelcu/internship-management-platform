@@ -13,9 +13,9 @@ import {
 
 import { OfferGeneralInfo } from "../components";
 
-import { TabNavigation } from "common";
-import type { TTab } from "common";
+import { Tabs } from "common";
 import EmployeeInfo from "../components/EmployeeInfo";
+import { ITabProps } from "common/types";
 
 const AdminOfferProfile = () => {
   const params = useParams();
@@ -52,7 +52,7 @@ const AdminOfferProfile = () => {
       </>
     );
 
-  const tabs: TTab[] = [
+  const tabs: ITabProps[] = [
     {
       label: (
         <span>
@@ -112,7 +112,7 @@ const AdminOfferProfile = () => {
           {data.companyName}
         </Typography.Title>
 
-        <TabNavigation tabList={tabs} />
+        <Tabs tabList={tabs} />
       </Spin>
     </>
   );

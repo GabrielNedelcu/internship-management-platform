@@ -1,25 +1,23 @@
-import { ReactElement } from "react";
+import React from "react";
 import { Collapse } from "antd";
-const { Panel } = Collapse;
 
-type TCollapsableProps = {
+interface ICollapsableProps {
   panelTitle: string;
-  contentElement: ReactElement;
+  contentElement: React.ReactElement;
   key: string | number;
-  extraButton?: ReactElement;
-};
+  extraButton?: React.ReactElement;
+}
 
-const Collabsable = ({
-  panelTitle,
-  contentElement,
-  extraButton,
-  key,
-}: TCollapsableProps) => {
+const Collabsable = ({ ...props }: ICollapsableProps) => {
   return (
     <Collapse collapsible="icon" defaultActiveKey={["1"]}>
-      <Panel header={panelTitle} key={key} extra={extraButton}>
-        {contentElement}
-      </Panel>
+      <Collapse.Panel
+        header={props.panelTitle}
+        key={props.key}
+        extra={props.extraButton}
+      >
+        {props.contentElement}
+      </Collapse.Panel>
     </Collapse>
   );
 };

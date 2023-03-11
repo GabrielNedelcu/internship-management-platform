@@ -1,9 +1,9 @@
-import { Button, Modal } from "antd";
-import { TabNavigation } from "common";
-import type { TTab } from "common";
+import { Modal } from "antd";
+import { Tabs } from "common";
+import { ITabProps } from "common/types";
 
 const AdminEditStudentModal = () => {
-  const tabs: TTab[] = [
+  const tabs: ITabProps[] = [
     {
       label: <span>General Information</span>,
       key: "1",
@@ -41,7 +41,7 @@ const AdminEditStudentModal = () => {
         //confirmLoading={confirmLoading}
         //onCancel={handleCancel}
       >
-        <TabNavigation tabList={tabs} />
+        <Tabs tabList={tabs} />
       </Modal>
     </>
   );

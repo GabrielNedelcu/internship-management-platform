@@ -18,8 +18,7 @@ import {
   UnorderedListOutlined,
 } from "@ant-design/icons";
 
-import { TabNavigation } from "common";
-import type { TTab } from "common";
+import { Tabs } from "common";
 
 import {
   ConpanyGeneralInfo,
@@ -28,6 +27,7 @@ import {
   CompanyOffersInfo,
 } from "../components";
 import { getCompany, acceptCompany } from "../api/companiesAPI";
+import { ITabProps } from "common/types";
 
 const AdminCompanyProfile = () => {
   const params = useParams();
@@ -96,7 +96,7 @@ const AdminCompanyProfile = () => {
       </>
     );
 
-  const tabs: TTab[] = [
+  const tabs: ITabProps[] = [
     {
       label: (
         <span>
@@ -191,7 +191,7 @@ const AdminCompanyProfile = () => {
           )}
         </Row>
 
-        <TabNavigation tabList={tabs} />
+        <Tabs tabList={tabs} />
       </Spin>
     </>
   );

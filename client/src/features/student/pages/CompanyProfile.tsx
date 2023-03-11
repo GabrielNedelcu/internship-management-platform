@@ -1,11 +1,11 @@
 import { InfoCircleOutlined, ProfileOutlined } from "@ant-design/icons";
 import { Typography } from "antd";
-import { LoadingPage, TabNavigation } from "common";
+import { LoadingPage, Tabs } from "common";
+import { ITabProps } from "common/types";
 import { getFieldOfWork } from "common/utils";
 import { useParams } from "react-router-dom";
 import { CompanyInfo, OffersList } from "../components";
 import useCompanyProfile from "../hooks/useCompanyProfile";
-import type { TTab } from "common";
 
 const CompanyProfile = () => {
   const params = useParams();
@@ -15,7 +15,7 @@ const CompanyProfile = () => {
   if (!companyData || isLoading)
     return <LoadingPage message="Fetching company data ..." />;
 
-  const tabs: TTab[] = [
+  const tabs: ITabProps[] = [
     {
       label: (
         <span>
@@ -45,7 +45,7 @@ const CompanyProfile = () => {
         {getFieldOfWork(companyData.fieldOfWork)}
       </Typography.Title>
 
-      <TabNavigation tabList={tabs} />
+      <Tabs tabList={tabs} />
     </>
   );
 };

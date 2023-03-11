@@ -19,20 +19,20 @@ function getNavBarMenuItem(
     icon,
     children,
     label,
-  } as MenuItem;
+  };
 }
 
-type TNavBarProps = {
+interface INavBarProps {
   items: MenuItem[];
   itemKeyToRedirectPath: Map<string, string>;
   selectedKey: string;
-};
+}
 
 const NavBar = ({
   items,
   itemKeyToRedirectPath,
   selectedKey,
-}: TNavBarProps) => {
+}: INavBarProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   return (

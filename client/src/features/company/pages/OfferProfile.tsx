@@ -1,11 +1,11 @@
 import { Typography } from "antd";
-import { LoadingPage, TabNavigation } from "common";
+import { LoadingPage, Tabs } from "common";
 import { useParams } from "react-router-dom";
 import useOfferProfile from "../hooks/useOfferProfile";
-import type { TTab } from "common";
 import OfferOverview from "../components/OfferOverview";
 import { FileSearchOutlined, SendOutlined } from "@ant-design/icons";
 import ApplicationsList from "../components/ApplicationsList";
+import { ITabProps } from "common/types";
 
 const OfferProfile = () => {
   const params = useParams();
@@ -15,7 +15,7 @@ const OfferProfile = () => {
   if (!offerData || isLoading)
     return <LoadingPage message="Fetching offer data ..." />;
 
-  const tabs: TTab[] = [
+  const tabs: ITabProps[] = [
     {
       label: (
         <span>
@@ -45,7 +45,7 @@ const OfferProfile = () => {
         Departament: {offerData.departament}
       </Typography.Title>
 
-      <TabNavigation tabList={tabs} />
+      <Tabs tabList={tabs} />
     </>
   );
 };

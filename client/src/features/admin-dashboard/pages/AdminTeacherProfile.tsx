@@ -5,11 +5,11 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { ContainerOutlined, UserOutlined } from "@ant-design/icons";
 
-import { TabNavigation } from "common";
-import type { TTab } from "common";
+import { Tabs } from "common";
 
 import { TeacherInfo } from "../components";
 import { getProfessor, patchProfessor } from "../api/professorsAPI";
+import { ITabProps } from "common/types";
 
 const AdminTeacherProfile = () => {
   const queryClient = useQueryClient();
@@ -79,7 +79,7 @@ const AdminTeacherProfile = () => {
       </>
     );
 
-  const tabs: TTab[] = [
+  const tabs: ITabProps[] = [
     {
       label: (
         <span>
@@ -148,7 +148,7 @@ const AdminTeacherProfile = () => {
           </Col>
         </Row>
 
-        <TabNavigation tabList={tabs} />
+        <Tabs tabList={tabs} />
       </Spin>
     </>
   );

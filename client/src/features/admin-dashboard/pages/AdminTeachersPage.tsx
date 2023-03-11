@@ -1,13 +1,13 @@
 import { Typography } from "antd";
 import { PlusCircleOutlined, SearchOutlined } from "@ant-design/icons";
 
-import { TabNavigation } from "common";
-import type { TTab } from "common";
+import { Tabs } from "common";
 
 import { AdminAddTeachers, AdminBrowseTeachers } from "../components";
+import { ITabProps } from "common/types";
 
 const AdminTeachersPage = () => {
-  const tabs: TTab[] = [
+  const tabs: ITabProps[] = [
     {
       label: (
         <span>
@@ -37,7 +37,7 @@ const AdminTeachersPage = () => {
         Add, view, edit or delete teachers from the internship program ...
       </Typography.Title>
 
-      <TabNavigation tabList={tabs} />
+      <Tabs tabList={tabs} />
     </>
   );
 };
