@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { Layout, CompanyNavBar } from "layout";
 
-import ProtectedRoutes from "./ProtectedRoutes";
+import ProtectedRoutes from "../ProtectedRoutes";
 import {
   Overview,
   Profile,

@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { Layout, StudentNavBar } from "layout";
 
-import ProtectedRoutes from "./ProtectedRoutes";
+import ProtectedRoutes from "../ProtectedRoutes";
 import {
   Companies,
   Overview,

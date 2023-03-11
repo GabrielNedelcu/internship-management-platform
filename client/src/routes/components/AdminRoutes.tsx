@@ -15,7 +15,7 @@ import {
   AdminOfferProfile,
   AdminTeacherProfile,
 } from "../../features";
-import ProtectedRoutes from "./ProtectedRoutes";
+import ProtectedRoutes from "../ProtectedRoutes";
 import { USER_ROLES } from "common/constants";
 
 const AdminRoutes = () => {
