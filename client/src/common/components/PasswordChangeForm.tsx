@@ -4,9 +4,17 @@ import { useMutation } from "@tanstack/react-query";
 import { changeUserPassword } from "common/api";
 import { useState } from "react";
 import { IPasswordChangeData } from "common/types";
+import { wait } from "@testing-library/user-event/dist/utils";
 
-const PasswordChangeForm = () => {
+interface IPasswordChangeFormProps {
+  afterSubmitCallback?: () => void;
+}
+
+const PasswordChangeForm = ({
+  afterSubmitCallback,
+}: IPasswordChangeFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [form] = Form.useForm();
 
   const { mutate: mutateChangeUserPassword } = useMutation(
     ["changeUserPassword"],
@@ -17,12 +25,13 @@ const PasswordChangeForm = () => {
     {
       onSuccess: () => {
         setIsLoading(false);
-
         notification.success({
           message: "Password changed",
           description: "Great! You have successfully changed your password ...",
           duration: 10,
         });
+        form.resetFields();
+        wait(3000).then(() => afterSubmitCallback?.());
       },
       onError: () => {
         setIsLoading(false);
@@ -32,6 +41,8 @@ const PasswordChangeForm = () => {
             "Error occured while changing your password! Please try again later!",
           duration: 10,
         });
+        form.resetFields();
+        wait(3000).then(() => afterSubmitCallback?.());
       },
     }
   );
@@ -43,6 +54,7 @@ const PasswordChangeForm = () => {
           layout="horizontal"
           size="large"
           labelCol={{ span: 5 }}
+          form={form}
           onFinish={(values: any) => {
             mutateChangeUserPassword(values);
           }}
@@ -89,7 +101,7 @@ const PasswordChangeForm = () => {
             />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" block danger>
+            <Button type="primary" htmlType="submit" block>
               Change password
             </Button>
           </Form.Item>

@@ -1,7 +1,8 @@
 import { ReactElement } from "react";
 import { Layout } from "antd";
 
-import { Header, Footer } from "./components";
+import Header from "./Header";
+import Footer from "./Footer";
 
 const { Content } = Layout;
 
