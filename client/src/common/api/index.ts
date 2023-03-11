@@ -36,3 +36,16 @@ export const changeUserPassword = async (newPassData: IPasswordChangeData) => {
 
   return res.data;
 };
+
+/**
+ * Change the language for the logged in user
+ * @param lang new language
+ * @returns server response
+ */
+export const changeUserLanguage = async (lang: string) => {
+  const res = await axiosClient.patch(`${ACCOUNTS_URL}/self`, {
+    language: lang,
+  });
+
+  return res.data;
+};
