@@ -49,7 +49,11 @@ async function httpCreateApplication(req, res) {
     applications: 1,
   });
   const company = await getOneCompany(applicationData.company, { name: 1 });
-  const student = await getOneStudent(studentId, { name: 1 });
+  const student = await getOneStudent(studentId, {
+    name: 1,
+    email: 1,
+    major: 1,
+  });
 
   const application = await createApplication({
     ...applicationData,
@@ -57,6 +61,8 @@ async function httpCreateApplication(req, res) {
     companyName: company.name,
     offerTitle: offer.title,
     studentName: student.name,
+    studentEmail: student.email,
+    studentMajor: student.major,
   });
   if (!application) {
     const err = new Error("Unable to create an application");
@@ -81,6 +87,9 @@ async function httpGetAllApplications(req, res) {
   const userId = req.userId;
   const userRole = req.userRole;
   const searchFor = req.query.search;
+  const offer = req.query.offer;
+  const status = req.query.status;
+  const major = req.query.studentMajor;
 
   const { sortOrder, sortBy } = getSort(req.query);
   const { pageSize, skipCount } = getPagination(req.query);
@@ -97,7 +106,13 @@ async function httpGetAllApplications(req, res) {
   };
 
   if (userRole === "student") query = { ...query, student: userId };
-  if (userRole === "company") query = { ...query, company: userId };
+  if (userRole === "company") {
+    query = { ...query, company: userId };
+    if (offer) query = { ...query, offer };
+  }
+
+  if (major) query = { ...query, studentMajor: { $in: major.split(",") } };
+  if (status) query = { ...query, status: { $in: status.split(",") } };
 
   const resp = await queryApplications(
     query,
@@ -108,7 +123,7 @@ async function httpGetAllApplications(req, res) {
     pageSize
   );
 
-  if (!resp.totalCount) return res.status(204).send();
+  // if (!resp.totalCount) return res.status(204).send();
 
   return res.status(200).json(resp);
 }

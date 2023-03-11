@@ -74,10 +74,16 @@ export interface IPagination {
   pageSize: number;
 }
 
+export interface IFilter {
+  field: string;
+  values: string[];
+}
+
 export interface IQueryParameters {
   fields?: string;
   pagination?: IPagination;
   sort?: string;
+  filters?: IFilter[];
 }
 
 export interface IOfferCardData {
@@ -121,6 +127,8 @@ export interface IApplicationData {
   offerTitle?: string;
   companyName?: string;
   studentName?: string;
+  studentEmail?: string;
+  studentMajor?: string;
   status?: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -130,6 +138,7 @@ export interface IFetchOptions {
   paginationParams: IPagination;
   sortOrder: string;
   searchValue: string;
+  filters?: IFilter[];
 }
 
 export interface IServerResponseMultipleFetch {
@@ -147,4 +156,9 @@ export interface IOfferStats {
   applications: number;
   rejected: number;
   accepted: number;
+}
+
+export interface IComboEntry {
+  text: string;
+  value: string;
 }

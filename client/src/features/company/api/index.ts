@@ -42,10 +42,12 @@ export const getOffers = async (
  */
 export const getSelfApplications = async (
   searchValue: string,
-  queryParams: IQueryParameters
+  queryParams: IQueryParameters,
+  offerId?: string
 ) => {
   const paramURL = buildQuery(`${URL_ROUTES.APPLICATIONS}`, queryParams);
-  const url = addParameterToQuery(paramURL, "search", searchValue);
+  let url = addParameterToQuery(paramURL, "search", searchValue);
+  if (offerId) url = addParameterToQuery(url, "offer", offerId);
   const res = await axiosClient.get(url);
   return res.data;
 };

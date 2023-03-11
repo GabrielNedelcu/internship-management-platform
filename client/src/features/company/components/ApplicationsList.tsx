@@ -1,25 +1,26 @@
-import { Row, Col, Spin } from "antd";
-import { LoadingPage, FilterSortData, Pagination } from "common";
-import { IApplicationData } from "common/types";
+import { Col, Row, Table } from "antd";
+import { FilterSortData, LoadingPage } from "common";
 import useApplicationsList from "../hooks/useApplicationsList";
-import ApplicationCard from "./ApplicationCard";
 
-const sortOptions = [
-  { value: "asc.createdAt", label: "Oldest" },
-  { value: "desc.createdAt", label: "Latest" },
-  { value: "", label: "None" },
-];
+interface IApplicationsTableProps {
+  offerId?: string;
+}
 
-const ApplicationsList = () => {
-  const { applications, isLoading, fetchOptions, setFetchOptions } =
-    useApplicationsList();
+const ApplicationsList = ({ offerId }: IApplicationsTableProps) => {
+  const {
+    isLoading,
+    columns,
+    handleTablePropsChange,
+    applicationsList,
+    fetchOptions,
+    setFetchOptions,
+  } = useApplicationsList(offerId);
 
-  if (!applications) return <LoadingPage message="Fetching applications" />;
-
+  if (!applicationsList) return <LoadingPage message="Fetching applications" />;
   return (
     <>
       <FilterSortData
-        searchPrompt={"Search for student name or offer title"}
+        searchPrompt={"Search for student name"}
         handleSearch={(value: string) => {
           setFetchOptions({
             ...fetchOptions,
@@ -34,36 +35,25 @@ const ApplicationsList = () => {
             paginationParams: { ...fetchOptions.paginationParams, page: 1 },
           });
         }}
-        sortOptions={sortOptions}
-        handleSortChange={(value: string) => {
-          setFetchOptions({ ...fetchOptions, sortOrder: value });
-        }}
       />
 
-      <Spin spinning={isLoading} tip="Fetching applications ..." size="large">
-        <Row gutter={[16, 16]}>
-          {applications.data.map((cardData: IApplicationData) => {
-            return (
-              <Col span={8} key={cardData._id}>
-                <ApplicationCard applicationData={cardData} />
-              </Col>
-            );
-          })}
-        </Row>
-
-        <Pagination
-          total={applications.totalCount}
-          handleChange={(page: number, pageSize: number) =>
-            setFetchOptions({
-              ...fetchOptions,
-              paginationParams: {
-                page,
-                pageSize,
-              },
-            })
-          }
-        />
-      </Spin>
+      <Row gutter={[16, 16]}>
+        <Col>
+          <br />
+          <Table
+            columns={columns}
+            dataSource={applicationsList.data}
+            loading={isLoading}
+            onChange={handleTablePropsChange}
+            pagination={{
+              ...fetchOptions.paginationParams,
+              total: applicationsList.totalCount,
+            }}
+            bordered
+            rowKey="_id"
+          />
+        </Col>
+      </Row>
     </>
   );
 };

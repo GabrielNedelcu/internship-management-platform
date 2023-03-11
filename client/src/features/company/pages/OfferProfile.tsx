@@ -5,6 +5,7 @@ import useOfferProfile from "../hooks/useOfferProfile";
 import type { TTab } from "common";
 import OfferOverview from "../components/OfferOverview";
 import { FileSearchOutlined, SendOutlined } from "@ant-design/icons";
+import ApplicationsList from "../components/ApplicationsList";
 
 const OfferProfile = () => {
   const params = useParams();
@@ -33,7 +34,7 @@ const OfferProfile = () => {
         </span>
       ),
       key: "2",
-      children: "Applications list",
+      children: <ApplicationsList offerId={offerId} />,
     },
   ];
 
