@@ -5,8 +5,11 @@ import { getOffers } from "../api";
 import { initialFetchOptions } from "common/constants";
 import { IServerResponseMultipleFetch } from "common/types";
 import { UserContext } from "app/contexts/UserContext";
+import { useTranslation } from "react-i18next";
 
 const useOffersList = () => {
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(false);
   const { userID } = useContext(UserContext);
 
@@ -36,8 +39,7 @@ const useOffersList = () => {
           setIsLoading(false);
           notification.error({
             message: "Ooops ...",
-            description:
-              "Cannot retrieve the offers from the server ... please try again!",
+            description: t("CANNOT_RETRIEVE_OFFERS"),
             duration: 10,
           });
         },
