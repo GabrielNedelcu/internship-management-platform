@@ -6,29 +6,32 @@ import {
   SolutionOutlined,
   UnlockOutlined,
 } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 interface OfferCardProps {
   offerData: IOfferCardData;
 }
 
 const OfferCard = ({ offerData }: OfferCardProps) => {
+  const { t } = useTranslation();
+
   return (
     <Card
       actions={[
         <IconText
           icon={SolutionOutlined}
           text={offerData.availablePos}
-          tooltip={"Offered Positions"}
+          tooltip={t("OFFERED_POSITIONS").toString()}
         />,
         <IconText
           icon={UnlockOutlined}
           text={offerData.remainingAvailablePos}
-          tooltip={"Positions Available"}
+          tooltip={t("AVAILABLE_POSITIONS").toString()}
         />,
         <IconText
           icon={SendOutlined}
           text={offerData.applications}
-          tooltip={"Total Applications"}
+          tooltip={t("APPLICATIONS").toString()}
         />,
       ]}
       avatar={

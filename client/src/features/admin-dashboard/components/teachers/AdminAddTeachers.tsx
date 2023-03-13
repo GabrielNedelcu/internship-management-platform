@@ -16,6 +16,7 @@ import type { UploadProps } from "antd";
 import { message, Upload } from "antd";
 
 import useTeacherCreation from "features/admin-dashboard/hooks/useTeacherCreation";
+import { useTranslation } from "react-i18next";
 
 const { Dragger } = Upload;
 
@@ -27,6 +28,8 @@ const props: UploadProps = {
 };
 
 const AdminAddTeachers = () => {
+  const { t } = useTranslation();
+
   const {
     setName,
     loading,
@@ -52,8 +55,7 @@ const AdminAddTeachers = () => {
   const validateEmail = (rule: any, value: any, callback: any) => {
     mutateCheckUniqueEmail(value);
 
-    if (emailCheckResult === "success")
-      callback("Email address already in use!");
+    if (emailCheckResult === "success") callback(t("EMAIL_ALREADY_IN_USE"));
     else callback();
   };
 
@@ -67,7 +69,7 @@ const AdminAddTeachers = () => {
       <Spin
         spinning={loading}
         size="large"
-        tip={"Creating teacher account(s) ..."}
+        tip={t("CREATING_STUDENT_ACCOUNTS")}
       >
         <Modal
           open={openModal}
@@ -76,31 +78,29 @@ const AdminAddTeachers = () => {
           width={1000}
         >
           <Typography.Title level={2}>
-            Professors Creation Results ...
+            {t("STUDENT_CREATION_RESULTS")}
           </Typography.Title>
           <Divider />
           <Row gutter={[16, 16]} style={{ display: "flex" }} justify="center">
             <Col span={8} style={{ display: "flex", justifyContent: "center" }}>
               <Typography.Title level={3} style={{ color: "rgb(15, 28, 112)" }}>
-                {detectedAccounts} Accounts Detected
+                {detectedAccounts} {t("ACCOUNTS_DETECTED")}
               </Typography.Title>
             </Col>
             <Col span={8} style={{ display: "flex", justifyContent: "center" }}>
               <Typography.Title level={3} style={{ color: "rgb(15, 28, 112)" }}>
-                {createdAccounts} Accounts Created
+                {createdAccounts} {t("ACCOUNTS_CREATED")}
               </Typography.Title>
             </Col>
             <Col span={8} style={{ display: "flex", justifyContent: "center" }}>
               <Typography.Title level={3} style={{ color: "rgb(15, 28, 112)" }}>
-                {detectedAccounts - createdAccounts} Accounts Aborted
+                {detectedAccounts - createdAccounts} {t("ACCOUNTS_ABORTED")}
               </Typography.Title>
             </Col>
           </Row>
           <br />
           <Typography.Title level={5} type={"secondary"}>
-            The following accounts have not been created (please check the email
-            is not already in use and that the information in the file is valid
-            ...):
+            {t("ACCOUNTS_NOT_CREATED_MSG")}
           </Typography.Title>
           <Typography.Title level={5} type={"secondary"}>
             {notCreatedAccounts}
@@ -109,7 +109,9 @@ const AdminAddTeachers = () => {
 
         <Row gutter={[16, 16]}>
           <Col span={12}>
-            <Typography.Title level={5}>Add a teacher</Typography.Title>
+            <Typography.Title level={5}>
+              {t("CREATE_TEACHER_ACCOUNT")}
+            </Typography.Title>
             <Form
               layout="vertical"
               size="large"
@@ -124,13 +126,13 @@ const AdminAddTeachers = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please provide the teacher's full name",
+                    message: t("TYPE_TEACHER_FULL_NAME").toString(),
                   },
                 ]}
                 hasFeedback
               >
                 <Input
-                  placeholder="Type in the teacher's full name"
+                  placeholder={t("TYPE_TEACHER_FULL_NAME").toString()}
                   onChange={(e) => {
                     setName(e.target.value);
                   }}
@@ -142,18 +144,18 @@ const AdminAddTeachers = () => {
                 rules={[
                   {
                     type: "email",
-                    message: "Please provide a valid email address!",
+                    message: t("TYPE_VALID_EMAIL").toString(),
                   },
                   {
                     required: true,
-                    message: "Please provide the student's email!",
+                    message: t("TYPE_TEACHER_EMAIL").toString(),
                   },
                   { validator: validateEmail },
                 ]}
                 hasFeedback
               >
                 <Input
-                  placeholder="Type in the teacher's email"
+                  placeholder={t("TYPE_TEACHER_EMAIL").toString()}
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
@@ -165,13 +167,13 @@ const AdminAddTeachers = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please provide the teacher's job title",
+                    message: t("TYPE_TEACHER_JOB_TITLE").toString(),
                   },
                 ]}
                 hasFeedback
               >
                 <Input
-                  placeholder="Type in the teacher's job title"
+                  placeholder={t("TYPE_TEACHER_JOB_TITLE").toString()}
                   onChange={(e) => {
                     setTitle(e.target.value);
                   }}
@@ -183,17 +185,17 @@ const AdminAddTeachers = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please provide the techer's private phone number",
+                    message: t("TYPE_TEACHER_PRIVATE_PHONE").toString(),
                   },
                   {
                     len: 9,
-                    message: "The phone number must have exactly 9 characters",
+                    message: t("TYPE_VALID_PHONE_NUMBER").toString(),
                   },
                 ]}
                 hasFeedback
               >
                 <Input
-                  placeholder="Type in the teacher's private phone number"
+                  placeholder={t("TYPE_TEACHER_PRIVATE_PHONE").toString()}
                   addonBefore="+40"
                   onChange={(e) => {
                     setPrivatePhone(e.target.value);
@@ -206,17 +208,17 @@ const AdminAddTeachers = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please provide the techer's public phone number",
+                    message: t("TYPE_TEACHER_PUBLICE_PHONE").toString(),
                   },
                   {
                     len: 9,
-                    message: "The phone number must have exactly 9 characters",
+                    message: t("TYPE_VALID_PHONE_NUMBER").toString(),
                   },
                 ]}
                 hasFeedback
               >
                 <Input
-                  placeholder="Type in the teacher's public phone number"
+                  placeholder={t("TYPE_TEACHER_PUBLICE_PHONE").toString()}
                   addonBefore="+40"
                   onChange={(e) => {
                     setPublicPhone(e.target.value);
@@ -229,13 +231,13 @@ const AdminAddTeachers = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please select the techer's departament",
+                    message: t("SELECT_TEACHER_DEPARTAMENT").toString(),
                   },
                 ]}
                 hasFeedback
               >
                 <Select
-                  placeholder="Please select the teacher's departament"
+                  placeholder={t("SELECT_TEACHER_DEPARTAMENT").toString()}
                   onChange={(value) => {
                     console.log(value);
                     setDepartament(value);
@@ -257,32 +259,27 @@ const AdminAddTeachers = () => {
                   onChange={(value) => {
                     setNumPositions(value ? value : 1);
                   }}
-                  addonBefore={"Number of students"}
+                  addonBefore={t("STUDENT_NUMBER")}
                 />
               </Form.Item>
 
               <Form.Item>
                 <Button type="primary" htmlType="submit" block>
-                  Add the teacher
+                  {t("CREATE_ACCOUNT")}
                 </Button>
               </Form.Item>
             </Form>
           </Col>
           <Col span={12}>
             <Typography.Title level={5}>
-              Import multiple teachers from file
+              {t("IMPORT_TEACHERS")}
             </Typography.Title>
             <Dragger {...newProps}>
               <p className="ant-upload-drag-icon">
                 <InboxOutlined />
               </p>
-              <p className="ant-upload-text">
-                Click or drag file to this area to upload
-              </p>
-              <p className="ant-upload-hint">
-                Select the .xlsx file containing the students. The upload will
-                start as soon as you drag or select the document.
-              </p>
+              <p className="ant-upload-text">{t("CLICK_DRAG")}</p>
+              <p className="ant-upload-hint">{t("SELECT_XLSX")}</p>
             </Dragger>
           </Col>
         </Row>

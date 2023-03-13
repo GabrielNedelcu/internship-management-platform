@@ -4,8 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import { ICompanyData } from "common/types";
 import { getCompany } from "../api";
 import { UserContext } from "app/contexts/UserContext";
+import { useTranslation } from "react-i18next";
 
 const useProfile = () => {
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(false);
   const { userID } = useContext(UserContext);
 
@@ -23,8 +26,7 @@ const useProfile = () => {
         setIsLoading(false);
         notification.error({
           message: "Ooops ...",
-          description:
-            "Cannot retrieve profile data from the server ... please try again!",
+          description: t("CANNOT_RETRIEVE_PROFILE_DATA"),
           duration: 10,
         });
       },

@@ -1,36 +1,39 @@
 import { Form, Input, Switch } from "antd";
+import { useTranslation } from "react-i18next";
 const { TextArea } = Input;
 
 const InternshipSetupStep = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <Form.Item
-        label="Address"
+        label={t("MAIN_ADDRESS")}
         name="internshipMainAddress"
         rules={[
           {
             required: true,
-            message: "Please provide the address!",
+            message: t("PROVIDE_ADDRESS").toString(),
           },
         ]}
         hasFeedback
       >
-        <Input placeholder="Please enter the address at which the students will be present" />
+        <Input placeholder={t("PROVIDE_ADDRESS").toString()} />
       </Form.Item>
 
       <Form.Item
-        label="Other Addresses"
+        label={t("OTHER_ADDRESSES")}
         name="internshipOtherAddresses"
         hasFeedback
       >
         <TextArea
           rows={2}
-          placeholder="Please enter any other addresses at which the students will work"
+          placeholder={t("PROVIDE_OTHER_ADDRESS").toString()}
         />
       </Form.Item>
 
       <Form.Item
-        label="Contract"
+        label={t("CONTRACT_OFFERED")}
         name="internshipContract"
         valuePropName="checked"
         initialValue
@@ -39,7 +42,7 @@ const InternshipSetupStep = () => {
       </Form.Item>
 
       <Form.Item
-        label="Compensation"
+        label={t("COMPENSATION_OFFERED")}
         name="internshipCompensation"
         valuePropName="checked"
         initialValue
@@ -48,14 +51,11 @@ const InternshipSetupStep = () => {
       </Form.Item>
 
       <Form.Item
-        label="Other Advantages"
+        label={t("ADVANTAGES")}
         name="internshipOtherAdvantages"
         hasFeedback
       >
-        <TextArea
-          rows={2}
-          placeholder="Please enter any other advantages (meal tickets, bonuses, etc.)"
-        />
+        <TextArea rows={2} />
       </Form.Item>
     </>
   );

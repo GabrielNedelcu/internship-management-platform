@@ -1,4 +1,6 @@
 import { Typography, Row, Col } from "antd";
+import { getFieldOfWork } from "common/utils";
+import { useTranslation } from "react-i18next";
 
 interface ICompanyGeneralInfoData {
   address: string;
@@ -13,39 +15,25 @@ const ConpanyGeneralInfo = ({
   contactNumber,
   description,
 }: ICompanyGeneralInfoData) => {
-  let fow = "";
-  switch (fieldOfWork) {
-    case "telecom":
-      fow = "Telecom";
-      break;
-    case "softwareDev":
-      fow = "Software Developement";
-      break;
-    case "electronics":
-      fow = "Electronics";
-      break;
-    case "other":
-      fow = "Other";
-      break;
-    default:
-      break;
-  }
+  const { t } = useTranslation();
 
   return (
     <>
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <Typography.Title level={4}>Address</Typography.Title>
+          <Typography.Title level={4}>{t("ADDRESS")}</Typography.Title>
           <Typography.Paragraph>{address}</Typography.Paragraph>
-          <Typography.Title level={4}>Phone Number</Typography.Title>
+          <Typography.Title level={4}>{t("PHONE_NUMBER")}</Typography.Title>
           <Typography.Paragraph>{`+40${contactNumber}`}</Typography.Paragraph>
         </Col>
         <Col span={12}>
-          <Typography.Title level={4}>Field of work</Typography.Title>
-          <Typography.Paragraph>{fow}</Typography.Paragraph>
+          <Typography.Title level={4}>{t("FIELD_OF_WORK")}</Typography.Title>
+          <Typography.Paragraph>
+            {getFieldOfWork(fieldOfWork)}
+          </Typography.Paragraph>
         </Col>
       </Row>
-      <Typography.Title level={4}>Company Description</Typography.Title>
+      <Typography.Title level={4}>{t("COMPANY_DESCRIPTION")}</Typography.Title>
       <Typography.Paragraph>{description}</Typography.Paragraph>
     </>
   );

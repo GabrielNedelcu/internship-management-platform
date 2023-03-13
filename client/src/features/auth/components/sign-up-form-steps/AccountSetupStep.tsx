@@ -2,59 +2,61 @@ import { Form, Input } from "antd";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 
 import useSignUp from "features/auth/hooks/useSignUp";
+import { useTranslation } from "react-i18next";
 
 const AccountSetupStep = () => {
+  const { t } = useTranslation();
+
   const { mutateCheckUniqueEmail, emailCheckResult } = useSignUp();
 
   const validateEmail = (rule: any, value: any, callback: any) => {
     mutateCheckUniqueEmail(value);
 
-    if (emailCheckResult === "success")
-      callback("Email address already in use!");
+    if (emailCheckResult === "success") callback(t("EMAIL_ALREADY_IN_USE"));
     else callback();
   };
 
   return (
     <>
       <Form.Item
-        label="Email address"
+        label={t("EMAIL")}
         name="accountEmail"
         rules={[
           {
             type: "email",
-            message: "Please provide a valid email address!",
+            message: t("TYPE_VALID_EMAIL").toString(),
           },
-          { required: true, message: "Please provide your email!" },
+          { required: true, message: t("PROVIDE_EMAIL").toString() },
           { validator: validateEmail },
         ]}
         hasFeedback
       >
         <Input
-          placeholder="Type in you email address"
+          placeholder={t("PROVIDE_EMAIL").toString()}
           prefix={<MailOutlined />}
         />
       </Form.Item>
 
       <Form.Item
-        label="Password"
+        label={t("PASSWORD")}
         name="accountPassword"
-        rules={[{ required: true, message: "Please provide a password!" }]}
+        rules={[{ required: true, message: t("PROVIDE_PASSWORD").toString() }]}
         hasFeedback
       >
         <Input.Password
-          placeholder="Type in your password"
+          placeholder={t("PROVIDE_PASSWORD").toString()}
           prefix={<LockOutlined />}
         />
       </Form.Item>
 
       <Form.Item
-        label="Password confirm"
+        label={t("CONFIRM")}
         name="accountPassword_confirmation"
         dependencies={["accountPassword"]}
         rules={[
           {
             required: true,
-            message: "Please confirm your password!",
+            message: t("CONFIRM_PASSWORD").toString(),
           },
           ({ getFieldValue }) => ({
             validator(_, value) {
@@ -62,7 +64,7 @@ const AccountSetupStep = () => {
                 return Promise.resolve();
               }
               return Promise.reject(
-                new Error("The two passwords that you entered do not match!")
+                new Error(t("PASSWORDS_NOT_MATCH").toString())
               );
             },
           }),
@@ -70,7 +72,7 @@ const AccountSetupStep = () => {
         hasFeedback
       >
         <Input.Password
-          placeholder="Re-enter your password"
+          placeholder={t("CONFIRM_PASSWORD").toString()}
           prefix={<LockOutlined />}
         />
       </Form.Item>

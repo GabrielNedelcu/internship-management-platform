@@ -1,10 +1,13 @@
 import { Typography, Button } from "antd";
 import useCompanyTable from "../hooks/useCompanyTable";
 import { Row, Col, Table, Input } from "antd";
+import { useTranslation } from "react-i18next";
 
 const { Search } = Input;
 
 const AdminCompaniesPage = () => {
+  const { t } = useTranslation();
+
   const {
     loading,
     columns,
@@ -18,15 +21,15 @@ const AdminCompaniesPage = () => {
 
   return (
     <>
-      <Typography.Title level={1}>Companies List</Typography.Title>
+      <Typography.Title level={1}>{t("COMPANIES_LIST")}</Typography.Title>
       <Typography.Title level={5} type={"secondary"}>
-        View, edit or delete companies from the internship program ...
+        {t("VIEW_EDIT_COMPANIES")}
       </Typography.Title>
 
       <Row gutter={[16, 16]}>
         <Col span="12">
           <Search
-            placeholder="Search for companies by name or account email"
+            placeholder={t("SEARCH_COMPANIES_NAME_EMAIL").toString()}
             onChange={(e) => {
               setSearchText(e.target.value);
             }}
@@ -38,7 +41,7 @@ const AdminCompaniesPage = () => {
         </Col>
         <Col style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button size="large" type="primary" onClick={handleClearSearch}>
-            Clear Search
+            {t("CLEAR_SEARCH")}
           </Button>
         </Col>
         <Col>

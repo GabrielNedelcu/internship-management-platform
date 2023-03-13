@@ -16,8 +16,11 @@ import useSignUpForm from "../hooks/useSignUpForm";
 import useSignUp from "../hooks/useSignUp";
 
 import "../../../style/SignUpForm.css";
+import { useTranslation } from "react-i18next";
 
 const SignUpPage = () => {
+  const { t } = useTranslation();
+
   const { formData, setFormData, mutateSignUpCompany } = useSignUp();
 
   const { currentStepIdx, step, next, back, isFirstStep, isLastStep } =
@@ -59,7 +62,7 @@ const SignUpPage = () => {
                       onClick={() => back()}
                       icon={<StepBackwardOutlined />}
                     >
-                      Back
+                      {t("BACK")}
                     </Button>
                   )}
 
@@ -69,7 +72,7 @@ const SignUpPage = () => {
                       htmlType="submit"
                       icon={<StepForwardOutlined />}
                     >
-                      Next
+                      {t("NEXT")}
                     </Button>
                   )}
                 </Space>

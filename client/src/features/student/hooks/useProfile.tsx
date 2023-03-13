@@ -2,8 +2,11 @@ import { useState } from "react";
 import { notification } from "antd";
 import { useQuery } from "@tanstack/react-query";
 import { getSelfStudent } from "../api";
+import { useTranslation } from "react-i18next";
 
 const useProfile = () => {
+  const { t } = useTranslation();
+
   const [loading, setLoading] = useState(false);
 
   const { data: studentProfileData } = useQuery(
@@ -20,8 +23,7 @@ const useProfile = () => {
         setLoading(false);
         notification.error({
           message: "Ooops ...",
-          description:
-            "Cannot retrieve profile data from the server ... please try again!",
+          description: t("CANNOT_RETRIEVE_PROFILE_DATA"),
           duration: 10,
         });
       },

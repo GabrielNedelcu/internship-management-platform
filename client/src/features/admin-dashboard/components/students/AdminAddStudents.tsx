@@ -14,6 +14,7 @@ import {
 import { InboxOutlined } from "@ant-design/icons";
 
 import useStudentCreation from "../../hooks/useStudentCreation";
+import { useTranslation } from "react-i18next";
 
 const { Dragger } = Upload;
 
@@ -25,6 +26,8 @@ const props: UploadProps = {
 };
 
 const AdminAddStudents = () => {
+  const { t } = useTranslation();
+
   const {
     cnp,
     setCNP,
@@ -50,8 +53,7 @@ const AdminAddStudents = () => {
   const validateEmail = (rule: any, value: any, callback: any) => {
     mutateCheckUniqueEmail(value);
 
-    if (emailCheckResult === "success")
-      callback("Email address already in use!");
+    if (emailCheckResult === "success") callback(t("EMAIL_ALREADY_IN_USE"));
     else callback();
   };
 
@@ -65,7 +67,7 @@ const AdminAddStudents = () => {
       <Spin
         spinning={loading}
         size="large"
-        tip={"Creating student account(s) ..."}
+        tip={t("CREATING_STUDENT_ACCOUNTS")}
       >
         <Modal
           open={openModal}
@@ -74,31 +76,29 @@ const AdminAddStudents = () => {
           width={1000}
         >
           <Typography.Title level={2}>
-            Student Creation Results ...
+            {t("STUDENT_CREATION_RESULTS")}
           </Typography.Title>
           <Divider />
           <Row gutter={[16, 16]} style={{ display: "flex" }} justify="center">
             <Col span={8} style={{ display: "flex", justifyContent: "center" }}>
               <Typography.Title level={3} style={{ color: "rgb(15, 28, 112)" }}>
-                {detectedAccounts} Accounts Detected
+                {detectedAccounts} {t("ACCOUNTS_DETECTED")}
               </Typography.Title>
             </Col>
             <Col span={8} style={{ display: "flex", justifyContent: "center" }}>
               <Typography.Title level={3} style={{ color: "rgb(15, 28, 112)" }}>
-                {createdAccounts} Accounts Created
+                {createdAccounts} {t("ACCOUNTS_CREATED")}
               </Typography.Title>
             </Col>
             <Col span={8} style={{ display: "flex", justifyContent: "center" }}>
               <Typography.Title level={3} style={{ color: "rgb(15, 28, 112)" }}>
-                {detectedAccounts - createdAccounts} Accounts Aborted
+                {detectedAccounts - createdAccounts} {t("ACCOUNTS_ABORTED")}
               </Typography.Title>
             </Col>
           </Row>
           <br />
           <Typography.Title level={5} type={"secondary"}>
-            The following accounts have not been created (please check the email
-            is not already in use and that the information in the file is valid
-            ...):
+            {t("ACCOUNTS_NOT_CREATED_MSG")}
           </Typography.Title>
           <Typography.Title level={5} type={"secondary"}>
             {notCreatedAccounts}
@@ -107,7 +107,9 @@ const AdminAddStudents = () => {
 
         <Row gutter={[16, 16]}>
           <Col span={12}>
-            <Typography.Title level={5}>Create a student</Typography.Title>
+            <Typography.Title level={5}>
+              {t("CREATE_STUDENT_ACCOUNT")}
+            </Typography.Title>
             <Form
               form={form}
               layout="vertical"
@@ -122,13 +124,13 @@ const AdminAddStudents = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please provide the student's full name",
+                    message: t("TYPE_STUDENT_FULL_NAME").toString(),
                   },
                 ]}
                 hasFeedback
               >
                 <Input
-                  placeholder="Type in the student's full name"
+                  placeholder={t("TYPE_STUDENT_FULL_NAME").toString()}
                   onChange={(e) => {
                     setName(e.target.value);
                   }}
@@ -140,18 +142,18 @@ const AdminAddStudents = () => {
                 rules={[
                   {
                     type: "email",
-                    message: "Please provide a valid email address!",
+                    message: t("TYPE_VALID_EMAIL").toString(),
                   },
                   {
                     required: true,
-                    message: "Please provide the student's email!",
+                    message: t("TYPE_STUDENT_EMAIL").toString(),
                   },
                   { validator: validateEmail },
                 ]}
                 hasFeedback
               >
                 <Input
-                  placeholder="Type in the student's email"
+                  placeholder={t("TYPE_STUDENT_EMAIL").toString()}
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
@@ -163,13 +165,13 @@ const AdminAddStudents = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please provide the student's group",
+                    message: t("TYPE_STUDENT_GROUP").toString(),
                   },
                 ]}
                 hasFeedback
               >
                 <Input
-                  placeholder="Type in the student's group"
+                  placeholder={t("TYPE_STUDENT_GROUP").toString()}
                   onChange={(e) => {
                     setGroup(e.target.value);
                   }}
@@ -181,18 +183,17 @@ const AdminAddStudents = () => {
                 rules={[
                   {
                     required: passport === "",
-                    message:
-                      "Please provide either the student's passport or CNP",
+                    message: t("TYPE_STUDENT_CNP_OR_PASSPORT").toString(),
                   },
                   {
                     len: 13,
-                    message: "CNP must have exactly 13 characters",
+                    message: t("CNP_MUST_HAVE").toString(),
                   },
                 ]}
                 hasFeedback
               >
                 <Input
-                  placeholder="Type in the student's CNP"
+                  placeholder={t("TYPE_STUDENT_CNP").toString()}
                   disabled={passport !== ""}
                   onChange={(e) => {
                     setCNP(e.target.value);
@@ -207,7 +208,7 @@ const AdminAddStudents = () => {
                 hasFeedback
               >
                 <Input
-                  placeholder="Type in the student's passport"
+                  placeholder={t("TYPE_STUDENT_PASSPORT").toString()}
                   disabled={cnp !== ""}
                   onChange={(e) => {
                     setPassport(e.target.value);
@@ -218,26 +219,21 @@ const AdminAddStudents = () => {
 
               <Form.Item>
                 <Button type="primary" htmlType="submit" block>
-                  Create the student
+                  {t("CREATE_ACCOUNT")}
                 </Button>
               </Form.Item>
             </Form>
           </Col>
           <Col span={12}>
             <Typography.Title level={5}>
-              Import multiple students from file
+              {t("IMPORT_STUDENTS")}
             </Typography.Title>
             <Dragger {...newProps}>
               <p className="ant-upload-drag-icon">
                 <InboxOutlined />
               </p>
-              <p className="ant-upload-text">
-                Click or drag file to this area to upload
-              </p>
-              <p className="ant-upload-hint">
-                Select the .xlsx file containing the students. The upload will
-                start as soon as you drag or select the document.
-              </p>
+              <p className="ant-upload-text">{t("CLICK_DRAG")}</p>
+              <p className="ant-upload-hint">{t("SELECT_XLSX")}</p>
             </Dragger>
           </Col>
         </Row>

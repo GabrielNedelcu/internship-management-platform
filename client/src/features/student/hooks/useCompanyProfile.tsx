@@ -2,8 +2,11 @@ import { useState } from "react";
 import { notification } from "antd";
 import { useQuery } from "@tanstack/react-query";
 import { getCompany } from "../api";
+import { useTranslation } from "react-i18next";
 
 const useOfferProfile = (companyId: string) => {
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const { data: companyData } = useQuery(
@@ -23,8 +26,7 @@ const useOfferProfile = (companyId: string) => {
         setIsLoading(false);
         notification.error({
           message: "Ooops ...",
-          description:
-            "Cannot retrieve the company data from the server ... please try again!",
+          description: t("CANNOT_RETRIEVE_COMPANY_DATA"),
           duration: 10,
         });
       },

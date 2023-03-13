@@ -1,6 +1,7 @@
 import { Row, Col, Spin } from "antd";
 import { FilterSortData, LoadingPage, Pagination } from "common";
 import { IOfferCardData } from "common/types";
+import { useTranslation } from "react-i18next";
 import { OfferCard } from ".";
 import useOffersList from "../hooks/useOffersList";
 
@@ -8,27 +9,47 @@ interface IOffersListProps {
   companyID?: string;
 }
 
-const sortOptions = [
-  { value: "asc.availablePos", label: "Positions Offered Asc." },
-  { value: "desc.availablePos", label: "Positions Offered Desc." },
-  { value: "asc.remainingAvailablePos", label: "Positions Available Asc." },
-  { value: "desc.remainingAvailablePos", label: "Positions Available Desc." },
-  { value: "asc.applications", label: "Applications Asc." },
-  { value: "desc.applications", label: "Applications Desc." },
-  { value: "asc.createdAt", label: "Latest" },
-  { value: "desc.createdAt", label: "Oldest" },
-  { value: "", label: "None" },
-];
-
 const OffersList = () => {
+  const { t } = useTranslation();
+
   const { offers, isLoading, fetchOptions, setFetchOptions } = useOffersList();
 
-  if (!offers) return <LoadingPage message="Fetching offers .." />;
+  const sortOptions = [
+    {
+      value: "asc.availablePos",
+      label: `${t("OFFERED_POSITIONS")} ${t("ASC")}`,
+    },
+    {
+      value: "desc.availablePos",
+      label: `${t("OFFERED_POSITIONS")} ${t("DESC")}`,
+    },
+    {
+      value: "asc.remainingAvailablePos",
+      label: `${t("AVAILABLE_POSITIONS")} ${t("ASC")}`,
+    },
+    {
+      value: "desc.remainingAvailablePos",
+      label: `${t("AVAILABLE_POSITIONS")} ${t("ASC")}`,
+    },
+    {
+      value: "asc.applications",
+      label: `${t("APPLICATIONS")} ${t("DESC")}`,
+    },
+    {
+      value: "desc.applications",
+      label: `${t("APPLICATIONS")} ${t("DESC")}`,
+    },
+    { value: "asc.createdAt", label: t("LATEST") },
+    { value: "desc.createdAt", label: t("OLDEST") },
+    { value: "", label: t("NONE") },
+  ];
+
+  if (!offers) return <LoadingPage message={t("FETCHING_OFFERS")} />;
 
   return (
     <>
       <FilterSortData
-        searchPrompt={"Search for offer title"}
+        searchPrompt={t("SEARCH_OFFER_TITLE")}
         handleSearch={(value: string) => {
           setFetchOptions({
             ...fetchOptions,
@@ -49,7 +70,7 @@ const OffersList = () => {
         }}
       />
 
-      <Spin spinning={isLoading} tip="Fetching offers ..." size="large">
+      <Spin spinning={isLoading} tip={t("FETCHING_OFFERS")} size="large">
         <Row gutter={[16, 16]}>
           {offers.data.map((cardData: IOfferCardData) => {
             return (

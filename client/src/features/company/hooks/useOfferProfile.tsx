@@ -2,8 +2,11 @@ import { useState } from "react";
 import { notification } from "antd";
 import { useQuery } from "@tanstack/react-query";
 import { getOffer } from "../api";
+import { useTranslation } from "react-i18next";
 
 const useOfferProfile = (offerId: string) => {
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const { data: offerData } = useQuery(
@@ -20,8 +23,7 @@ const useOfferProfile = (offerId: string) => {
         setIsLoading(false);
         notification.error({
           message: "Ooops ...",
-          description:
-            "Cannot retrieve the offer data from the server ... please try again!",
+          description: t("CANNOT_RETRIEVE_OFFER_DATA"),
           duration: 10,
         });
       },

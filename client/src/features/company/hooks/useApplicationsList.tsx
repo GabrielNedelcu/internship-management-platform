@@ -19,8 +19,11 @@ import {
   parseTableFiltersObject,
   parseTableSortObject,
 } from "common/utils";
+import { useTranslation } from "react-i18next";
 
 const useApplicationsList = (offerId?: string) => {
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(false);
   const [fetchOptions, setFetchOptions] = useState({
     ...initialFetchOptions,
@@ -53,8 +56,7 @@ const useApplicationsList = (offerId?: string) => {
           setIsLoading(false);
           notification.error({
             message: "Ooops ...",
-            description:
-              "Cannot retrieve the applications from the server ... please try again!",
+            description: t("CANNOT_RETRIEVE_APPLICATIONS"),
             duration: 10,
           });
         },
@@ -85,21 +87,21 @@ const useApplicationsList = (offerId?: string) => {
 
   const columns: ColumnsType<IApplicationData> = [
     {
-      title: "Student Name",
+      title: t("STUDENT_NAME"),
       dataIndex: "studentName",
       key: "studentName",
       ellipsis: true,
       sorter: true,
     },
     {
-      title: "Student Email",
+      title: t("STUDENT_EMAIL"),
       dataIndex: "studentEmail",
       key: "studentEmail",
       ellipsis: true,
       sorter: true,
     },
     {
-      title: "Student Major",
+      title: t("STUDENT_MAJOR"),
       dataIndex: "studentMajor",
       key: "studentMajor",
       ellipsis: true,
@@ -109,7 +111,7 @@ const useApplicationsList = (offerId?: string) => {
     ...(!offerId
       ? [
           {
-            title: "Job Title",
+            title: t("JOB_TITLE"),
             dataIndex: "offerTitle",
             key: "offerTitle",
             ellipsis: true,
@@ -118,7 +120,7 @@ const useApplicationsList = (offerId?: string) => {
         ]
       : []),
     {
-      title: "Applied On",
+      title: t("APPLIED_ON"),
       dataIndex: "createdAt",
       key: "createdAt",
       ellipsis: true,
@@ -146,12 +148,12 @@ const useApplicationsList = (offerId?: string) => {
     },
     {
       key: "5",
-      title: "Actions",
+      title: t("ACTIONS"),
       render: (record) => {
         return (
           <>
             <Space size="small">
-              <Tooltip title="Accept for interview">
+              <Tooltip title={t("ACCEPT_FOR_INTERVIEW")}>
                 <Button
                   type="primary"
                   shape="circle"
@@ -159,7 +161,7 @@ const useApplicationsList = (offerId?: string) => {
                   onClick={() => {}}
                 />
               </Tooltip>
-              <Tooltip title="Accept">
+              <Tooltip title={t("ACCEPTED")}>
                 <Button
                   type="primary"
                   shape="circle"
@@ -168,7 +170,7 @@ const useApplicationsList = (offerId?: string) => {
                   onClick={() => {}}
                 />
               </Tooltip>
-              <Tooltip title="Reject">
+              <Tooltip title={t("REJECTED")}>
                 <Button
                   type="primary"
                   shape="circle"
@@ -177,7 +179,7 @@ const useApplicationsList = (offerId?: string) => {
                   danger
                 />
               </Tooltip>
-              <Tooltip title="Download CV">
+              <Tooltip title={t("DOWNLOAD_CV")}>
                 <Button
                   shape="circle"
                   icon={<DownloadOutlined />}

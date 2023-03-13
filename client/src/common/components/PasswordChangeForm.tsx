@@ -5,6 +5,7 @@ import { changeUserPassword } from "common/api";
 import { useState } from "react";
 import { IPasswordChangeData } from "common/types";
 import { wait } from "@testing-library/user-event/dist/utils";
+import { useTranslation } from "react-i18next";
 
 interface IPasswordChangeFormProps {
   afterSubmitCallback?: () => void;
@@ -16,6 +17,8 @@ const PasswordChangeForm = ({
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
 
+  const { t } = useTranslation();
+
   const { mutate: mutateChangeUserPassword } = useMutation(
     ["changeUserPassword"],
     (data: IPasswordChangeData) => {
@@ -26,8 +29,8 @@ const PasswordChangeForm = ({
       onSuccess: () => {
         setIsLoading(false);
         notification.success({
-          message: "Password changed",
-          description: "Great! You have successfully changed your password ...",
+          message: t("PASSWORD_CHANGED"),
+          description: t("PASSWORD_CHANGED_SUCCESSFULLY_MSG"),
           duration: 10,
         });
         form.resetFields();
@@ -37,8 +40,7 @@ const PasswordChangeForm = ({
         setIsLoading(false);
         notification.error({
           message: "Ooops ...",
-          description:
-            "Error occured while changing your password! Please try again later!",
+          description: t("PASSWORD_CHANGED_ERROR"),
           duration: 10,
         });
         form.resetFields();
@@ -49,36 +51,38 @@ const PasswordChangeForm = ({
 
   return (
     <>
-      <Spin spinning={isLoading} tip="Changing password ...">
+      <Spin spinning={isLoading} tip={t("CHANGING_PASSWORD")}>
         <Form
           layout="horizontal"
           size="large"
-          labelCol={{ span: 5 }}
+          labelCol={{ span: 6 }}
           form={form}
           onFinish={(values: any) => {
             mutateChangeUserPassword(values);
           }}
         >
           <Form.Item
-            label="Password"
+            label={t("PASSWORD")}
             name="accountPassword"
-            rules={[{ required: true, message: "Please provide a password!" }]}
+            rules={[
+              { required: true, message: t("PROVIDE_PASSWORD").toString() },
+            ]}
             hasFeedback
           >
             <Input.Password
-              placeholder="Type in your password"
+              placeholder={t("TYPE_PASSWORD").toString()}
               prefix={<LockOutlined />}
             />
           </Form.Item>
 
           <Form.Item
-            label="Confirm"
+            label={t("CONFIRM")}
             name="accountPassword_confirmation"
             dependencies={["accountPassword"]}
             rules={[
               {
                 required: true,
-                message: "Please confirm your password!",
+                message: t("CONFIRM_PASSWORD").toString(),
               },
               ({ getFieldValue }) => ({
                 validator(_, value) {
@@ -86,9 +90,7 @@ const PasswordChangeForm = ({
                     return Promise.resolve();
                   }
                   return Promise.reject(
-                    new Error(
-                      "The two passwords that you entered do not match!"
-                    )
+                    new Error(t("PASSWORDS_NOT_MATCH").toString())
                   );
                 },
               }),
@@ -96,13 +98,13 @@ const PasswordChangeForm = ({
             hasFeedback
           >
             <Input.Password
-              placeholder="Re-enter your password"
+              placeholder={t("RE_ENTER_PASSWORD").toString()}
               prefix={<LockOutlined />}
             />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" block>
-              Change password
+              {t("CHANGE_PASSWORD")}
             </Button>
           </Form.Item>
         </Form>

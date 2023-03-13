@@ -2,8 +2,11 @@ import { useMutation } from "@tanstack/react-query";
 
 import { checkAccountEmail } from "common";
 import { RuleObject } from "antd/es/form";
+import { useTranslation } from "react-i18next";
 
 const useCheckUniqueEmail = () => {
+  const { t } = useTranslation();
+
   const { mutate: mutateCheckUniqueEmail, status: emailCheckResult } =
     useMutation(["checkUniqueEmail"], (email: string) =>
       checkAccountEmail(email)
@@ -17,7 +20,7 @@ const useCheckUniqueEmail = () => {
     mutateCheckUniqueEmail(value);
 
     if (emailCheckResult === "success")
-      callback("Email address already in use!");
+      callback(t("EMAIL_ALREADY_IN_USE").toString());
     else callback();
   };
 

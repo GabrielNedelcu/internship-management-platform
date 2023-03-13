@@ -16,6 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { getAllProfessors } from "../api/professorsAPI";
+import { useTranslation } from "react-i18next";
 interface ITeacherData {
   _id: string;
   name: string;
@@ -29,6 +30,8 @@ interface ITeacherData {
 }
 
 const useTeachersTable = () => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -54,8 +57,7 @@ const useTeachersTable = () => {
         setLoading(false);
         notification.error({
           message: "Ooops ...",
-          description:
-            "Cannot retrieve the professors from the server ... please try again!",
+          description: t("CANNOT_RETRIEVE_PROFESSORS"),
           duration: 10,
         });
       },
@@ -73,7 +75,7 @@ const useTeachersTable = () => {
 
   const columns: ColumnsType<ITeacherData> = [
     {
-      title: "Name",
+      title: t("NAME"),
       dataIndex: "name",
       key: "name",
       sorter: (a, b) => a.name.localeCompare(b.name),
@@ -81,7 +83,7 @@ const useTeachersTable = () => {
       ellipsis: true,
     },
     {
-      title: "Email",
+      title: t("EMAIL"),
       dataIndex: "email",
       key: "email",
       sorter: (a, b) => a.email.localeCompare(b.email),
@@ -89,7 +91,7 @@ const useTeachersTable = () => {
       ellipsis: true,
     },
     {
-      title: "Job Title",
+      title: t("JOB_TITLE"),
       dataIndex: "title",
       key: "title",
       sorter: (a, b) => a.title.localeCompare(b.title),
@@ -97,7 +99,7 @@ const useTeachersTable = () => {
       ellipsis: true,
     },
     {
-      title: "Departament",
+      title: t("DEPARTAMENT"),
       dataIndex: "departament",
       key: "departament",
       filters: [
@@ -115,7 +117,7 @@ const useTeachersTable = () => {
       ellipsis: true,
     },
     {
-      title: "Private Phone Number",
+      title: t("PRIVATE_PHONE"),
       dataIndex: "privatePhone",
       key: "privatePhone",
       sorter: (a, b) => a.privatePhone.localeCompare(b.privatePhone),
@@ -124,7 +126,7 @@ const useTeachersTable = () => {
       ellipsis: true,
     },
     {
-      title: "Public Phone Number",
+      title: t("PUBLIC_PHONE"),
       dataIndex: "publicPhone",
       key: "publicPhone",
       sorter: (a, b) => a.publicPhone.localeCompare(b.publicPhone),
@@ -133,7 +135,7 @@ const useTeachersTable = () => {
       ellipsis: true,
     },
     {
-      title: "Positions No.",
+      title: t("POSITIONS_NB"),
       dataIndex: "numPositions",
       key: "numPositions",
       sorter: (a, b) => a.numPositions - b.numPositions,
@@ -142,7 +144,7 @@ const useTeachersTable = () => {
       ellipsis: true,
     },
     {
-      title: "Available Positions No.",
+      title: t("AVAILABLE_POSITIONS"),
       dataIndex: "numAvailablePositions",
       key: "numAvailablePositions",
       sorter: (a, b) => a.numAvailablePositions - b.numAvailablePositions,
@@ -159,7 +161,7 @@ const useTeachersTable = () => {
         return (
           <>
             <Space size="small">
-              <Tooltip title="Edit Teacher">
+              <Tooltip title={t("EDIT")}>
                 <Button
                   type="primary"
                   shape="circle"
@@ -167,7 +169,7 @@ const useTeachersTable = () => {
                   onClick={() => handleEditTeacher(record._id)}
                 />
               </Tooltip>
-              <Tooltip title="Delete Teacher">
+              <Tooltip title={t("DELETE")}>
                 <Button
                   type="primary"
                   shape="circle"

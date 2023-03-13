@@ -8,6 +8,7 @@ import type {
 import { useQuery } from "@tanstack/react-query";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { getAllStudents } from "../api/studentAPI";
+import { useTranslation } from "react-i18next";
 
 interface IStudentData {
   key: string;
@@ -19,6 +20,8 @@ interface IStudentData {
 }
 
 const useStudentsTable = () => {
+  const { t } = useTranslation();
+
   const [loading, setLoading] = useState<boolean>(false);
 
   const [tableData, setTableData] = useState<IStudentData[]>();
@@ -43,8 +46,7 @@ const useStudentsTable = () => {
         setLoading(false);
         notification.error({
           message: "Ooops ...",
-          description:
-            "Cannot retrieve the students from the server ... please try again!",
+          description: t("CANNOT_RETRIEVE_STUDENTS"),
           duration: 10,
         });
       },
@@ -62,7 +64,7 @@ const useStudentsTable = () => {
 
   const columns: ColumnsType<IStudentData> = [
     {
-      title: "Name",
+      title: t("NAME"),
       dataIndex: "name",
       key: "name",
       sorter: (a, b) => a.name.localeCompare(b.name),
@@ -70,7 +72,7 @@ const useStudentsTable = () => {
       ellipsis: true,
     },
     {
-      title: "Email",
+      title: t("EMAIL"),
       dataIndex: "email",
       key: "email",
       sorter: (a, b) => a.email.localeCompare(b.email),
@@ -78,7 +80,7 @@ const useStudentsTable = () => {
       ellipsis: true,
     },
     {
-      title: "Group",
+      title: t("GROUP"),
       dataIndex: "group",
       key: "group",
       sorter: (a, b) => a.group.localeCompare(b.group),
@@ -86,7 +88,7 @@ const useStudentsTable = () => {
       ellipsis: true,
     },
     {
-      title: "Major",
+      title: t("MAJOR"),
       dataIndex: "major",
       key: "major",
       filters: [

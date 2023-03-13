@@ -1,6 +1,7 @@
 import { Row, Col, Spin } from "antd";
 import { LoadingPage, FilterSortData, Pagination } from "common";
 import { IApplicationData } from "common/types";
+import { useTranslation } from "react-i18next";
 import useApplicationsList from "../hooks/useApplicationsList";
 import ApplicationCard from "./ApplicationCard";
 
@@ -11,15 +12,18 @@ const sortOptions = [
 ];
 
 const ApplicationsList = () => {
+  const { t } = useTranslation();
+
   const { applications, isLoading, fetchOptions, setFetchOptions } =
     useApplicationsList();
 
-  if (!applications) return <LoadingPage message="Fetching applications" />;
+  if (!applications)
+    return <LoadingPage message={t("FETCHING_APPLICATIONS")} />;
 
   return (
     <>
       <FilterSortData
-        searchPrompt={"Search for company name or offer title"}
+        searchPrompt={t("SEARCH_COMPANY_NAME_OFFER_TITLE")}
         handleSearch={(value: string) => {
           setFetchOptions({
             ...fetchOptions,
@@ -40,7 +44,7 @@ const ApplicationsList = () => {
         }}
       />
 
-      <Spin spinning={isLoading} tip="Fetching applications ..." size="large">
+      <Spin spinning={isLoading} tip={t("FETCHING_APPLICATIONS")} size="large">
         <Row gutter={[16, 16]}>
           {applications.data.map((cardData: IApplicationData) => {
             return (

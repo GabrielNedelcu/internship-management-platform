@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllOffers, getCompanyOffers } from "../api/offersAPI";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 type IOfferData = {
   _id: string;
@@ -21,6 +22,8 @@ type IOfferData = {
 };
 
 const useOffersTable = (companyId?: string) => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -57,8 +60,7 @@ const useOffersTable = (companyId?: string) => {
         setLoading(false);
         notification.error({
           message: "Ooops ...",
-          description:
-            "Cannot retrieve the offers from the server ... please try again!",
+          description: t("CANNOT_RETRIEVE_OFFERS"),
           duration: 10,
         });
       },
@@ -67,7 +69,7 @@ const useOffersTable = (companyId?: string) => {
 
   const columns: ColumnsType<IOfferData> = [
     {
-      title: "Job Title",
+      title: t("JOB_TITLE"),
       dataIndex: "title",
       key: "title",
       sorter: (a, b) => a.title.localeCompare(b.title),
@@ -75,7 +77,7 @@ const useOffersTable = (companyId?: string) => {
       ellipsis: true,
     },
     {
-      title: "Company",
+      title: t("COMPANY"),
       dataIndex: "companyName",
       key: "companyName",
       sorter: (a, b) => a.companyName.localeCompare(b.companyName),
@@ -84,7 +86,7 @@ const useOffersTable = (companyId?: string) => {
       ellipsis: true,
     },
     {
-      title: "Departament",
+      title: t("DEPARTAMENT"),
       dataIndex: "departament",
       key: "departament",
       sorter: (a, b) => a.departament.localeCompare(b.departament),
@@ -93,7 +95,7 @@ const useOffersTable = (companyId?: string) => {
       ellipsis: true,
     },
     {
-      title: "Offered Positions",
+      title: t("OFFERED_POSITIONS"),
       dataIndex: "availablePos",
       key: "availablePos",
       sorter: (a, b) => a.availablePos - b.availablePos,
@@ -102,7 +104,7 @@ const useOffersTable = (companyId?: string) => {
       ellipsis: true,
     },
     {
-      title: "Available Positions",
+      title: t("AVAILABLE_POSITIONS"),
       dataIndex: "remainingAvailablePos",
       key: "remainingAvailablePos",
       sorter: (a, b) => a.remainingAvailablePos - b.remainingAvailablePos,
@@ -113,7 +115,7 @@ const useOffersTable = (companyId?: string) => {
       ellipsis: true,
     },
     {
-      title: "Applications",
+      title: t("APPLICATIONS"),
       dataIndex: "applications",
       key: "applications",
       sorter: (a, b) => a.applications - b.applications,
@@ -128,7 +130,7 @@ const useOffersTable = (companyId?: string) => {
         return (
           <>
             <Space size="small">
-              <Tooltip title="Edit Offer">
+              <Tooltip title={t("EDIT")}>
                 <Button
                   type="primary"
                   shape="circle"
@@ -136,7 +138,7 @@ const useOffersTable = (companyId?: string) => {
                   onClick={() => handleEditOffer(record._id)}
                 />
               </Tooltip>
-              <Tooltip title="Delete Offer">
+              <Tooltip title={t("DELETE")}>
                 <Button
                   type="primary"
                   shape="circle"

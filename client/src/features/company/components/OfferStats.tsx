@@ -1,5 +1,6 @@
 import { Row, Col, Typography } from "antd";
 import { Card, LoadingPage } from "common";
+import { useTranslation } from "react-i18next";
 import useOfferStats from "../hooks/useOfferStats";
 
 interface IOfferStatsProps {
@@ -7,6 +8,8 @@ interface IOfferStatsProps {
 }
 
 const OfferStats = ({ offerId }: IOfferStatsProps) => {
+  const { t } = useTranslation();
+
   const { offerStats, isLoading } = useOfferStats(offerId);
 
   if (!offerStats || isLoading)
@@ -20,7 +23,7 @@ const OfferStats = ({ offerId }: IOfferStatsProps) => {
               <Card
                 title={
                   <Typography.Title level={5}>
-                    Positions Offered
+                    {t("OFFERED_POSITIONS")}
                   </Typography.Title>
                 }
                 content={
@@ -38,7 +41,9 @@ const OfferStats = ({ offerId }: IOfferStatsProps) => {
             <Col span={12}>
               <Card
                 title={
-                  <Typography.Title level={5}>Applications</Typography.Title>
+                  <Typography.Title level={5}>
+                    {t("APPLICATIONS")}
+                  </Typography.Title>
                 }
                 content={
                   <Typography.Title
@@ -54,7 +59,9 @@ const OfferStats = ({ offerId }: IOfferStatsProps) => {
             </Col>
             <Col span={12}>
               <Card
-                title={<Typography.Title level={5}>Rejected</Typography.Title>}
+                title={
+                  <Typography.Title level={5}>{t("REJECTED")}</Typography.Title>
+                }
                 content={
                   <Typography.Title
                     level={3}
@@ -69,7 +76,9 @@ const OfferStats = ({ offerId }: IOfferStatsProps) => {
             </Col>
             <Col span={12}>
               <Card
-                title={<Typography.Title level={5}>Accepted</Typography.Title>}
+                title={
+                  <Typography.Title level={5}>{t("ACCEPTED")}</Typography.Title>
+                }
                 content={
                   <Typography.Title
                     level={3}
@@ -88,7 +97,7 @@ const OfferStats = ({ offerId }: IOfferStatsProps) => {
           <Card
             title={
               <Typography.Title level={3} style={{ color: "white" }}>
-                Positions to fill
+                {t("POSITIONS_TO_FILL")}
               </Typography.Title>
             }
             content={

@@ -3,24 +3,27 @@ import { Typography } from "antd";
 import { LoadingPage, Tabs } from "common";
 import { ITabProps } from "common/types";
 import { getFieldOfWork } from "common/utils";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { CompanyInfo, OffersList } from "../components";
 import useCompanyProfile from "../hooks/useCompanyProfile";
 
 const CompanyProfile = () => {
+  const { t } = useTranslation();
+
   const params = useParams();
   const companyId = params.companyID;
   const { companyData, isLoading } = useCompanyProfile(companyId || "");
 
   if (!companyData || isLoading)
-    return <LoadingPage message="Fetching company data ..." />;
+    return <LoadingPage message={t("FETCHING_COMPANY_DATA")} />;
 
   const tabs: ITabProps[] = [
     {
       label: (
         <span>
           <InfoCircleOutlined />
-          About
+          {t("ABOUT")}
         </span>
       ),
       key: "1",
@@ -30,7 +33,7 @@ const CompanyProfile = () => {
       label: (
         <span>
           <ProfileOutlined />
-          Offers
+          {t("OFFERS")}
         </span>
       ),
       key: "2",

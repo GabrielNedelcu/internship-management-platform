@@ -1,73 +1,76 @@
 import { Form, FormListFieldData, Input, InputNumber } from "antd";
+import { useTranslation } from "react-i18next";
 import { Collabsable } from "../../../common";
 const { TextArea } = Input;
 
 const OfferForm = (props: { field: FormListFieldData }) => {
+  const { t } = useTranslation();
+
   const field = props.field;
   return (
     <>
       <Form.Item
         {...field}
-        label="Job Title"
+        label={t("JOB_TITLE")}
         name={[field.name, "title"]}
         rules={[
           {
             required: true,
-            message: "Please provide the offerțs job title",
+            message: t("PROVIDE_JOB_TITLE").toString(),
           },
         ]}
         hasFeedback
       >
-        <Input placeholder="Please enter the job's title." />
+        <Input placeholder={t("PROVIDE_JOB_TITLE").toString()} />
       </Form.Item>
 
       <Form.Item
         {...field}
-        label="Job Description"
+        label={t("JOB_DESCRIPTION")}
         name={[field.name, "description"]}
         rules={[
           {
             required: true,
-            message: "Please provide the offer's description",
+            message: t("PROVIDE_JOB_dESCRIPTION").toString(),
           },
         ]}
         hasFeedback
       >
-        <TextArea rows={3} placeholder="Please enter the job's description" />
+        <TextArea
+          rows={3}
+          placeholder={t("PROVIDE_JOB_dESCRIPTION").toString()}
+        />
       </Form.Item>
 
       <Form.Item
         {...field}
-        label="Departament"
+        label={t("DEPARTAMENT")}
         name={[field.name, "departament"]}
         rules={[
           {
             required: true,
-            message: "Please provide the offer's departament!",
+            message: t("PROVIDE_DEPARTAMENT").toString(),
           },
         ]}
         hasFeedback
       >
-        <Input placeholder="Please enter the departament in which the offer will be" />
+        <Input placeholder={t("PROVIDE_DEPARTAMENT").toString()} />
       </Form.Item>
 
       <Form.Item
         {...field}
-        label="Available Positions"
+        label={t("AVAILABLE_POSITIONS")}
         name={[field.name, "availablePos"]}
         rules={[
           {
             required: true,
-            message: "Please provide the number of available positions",
           },
           () => ({
             validator(_, value) {
               if (!value || value >= 1) {
                 return Promise.resolve();
               }
-              return Promise.reject(
-                new Error("Please provide at least 1 available position")
-              );
+              return Promise.reject(new Error(""));
             },
           }),
         ]}
@@ -78,71 +81,65 @@ const OfferForm = (props: { field: FormListFieldData }) => {
 
       <Form.Item
         {...field}
-        label="Requirements"
+        label={t("JOB_REQUIREMENTS")}
         name={[field.name, "requirements"]}
         hasFeedback
       >
-        <TextArea rows={3} placeholder="Please enter the job's requirements" />
+        <TextArea rows={3} placeholder={t("PROVIDE_REQUIREMENTS").toString()} />
       </Form.Item>
 
       <Form.Item
         {...field}
-        label="Other Mentions"
+        label={t("OTHER_MENTIONS")}
         name={[field.name, "mentions"]}
         hasFeedback
       >
-        <TextArea
-          rows={3}
-          placeholder="Please enter, if needed, other metions. E.g. All the CVs must pe also sent to the following email address ..."
-        />
+        <TextArea rows={3} />
       </Form.Item>
 
       <Collabsable
         key={`supervisor#${field.key}`}
-        panelTitle={"Supervisor"}
+        panelTitle={t("SUPERVISOR")}
         contentElement={
           <>
             <Form.Item
               {...field}
-              label="Full Name"
+              label={t("NAME")}
               name={[field.name, "supervisor", "name"]}
               rules={[
                 {
                   required: true,
-                  message:
-                    "Please provide the full name for the supervisor for this offer!",
+                  message: t("PROVIDE_NAME").toString(),
                 },
               ]}
               hasFeedback
             >
-              <Input placeholder="Offer's supervisor's Full Name" />
+              <Input placeholder={t("PROVIDE_NAME").toString()} />
             </Form.Item>
 
             <Form.Item
               {...field}
-              label="Job Title"
+              label={t("JOB_TITLE")}
               name={[field.name, "supervisor", "jobTitle"]}
               rules={[
                 {
                   required: true,
-                  message:
-                    "Please provide the job title for the supervisor for this offer!",
+                  message: t("PROVIDE_JOB_TITLE").toString(),
                 },
               ]}
               hasFeedback
             >
-              <Input placeholder="Offer's supervisor's Job Title" />
+              <Input placeholder={t("PROVIDE_JOB_TITLE").toString()} />
             </Form.Item>
 
             <Form.Item
               {...field}
-              label="Phone Number"
+              label={t("PHONE_NUMBER")}
               name={[field.name, "supervisor", "phoneNumber"]}
               rules={[
                 {
                   required: true,
-                  message:
-                    "Please provide the phone number for the supervisor for this offer!",
+                  message: t("PROVIDE_PHONE_NUMBER").toString(),
                 },
                 () => ({
                   validator(_, value) {
@@ -150,9 +147,7 @@ const OfferForm = (props: { field: FormListFieldData }) => {
                       return Promise.resolve();
                     }
                     return Promise.reject(
-                      new Error(
-                        "Please provide a phone number containnig 9 digits"
-                      )
+                      new Error(t("TYPE_VALID_PHONE_NUMBER").toString())
                     );
                   },
                 }),
@@ -161,27 +156,27 @@ const OfferForm = (props: { field: FormListFieldData }) => {
             >
               <Input
                 addonBefore="+40"
-                placeholder="Offer's supervisor's Phone Number"
+                placeholder={t("PROVIDE_PHONE_NUMBER").toString()}
               />
             </Form.Item>
 
             <Form.Item
               {...field}
-              label="Email"
+              label={t("EMAIL")}
               name={[field.name, "supervisor", "email"]}
               rules={[
                 {
                   type: "email",
-                  message: "Please provide a valid email address!",
+                  message: t("TYPE_VALID_EMAIL").toString(),
                 },
                 {
                   required: true,
-                  message: "Please provide the email address for the handler!",
+                  message: t("PROVIDE_EMAIL").toString(),
                 },
               ]}
               hasFeedback
             >
-              <Input placeholder="Offer's supervisor's Email" />
+              <Input placeholder={t("PROVIDE_EMAIL").toString()} />
             </Form.Item>
           </>
         }

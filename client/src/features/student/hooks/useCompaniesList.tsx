@@ -4,8 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import { getCompanies } from "../api";
 import { initialFetchOptions } from "common/constants";
 import { IServerResponseMultipleFetch } from "common/types";
+import { useTranslation } from "react-i18next";
 
 const useCompaniesList = () => {
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [fetchOptions, setFetchOptions] = useState(initialFetchOptions);
@@ -29,8 +32,7 @@ const useCompaniesList = () => {
           setIsLoading(false);
           notification.error({
             message: "Ooops ...",
-            description:
-              "Cannot retrieve the companies from the server ... please try again!",
+            description: t("CANNOT_RETRIEVE_COMPANIES"),
             duration: 10,
           });
         },

@@ -3,8 +3,11 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 import { Collabsable } from "../../../../common";
 import { OfferForm } from "../";
+import { useTranslation } from "react-i18next";
 
 const CompanyOffersStep = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <Form.List name="offers">
@@ -15,7 +18,7 @@ const CompanyOffersStep = () => {
                 <>
                   <Collabsable
                     key={index}
-                    panelTitle={`Offer #${index}`}
+                    panelTitle={`${t("OFFER")} #${index}`}
                     contentElement={<OfferForm field={field} />}
                     extraButton={
                       <MinusCircleOutlined
@@ -36,7 +39,7 @@ const CompanyOffersStep = () => {
                 block
                 icon={<PlusOutlined />}
               >
-                Add Offer
+                {t("ADD_OFFER")}
               </Button>
             </Form.Item>
           </>

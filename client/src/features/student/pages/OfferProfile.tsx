@@ -1,17 +1,20 @@
 import { SendOutlined } from "@ant-design/icons";
 import { Row, Col, Typography, Button } from "antd";
 import { LoadingPage, Card, OfferData } from "common";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import useOfferProfile from "../hooks/useOfferProfile";
 
 const OfferProfile = () => {
+  const { t } = useTranslation();
+
   const params = useParams();
   const offerId = params.offerID;
   const { offerData, isLoading, handleApply, handleRemoveApplication } =
     useOfferProfile(offerId || "");
 
   if (!offerData || isLoading)
-    return <LoadingPage message="Fetching offer data ..." />;
+    return <LoadingPage message={t("FETCHING_OFFER_DATA")} />;
 
   return (
     <>
@@ -32,7 +35,7 @@ const OfferProfile = () => {
               block
               danger
             >
-              Remove Application
+              {t("REMOVE_APPLICATION")}
             </Button>
           ) : (
             <Button
@@ -41,7 +44,7 @@ const OfferProfile = () => {
               onClick={handleApply}
               block
             >
-              Apply to this offer
+              {t("APPLY_TO_OFFER")}
             </Button>
           )}
         </Col>
@@ -50,7 +53,7 @@ const OfferProfile = () => {
       <Row gutter={[16, 16]}>
         <Col span={8}>
           <Card
-            title="Positions Offered"
+            title={t("OFFERED_POSITIONS")}
             content={
               <Typography.Paragraph>
                 <br />
@@ -61,7 +64,7 @@ const OfferProfile = () => {
         </Col>
         <Col span={8}>
           <Card
-            title="Positions Available"
+            title={t("AVAILABLE_POSITIONS")}
             content={
               <Typography.Paragraph>
                 <br />
@@ -72,7 +75,7 @@ const OfferProfile = () => {
         </Col>
         <Col span={8}>
           <Card
-            title="Applications"
+            title={t("APPLICATIONS")}
             content={
               <Typography.Paragraph>
                 <br />

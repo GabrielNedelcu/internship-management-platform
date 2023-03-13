@@ -4,12 +4,15 @@ import { Card, IconText } from "common";
 import { IApplicationData } from "common/types";
 import { getApplicationStatus } from "common/utils";
 import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 
 interface IApplicationCardProps {
   applicationData: IApplicationData;
 }
 
 const ApplicationCard = ({ applicationData }: IApplicationCardProps) => {
+  const { t } = useTranslation();
+
   return (
     <Card
       actions={[
@@ -34,7 +37,7 @@ const ApplicationCard = ({ applicationData }: IApplicationCardProps) => {
       content={
         <Typography.Paragraph ellipsis={{ rows: 3 }}>
           <br />
-          {`You have applied on ${dayjs(applicationData.createdAt)}`}
+          {`${t("YOU_HAVE_APPLIED_ON")} ${dayjs(applicationData.createdAt)}`}
         </Typography.Paragraph>
       }
     />

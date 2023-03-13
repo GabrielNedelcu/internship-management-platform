@@ -2,8 +2,11 @@ import { Col, Row, Typography } from "antd";
 import "../../../style/SignInPage.css";
 import { ProfileForm } from "../components";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const ProfileSetup = () => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
 
   return (
@@ -13,14 +16,11 @@ const ProfileSetup = () => {
         style={{ backgroundColor: "white", padding: 25 }}
       >
         <Row justify="center">
-          <Typography.Title level={2}>
-            Setting up your profile ...
-          </Typography.Title>
+          <Typography.Title level={2}>{t("PROFILE_SETUP")}</Typography.Title>
         </Row>
         <Row justify="center">
           <Typography.Title level={4} type={"secondary"}>
-            Before using the platform, we need some information in order to
-            generate the legal documents (contracts, etc.)
+            {t("PROFILE_SETUP_MSG")}
           </Typography.Title>
         </Row>
 
@@ -30,7 +30,7 @@ const ProfileSetup = () => {
             <br />
             <br />
             <ProfileForm
-              finishPrompt="Finish Profile Setup"
+              finishPrompt={t("FINISH_PROFILE_SETUP")}
               onSuccess={() => {
                 return navigate(`/student/overview`);
               }}

@@ -4,8 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import { getOffers } from "../api";
 import { initialFetchOptions } from "common/constants";
 import { IServerResponseMultipleFetch } from "common/types";
+import { useTranslation } from "react-i18next";
 
 const useOffersList = (companyID?: string) => {
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [fetchOptions, setFetchOptions] = useState(initialFetchOptions);
@@ -34,8 +37,7 @@ const useOffersList = (companyID?: string) => {
           setIsLoading(false);
           notification.error({
             message: "Ooops ...",
-            description:
-              "Cannot retrieve the offers from the server ... please try again!",
+            description: t("CANNOT_RETRIEVE_OFFERS"),
             duration: 10,
           });
         },

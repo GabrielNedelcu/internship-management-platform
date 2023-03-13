@@ -6,8 +6,11 @@ import { wait } from "@testing-library/user-event/dist/utils";
 
 import { signUpCompany } from "../api";
 import { checkAccountEmail } from "common";
+import { useTranslation } from "react-i18next";
 
 const useSignUp = () => {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
 
@@ -15,9 +18,8 @@ const useSignUp = () => {
     useMutation(["signUpCompany"], () => signUpCompany(formData), {
       onSuccess: () => {
         notification.success({
-          message: "Account created",
-          description:
-            "Great! Your account has been created successfully. You will not have access on the platform until a faculty will review your account and approve your request! We will notify you on your email ass soon as possible! You will be redirected to the login page in 5 seconds!",
+          message: t("ACCOUNT_CREATED"),
+          description: t("ACCOUNT_CREATED_MSG"),
           duration: 10,
         });
 
@@ -26,8 +28,7 @@ const useSignUp = () => {
       onError: () => {
         notification.error({
           message: "Ooops ...",
-          description:
-            "Error occured while creating your account! Please try again later!",
+          description: t("ACCOUNT_CREATION_ERROR"),
           duration: 10,
         });
 

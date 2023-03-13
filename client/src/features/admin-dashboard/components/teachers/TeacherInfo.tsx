@@ -14,6 +14,7 @@ import { useCheckUniqueEmail } from "common";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { patchProfessor } from "features/admin-dashboard/api/professorsAPI";
+import { useTranslation } from "react-i18next";
 
 interface ITeacherData {
   teacherId: string;
@@ -36,6 +37,8 @@ const TeacherInfo = ({
   departament,
   numPositions,
 }: ITeacherData) => {
+  const { t } = useTranslation();
+
   const queryClient = useQueryClient();
 
   const [newEmail, setNewEmail] = useState<String>(email);
@@ -55,9 +58,8 @@ const TeacherInfo = ({
         queryClient.invalidateQueries(["getTeacher", teacherId]);
 
         notification.success({
-          message: "Account updated",
-          description:
-            "Great! You have successfully updated the teacher's account! ...",
+          message: t("ACCOUNT_UPDATED"),
+          description: t("UPDATE_ACCOUNT_SUCCESS_MSG"),
           duration: 10,
         });
       },
@@ -65,8 +67,7 @@ const TeacherInfo = ({
         setLoading(false);
         notification.error({
           message: "Ooops ...",
-          description:
-            "Error occured while updating the account! Please try again later!",
+          description: t("UPDATE_ACCOUNT_ERR_MSG"),
           duration: 10,
         });
       },
@@ -75,7 +76,7 @@ const TeacherInfo = ({
 
   return (
     <>
-      <Spin spinning={loading} tip={"Updating teacher profile..."}>
+      <Spin spinning={loading} tip={t("UPDATING_ACCOUNT")}>
         <Row gutter={[16, 16]}>
           <Col span={12} offset={6}>
             <Form
@@ -88,18 +89,18 @@ const TeacherInfo = ({
             >
               <Form.Item
                 name="name"
-                label="Name"
+                label={t("NAME")}
                 initialValue={name}
                 rules={[
                   {
                     required: true,
-                    message: "Please provide the teacher's full name",
+                    message: t("TYPE_TEACHER_FULL_NAME").toString(),
                   },
                 ]}
                 hasFeedback
               >
                 <Input
-                  placeholder="Type in the teacher's full name"
+                  placeholder={t("TYPE_TEACHER_FULL_NAME").toString()}
                   defaultValue={name}
                   onChange={(e) => {}}
                 />
@@ -107,23 +108,23 @@ const TeacherInfo = ({
 
               <Form.Item
                 name="email"
-                label="Email"
+                label={t("EMAIL")}
                 initialValue={email}
                 rules={[
                   {
                     type: "email",
-                    message: "Please provide a valid email address!",
+                    message: t("TYPE_VALID_EMAIL").toString(),
                   },
                   {
                     required: true,
-                    message: "Please provide the student's email!",
+                    message: t("TYPE_TEACHER_EMAIL").toString(),
                   },
                   ...(newEmail !== email ? [{ validator: validateEmail }] : []),
                 ]}
                 hasFeedback
               >
                 <Input
-                  placeholder="Type in the teacher's email"
+                  placeholder={t("TYPE_TEACHER_EMAIL").toString()}
                   defaultValue={email}
                   onChange={(e) => {
                     setNewEmail(e.target.value);
@@ -133,18 +134,18 @@ const TeacherInfo = ({
 
               <Form.Item
                 name="title"
-                label="Job Title"
+                label={t("JOB_TITLE").toString()}
                 initialValue={title}
                 rules={[
                   {
                     required: true,
-                    message: "Please provide the teacher's job title",
+                    message: t("TYPE_TEACHER_JOB_TITLE").toString(),
                   },
                 ]}
                 hasFeedback
               >
                 <Input
-                  placeholder="Type in the teacher's job title"
+                  placeholder={t("TYPE_TEACHER_JOB_TITLE").toString()}
                   defaultValue={title}
                   onChange={(e) => {}}
                 />
@@ -152,22 +153,22 @@ const TeacherInfo = ({
 
               <Form.Item
                 name="privatePhone"
-                label="Private Phone"
+                label={t("PRIVATE_PHONE").toString()}
                 initialValue={privatePhone}
                 rules={[
                   {
                     required: true,
-                    message: "Please provide the techer's private phone number",
+                    message: t("TYPE_TEACHER_PRIVATE_PHONE").toString(),
                   },
                   {
                     len: 9,
-                    message: "The phone number must have exactly 9 characters",
+                    message: t("TYPE_VALID_PHONE_NUMBER").toString(),
                   },
                 ]}
                 hasFeedback
               >
                 <Input
-                  placeholder="Type in the teacher's private phone number"
+                  placeholder={t("TYPE_TEACHER_PRIVATE_PHONE").toString()}
                   addonBefore="+40"
                   defaultValue={privatePhone}
                   onChange={(e) => {}}
@@ -176,22 +177,22 @@ const TeacherInfo = ({
 
               <Form.Item
                 name="publicPhone"
-                label="Public Phone"
+                label={t("PUBLIC_PHONE").toString()}
                 initialValue={publicPhone}
                 rules={[
                   {
                     required: true,
-                    message: "Please provide the techer's public phone number",
+                    message: t("TYPE_TEACHER_PUBLICE_PHONE").toString(),
                   },
                   {
                     len: 9,
-                    message: "The phone number must have exactly 9 characters",
+                    message: t("TYPE_VALID_PHONE_NUMBER").toString(),
                   },
                 ]}
                 hasFeedback
               >
                 <Input
-                  placeholder="Type in the teacher's public phone number"
+                  placeholder={t("TYPE_TEACHER_PUBLICE_PHONE").toString()}
                   addonBefore="+40"
                   defaultValue={publicPhone}
                   onChange={(e) => {}}
@@ -200,18 +201,18 @@ const TeacherInfo = ({
 
               <Form.Item
                 name="departament"
-                label="Departament"
+                label={t("DEPARTAMENT").toString()}
                 initialValue={departament}
                 rules={[
                   {
                     required: true,
-                    message: "Please select the techer's departament",
+                    message: t("SELECT_TEACHER_DEPARTAMENT").toString(),
                   },
                 ]}
                 hasFeedback
               >
                 <Select
-                  placeholder="Please select the teacher's departament"
+                  placeholder={t("SELECT_TEACHER_DEPARTAMENT").toString()}
                   defaultValue={departament}
                   onChange={(value) => {
                     console.log(value);
@@ -226,7 +227,7 @@ const TeacherInfo = ({
 
               <Form.Item
                 name="numPositions"
-                label="Students no."
+                label={t("STUDENT_NUMBER").toString()}
                 initialValue={numPositions}
               >
                 <InputNumber
@@ -240,7 +241,7 @@ const TeacherInfo = ({
 
               <Form.Item>
                 <Button type="primary" htmlType="submit" block>
-                  Modify Teacher Data
+                  {t("UPDATE_ACCOUNT")}
                 </Button>
               </Form.Item>
             </Form>

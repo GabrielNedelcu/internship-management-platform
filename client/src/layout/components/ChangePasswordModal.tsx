@@ -1,5 +1,6 @@
 import { Modal } from "antd";
 import { PasswordChangeForm } from "common";
+import { useTranslation } from "react-i18next";
 
 interface IChangePasswordModalProps {
   openModal: boolean;
@@ -10,10 +11,12 @@ const ChangePasswordModal = ({
   openModal,
   onAfterOK,
 }: IChangePasswordModalProps) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <Modal
-        title="Change your account's password ..."
+        title={t("CHANGE_ACCOUNT_PASSWORD")}
         open={openModal}
         footer={null}
         onCancel={() => onAfterOK()}

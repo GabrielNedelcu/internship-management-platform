@@ -4,10 +4,13 @@ import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import useSignIn from "../hooks/useSignIn";
 
 import "../../../style/SignInForm.css";
+import { useTranslation } from "react-i18next";
 
 const { Search } = Input;
 
 const SignInForm = () => {
+  const { t } = useTranslation();
+
   const {
     setEmail,
     setPassword,
@@ -18,7 +21,7 @@ const SignInForm = () => {
 
   return (
     <div className="sign-in-form-container">
-      <h1 className="header">Welcome!</h1>
+      <h1 className="header">{t("WELCOME")}</h1>
       <p style={{ color: "#c5c5c5" }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ornare
         congue euismod. Nullam accumsan, libero sit{" "}
@@ -32,13 +35,13 @@ const SignInForm = () => {
           rules={[
             {
               type: "email",
-              message: "Please input a valid email address!",
+              message: t("TYPE_VALID_EMAIL").toString(),
             },
-            { required: true, message: "Please input your email!" },
+            { required: true, message: t("TYPE_IN_YOUR_EMAIL").toString() },
           ]}
         >
           <Input
-            placeholder="Type in you email address"
+            placeholder={t("TYPE_IN_YOUR_EMAIL").toString()}
             prefix={<MailOutlined />}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -47,10 +50,12 @@ const SignInForm = () => {
         </Form.Item>
         <Form.Item
           name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
+          rules={[
+            { required: true, message: t("TYPE_IN_YOUR_PASSWORD").toString() },
+          ]}
         >
           <Input.Password
-            placeholder="Type in your password"
+            placeholder={t("TYPE_IN_YOUR_PASSWORD").toString()}
             prefix={<LockOutlined />}
             onChange={(e) => {
               setPassword(e.target.value);
@@ -59,7 +64,7 @@ const SignInForm = () => {
         </Form.Item>
         <Form.Item>
           <a href="" style={{ float: "right" }}>
-            Forgotten password?
+            {t("PASS_FORGOTTEN")}
           </a>
         </Form.Item>
         <Form.Item>
@@ -69,10 +74,10 @@ const SignInForm = () => {
         </Form.Item>
       </Form>
 
-      <Divider>Don't have an account?</Divider>
+      <Divider>{t("DONT_HAVE_ACCOUNT")}</Divider>
 
       <Divider orientation="left" dashed={true}>
-        I am a company
+        {t("I_AM_COMPANY")}
       </Divider>
 
       <Button
@@ -86,13 +91,13 @@ const SignInForm = () => {
       </Button>
 
       <Divider orientation="left" dashed={true}>
-        I am a student / teacher
+        {t("I_AM_STUDENT_TEACHER")}
       </Divider>
 
       <Search
-        placeholder="Please enter your email so we can send you your password"
+        placeholder={t("ENTER_EMAIL_FOR_PASS_REQ").toString()}
         allowClear
-        enterButton="Request password"
+        enterButton={t("REQUEST_PASS")}
         size="large"
         onChange={(e) => {
           setReqPasswordEmail(e.target.value);
@@ -101,8 +106,7 @@ const SignInForm = () => {
           if (!value.length) {
             notification.error({
               message: "Ooops ...",
-              description:
-                "Please fill out your email before requesting your password!",
+              description: t("ENTER_EMAIL_FOR_PASS_REQ"),
               duration: 2,
             });
           } else mutateRequestPassword();

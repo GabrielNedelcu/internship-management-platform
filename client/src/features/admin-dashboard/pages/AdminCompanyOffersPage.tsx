@@ -1,10 +1,13 @@
 import { Typography, Button } from "antd";
 import useOffersTable from "../hooks/useOffersTable";
 import { Row, Col, Table, Input } from "antd";
+import { useTranslation } from "react-i18next";
 
 const { Search } = Input;
 
 const AdminCompanyOffersPage = () => {
+  const { t } = useTranslation();
+
   const {
     loading,
     tableData,
@@ -18,15 +21,15 @@ const AdminCompanyOffersPage = () => {
 
   return (
     <>
-      <Typography.Title level={1}>Company Offers</Typography.Title>
+      <Typography.Title level={1}>{t("COMPANY_OFFERS")}</Typography.Title>
       <Typography.Title level={5} type={"secondary"}>
-        View, edit and delete company offers ...
+        {t("VIEW_EDIT_OFFERS")}
       </Typography.Title>
 
       <Row gutter={[16, 16]}>
         <Col span="12">
           <Search
-            placeholder="Search for offers by job title or company name"
+            placeholder={t("SEARCH_OFFERS_TITLE_COMPANY").toString()}
             onSearch={handleSearchBy}
             enterButton
             size="large"
@@ -38,7 +41,7 @@ const AdminCompanyOffersPage = () => {
         </Col>
         <Col style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button size="large" type="primary" onClick={handleClearSearch}>
-            Clear Search
+            {t("CLEAR_SEARCH")}
           </Button>
         </Col>
         <Col>

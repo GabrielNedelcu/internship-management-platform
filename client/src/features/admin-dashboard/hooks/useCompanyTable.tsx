@@ -10,6 +10,7 @@ import { getAllCompanies, acceptCompany } from "../api/companiesAPI";
 import { TableProps, Space, Button, Tooltip, notification } from "antd";
 import { CloseOutlined, CheckOutlined, EditOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 type ICompanyData = {
   _id: string;
@@ -22,6 +23,8 @@ type ICompanyData = {
 };
 
 const useCompanyTable = (companyValidated: boolean) => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -48,8 +51,7 @@ const useCompanyTable = (companyValidated: boolean) => {
         setLoading(false);
         notification.error({
           message: "Ooops ...",
-          description:
-            "Cannot retrieve the companies from the server ... please try again!",
+          description: t("CANNOT_RETRIEVE_COMPANIES"),
           duration: 10,
         });
       },
@@ -69,17 +71,16 @@ const useCompanyTable = (companyValidated: boolean) => {
         queryClient.invalidateQueries(["getAllCompanies"]);
 
         notification.success({
-          message: "Great!",
-          description: "The company has just been accepted on the platform!",
+          message: t("GREAT"),
+          description: t("COMPANY_ACCEPTED"),
           duration: 10,
         });
       },
       onError: () => {
         setLoading(false);
         notification.error({
-          message: "Something went wrong ...",
-          description:
-            "An error occured while accepting the company on the platform! Please try again later ...",
+          message: "Oops ...",
+          description: t("CANNOT_ACCEPT_COMPANIES"),
           duration: 10,
         });
       },
@@ -97,7 +98,7 @@ const useCompanyTable = (companyValidated: boolean) => {
 
   const columns: ColumnsType<ICompanyData> = [
     {
-      title: "Company Name",
+      title: t("COMPANY_NAME"),
       dataIndex: "name",
       key: "name",
       sorter: (a, b) => a.name.localeCompare(b.name),
@@ -105,7 +106,7 @@ const useCompanyTable = (companyValidated: boolean) => {
       ellipsis: true,
     },
     {
-      title: "Account Email",
+      title: t("EMAIL"),
       dataIndex: "email",
       key: "email",
       sorter: (a, b) => a.email.localeCompare(b.email),
@@ -113,7 +114,7 @@ const useCompanyTable = (companyValidated: boolean) => {
       ellipsis: true,
     },
     {
-      title: "Field of Work",
+      title: t("FIELD_OF_WORK"),
       dataIndex: "fieldOfWork",
       key: "fieldOfWork",
       filters: [
@@ -154,7 +155,7 @@ const useCompanyTable = (companyValidated: boolean) => {
       },
     },
     {
-      title: "Number Of Offers",
+      title: t("OFFERS_NB"),
       dataIndex: "numOffers",
       key: "numOffers",
       sorter: (a, b) => a.numOffers - b.numOffers,
@@ -162,7 +163,7 @@ const useCompanyTable = (companyValidated: boolean) => {
       ellipsis: true,
     },
     {
-      title: "Number Of Positions",
+      title: t("POSITIONS_NB"),
       dataIndex: "numPositions",
       key: "numPositions",
       sorter: (a, b) => a.numPositions - b.numPositions,
@@ -171,7 +172,7 @@ const useCompanyTable = (companyValidated: boolean) => {
       ellipsis: true,
     },
     {
-      title: "Onboarding Date",
+      title: t("POSITIONS_NB"),
       dataIndex: "onboardingDate",
       key: "onboardingDate",
       sorter: (a, b) =>
@@ -196,7 +197,7 @@ const useCompanyTable = (companyValidated: boolean) => {
           return (
             <>
               <Space size="small">
-                <Tooltip title="Review Company">
+                <Tooltip title={t("REVIEW")}>
                   <Button
                     type="primary"
                     shape="circle"
@@ -204,7 +205,7 @@ const useCompanyTable = (companyValidated: boolean) => {
                     onClick={() => handleReview(record._id)}
                   />
                 </Tooltip>
-                <Tooltip title="Quick Accept">
+                <Tooltip title={t("QUICK_ACCEPT")}>
                   <Button
                     type="primary"
                     shape="circle"
@@ -213,7 +214,7 @@ const useCompanyTable = (companyValidated: boolean) => {
                     onClick={() => mutateAcceptCompany(record._id)}
                   />
                 </Tooltip>
-                <Tooltip title="Quick Decline">
+                <Tooltip title={t("QUICK_DECLINE")}>
                   <Button
                     type="primary"
                     shape="circle"
@@ -229,7 +230,7 @@ const useCompanyTable = (companyValidated: boolean) => {
           return (
             <>
               <Space size="small">
-                <Tooltip title="Edit Company">
+                <Tooltip title={t("EDIT")}>
                   <Button
                     type="primary"
                     shape="circle"
@@ -237,7 +238,7 @@ const useCompanyTable = (companyValidated: boolean) => {
                     onClick={() => handleReview(record._id)}
                   />
                 </Tooltip>
-                <Tooltip title="Delete Company">
+                <Tooltip title={t("DELETE")}>
                   <Button
                     type="primary"
                     shape="circle"

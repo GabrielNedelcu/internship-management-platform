@@ -10,8 +10,11 @@ import { Tabs } from "common";
 import { TeacherInfo } from "../components";
 import { getProfessor, patchProfessor } from "../api/professorsAPI";
 import { ITabProps } from "common/types";
+import { useTranslation } from "react-i18next";
 
 const AdminTeacherProfile = () => {
+  const { t } = useTranslation();
+
   const queryClient = useQueryClient();
 
   const params = useParams();
@@ -33,8 +36,7 @@ const AdminTeacherProfile = () => {
         setLoading(false);
         notification.error({
           message: "Ooops ...",
-          description:
-            "Cannot retrieve the professor's data from the server ... please try again!",
+          description: t("CANNOT_RETRIEVE_TEACHER_DATA"),
           duration: 10,
         });
       },
@@ -54,9 +56,8 @@ const AdminTeacherProfile = () => {
         queryClient.invalidateQueries(["getTeacher", teacherId]);
 
         notification.success({
-          message: "Account updated",
-          description:
-            "Great! You have successfully updated the teacher's account! ...",
+          message: t("ACCOUNT_UPDATED"),
+          description: t("UPDATE_ACCOUNT_SUCCESS_MSG"),
           duration: 10,
         });
       },
@@ -64,8 +65,7 @@ const AdminTeacherProfile = () => {
         setLoading(false);
         notification.error({
           message: "Ooops ...",
-          description:
-            "Error occured while updating the account! Please try again later!",
+          description: t("UPDATE_ACCOUNT_ERR_MSG"),
           duration: 10,
         });
       },
@@ -75,7 +75,7 @@ const AdminTeacherProfile = () => {
   if (!data)
     return (
       <>
-        <Spin spinning={true} size="large" tip={"Fetching teacher data ..."} />
+        <Spin spinning={true} size="large" tip={t("FETCHING_TEACHER_DATA")} />
       </>
     );
 
@@ -84,7 +84,7 @@ const AdminTeacherProfile = () => {
       label: (
         <span>
           <ContainerOutlined />
-          Profile Information
+          {t("PROFILE_INFO")}
         </span>
       ),
       key: "1",
@@ -105,7 +105,7 @@ const AdminTeacherProfile = () => {
       label: (
         <span>
           <UserOutlined />
-          Supervised Students
+          {t("SUPERVISED_STUDENTS")}
         </span>
       ),
       key: "2",
@@ -115,7 +115,7 @@ const AdminTeacherProfile = () => {
 
   return (
     <>
-      <Spin spinning={loading} size="large" tip={"Fetching teacher's data ..."}>
+      <Spin spinning={loading} size="large" tip={t("FETCHING_TEACHER_DATA")}>
         <Row gutter={[16, 16]}>
           <Col span={18}>
             <Typography.Title level={1}>{data.name}</Typography.Title>
@@ -132,7 +132,7 @@ const AdminTeacherProfile = () => {
                   mutateUpdateTeacherData({ admin: true });
                 }}
               >
-                Make Admin
+                {t("MAKE_ADMIN")}
               </Button>
             ) : (
               <Button
@@ -142,7 +142,7 @@ const AdminTeacherProfile = () => {
                   mutateUpdateTeacherData({ admin: false });
                 }}
               >
-                Remove Admin
+                {t("REMOVE_ADMIN")}
               </Button>
             )}
           </Col>

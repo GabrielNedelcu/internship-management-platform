@@ -7,8 +7,12 @@ import { loginUser, requestPassword } from "../api";
 import { UserContext } from "app/contexts/UserContext";
 import { LanguageContext } from "app/contexts/LanguageContext";
 import { USER_ROLES } from "common/constants";
+import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 const useSignIn = () => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
 
   const { setUserID, setAccessToken } = useContext(UserContext);
@@ -48,8 +52,7 @@ const useSignIn = () => {
           if (!data.validated)
             notification.error({
               message: "Ooops ...",
-              description:
-                "Seems like your profile hasn't been validated yet. You cannot access the platform",
+              description: t("PROFILE_NOT_VALIDATED"),
               duration: 10,
             });
           else {
@@ -66,7 +69,7 @@ const useSignIn = () => {
       onError: () => {
         notification.error({
           message: "Ooops ...",
-          description: "Invalid credentials ... please try again!",
+          description: t("INVALID_CREDENTIALS"),
           duration: 10,
         });
       },
@@ -79,17 +82,15 @@ const useSignIn = () => {
     {
       onSuccess: () => {
         notification.success({
-          message: "Great!",
-          description:
-            "We have sent you your email containing the instructions you need to follow in order to successfully. Please check your inbox!",
+          message: t("GREAT"),
+          description: t("REQUEST_PASSWORD_MSG"),
           duration: 10,
         });
       },
       onError: () => {
         notification.error({
-          message: "Something went wrong ...",
-          description:
-            "An error occured while resetting your password! Please try again later ...",
+          message: "Ooops ...",
+          description: t("REQUEST_PASSWORD_ERR"),
           duration: 10,
         });
       },

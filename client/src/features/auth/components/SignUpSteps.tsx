@@ -1,4 +1,5 @@
 import { Steps } from "antd";
+import { useTranslation } from "react-i18next";
 
 type SignUpStepsProps = {
   currentStepIdx: number;
@@ -6,33 +7,35 @@ type SignUpStepsProps = {
 };
 
 const SignUpSteps = ({ currentStepIdx, onChangeHandler }: SignUpStepsProps) => {
+  const { t } = useTranslation();
+
   const steps = [
     {
       title: "Step 1",
-      description: "Account Setup",
+      description: t("ACCOUNT_SETUP"),
     },
     {
       title: "Step 2",
-      description: "Company general information",
+      description: t("GENERAL_INFORMATION"),
     },
     {
       title: "Step 3",
-      description: "Company legal representative information",
+      description: t("LEGAL_REP"),
     },
     {
       title: "Step 4",
-      description: "Internship handler information",
+      description: t("INTERNSHIP_HANDLER"),
     },
     {
       title: "Step 5",
-      description: "Internship options setup",
+      description: t("INTERNSHIP_SETUP"),
     },
     {
       title: "Step 6",
-      description: "Offers setup",
+      description: t("OFFERS"),
     },
     {
-      title: "Finish!",
+      title: t("FINISH"),
     },
   ];
 

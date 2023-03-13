@@ -4,8 +4,11 @@ import { useMutation } from "@tanstack/react-query";
 
 import { checkAccountEmail } from "common";
 import { createStudent, uploadStudentsFile } from "../api/studentAPI";
+import { useTranslation } from "react-i18next";
 
 const useStudentCreation = () => {
+  const { t } = useTranslation();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [group, setGroup] = useState("");
@@ -37,8 +40,8 @@ const useStudentCreation = () => {
         setLoading(false);
 
         notification.success({
-          message: "Student created",
-          description: `Great! We've just created a new student with id ${res._id}`,
+          message: t("ACCOUNT_CREATED"),
+          description: t("ACCOUNT_CREATED_MSG"),
           duration: 10,
         });
 
@@ -49,7 +52,7 @@ const useStudentCreation = () => {
 
         notification.error({
           message: "Ooops ...",
-          description: "Error while creating the student! Please try again ...",
+          description: t("ACCOUNT_CREATION_ERROR"),
           duration: 10,
         });
 
@@ -86,8 +89,7 @@ const useStudentCreation = () => {
 
         notification.error({
           message: "Ooops ...",
-          description:
-            "The file could not be uploaded to the server ... Please try again!",
+          description: t("FILE_UPLOAD_ERROR"),
           duration: 10,
         });
 

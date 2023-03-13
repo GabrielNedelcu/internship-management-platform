@@ -1,5 +1,6 @@
 import { Row, Col, Input, Button, Select } from "antd";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ISortComboData {
   value: string;
@@ -15,6 +16,8 @@ interface IFilterSortDataProps {
 }
 
 const FilterSortData = ({ ...props }: IFilterSortDataProps) => {
+  const { t } = useTranslation();
+
   const [filterValue, setFilterValue] = useState<string>("");
 
   return (
@@ -42,7 +45,7 @@ const FilterSortData = ({ ...props }: IFilterSortDataProps) => {
               setFilterValue("");
             }}
           >
-            Clear Search
+            {t("CLEAR_SEARCH")}
           </Button>
           {props.handleSortChange && props.sortOptions && (
             <Select

@@ -1,5 +1,6 @@
 import { Col, Row, Table } from "antd";
 import { FilterSortData, LoadingPage } from "common";
+import { useTranslation } from "react-i18next";
 import useApplicationsList from "../hooks/useApplicationsList";
 
 interface IApplicationsTableProps {
@@ -7,6 +8,8 @@ interface IApplicationsTableProps {
 }
 
 const ApplicationsList = ({ offerId }: IApplicationsTableProps) => {
+  const { t } = useTranslation();
+
   const {
     isLoading,
     columns,
@@ -16,11 +19,12 @@ const ApplicationsList = ({ offerId }: IApplicationsTableProps) => {
     setFetchOptions,
   } = useApplicationsList(offerId);
 
-  if (!applicationsList) return <LoadingPage message="Fetching applications" />;
+  if (!applicationsList)
+    return <LoadingPage message={t("FETCHING_APPLICATIONS")} />;
   return (
     <>
       <FilterSortData
-        searchPrompt={"Search for student name"}
+        searchPrompt={t("SEARCH_STUDENT_NAME").toString()}
         handleSearch={(value: string) => {
           setFetchOptions({
             ...fetchOptions,

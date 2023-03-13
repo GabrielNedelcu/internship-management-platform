@@ -1,4 +1,5 @@
 import { Result } from "antd";
+import { useTranslation } from "react-i18next";
 
 import "../../style/ErrorPage.css";
 
@@ -9,22 +10,12 @@ export enum ErrorPageCode {
 }
 
 export const ErrorPage = ({ errorCode }: { errorCode: ErrorPageCode }) => {
+  const { t } = useTranslation();
+
   const errorData = new Map<ErrorPageCode, [string, string]>([
-    [
-      ErrorPageCode.NotPermitted,
-      [
-        "403 Not Permitted",
-        "Sorry, you are not authorized to access this page.",
-      ],
-    ],
-    [
-      ErrorPageCode.NotFound,
-      ["404 Not Found", "Sorry, the page you visited does not exist."],
-    ],
-    [
-      ErrorPageCode.InternalError,
-      ["500 Internal Server Error", "Sorry, something went wrong."],
-    ],
+    [ErrorPageCode.NotPermitted, [t("NOT_PERMITTED"), t("403_ERR_MSG")]],
+    [ErrorPageCode.NotFound, [t("NOT_FOUND"), t("404_ERR_MSG")]],
+    [ErrorPageCode.InternalError, [t("INTERNAL_ERR"), t("500_ERR_MSG")]],
   ]);
 
   return (

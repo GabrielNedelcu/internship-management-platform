@@ -1,24 +1,27 @@
 import { Row, Col, Spin } from "antd";
 import { FilterSortData, LoadingPage, Pagination } from "common";
 import { ICompanyCardData } from "common/types";
+import { useTranslation } from "react-i18next";
 import { CompanyCard } from "../components";
 import useCompaniesList from "../hooks/useCompaniesList";
-
-const sortOptions = [
-  { value: "asc.numOffers", label: "Offers Asc." },
-  { value: "desc.numOffers", label: "Offers Desc." },
-  { value: "asc.numPositions", label: "Positions Asc." },
-  { value: "desc.numPositions", label: "Positions Desc." },
-  { value: "asc.createdAt", label: "Latest" },
-  { value: "desc.createdAt", label: "Oldest" },
-  { value: "", label: "None" },
-];
 
 const CompaniesList = () => {
   const { companies, isLoading, fetchOptions, setFetchOptions } =
     useCompaniesList();
 
-  if (!companies) return <LoadingPage message="Fetching companies .." />;
+  const { t } = useTranslation();
+
+  const sortOptions = [
+    { value: "asc.numOffers", label: `${t("OFFERS")} ${t("ASC")}` },
+    { value: "desc.numOffers", label: `${t("OFFERS")} ${t("DESC")}` },
+    { value: "asc.numPositions", label: `${t("POSITIONS")} ${t("ASC")}` },
+    { value: "desc.numPositions", label: `${t("POSITIONS")} ${t("DESC")}` },
+    { value: "asc.createdAt", label: t("LATEST") },
+    { value: "desc.createdAt", label: t("OLDEST") },
+    { value: "", label: t("NONE") },
+  ];
+
+  if (!companies) return <LoadingPage message={t("FETCHING_COMPANIES")} />;
 
   return (
     <>
@@ -44,7 +47,7 @@ const CompaniesList = () => {
         }}
       />
 
-      <Spin spinning={isLoading} tip="Fetching companies ..." size="large">
+      <Spin spinning={isLoading} tip={t("FETCHING_COMPANIES")} size="large">
         <Row gutter={[16, 16]}>
           {companies.data.map((cardData: ICompanyCardData) => {
             return (

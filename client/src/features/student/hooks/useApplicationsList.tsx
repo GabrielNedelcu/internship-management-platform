@@ -4,8 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import { getSelfApplications } from "../api";
 import { initialFetchOptions } from "common/constants";
 import { IServerResponseMultipleFetch } from "common/types";
+import { useTranslation } from "react-i18next";
 
 const useApplicationsList = () => {
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [fetchOptions, setFetchOptions] = useState(initialFetchOptions);
@@ -28,8 +31,7 @@ const useApplicationsList = () => {
           setIsLoading(false);
           notification.error({
             message: "Ooops ...",
-            description:
-              "Cannot retrieve your applications from the server ... please try again!",
+            description: t("CANNOT_RETRIEVE_APPLICATIONS"),
             duration: 10,
           });
         },

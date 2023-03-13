@@ -5,14 +5,17 @@ import { Tabs } from "common";
 
 import { AdminAddTeachers, AdminBrowseTeachers } from "../components";
 import { ITabProps } from "common/types";
+import { useTranslation } from "react-i18next";
 
 const AdminTeachersPage = () => {
+  const { t } = useTranslation();
+
   const tabs: ITabProps[] = [
     {
       label: (
         <span>
           <PlusCircleOutlined />
-          Add Teachers
+          {t("ADD_TEACHERS")}
         </span>
       ),
       key: "1",
@@ -22,7 +25,7 @@ const AdminTeachersPage = () => {
       label: (
         <span>
           <SearchOutlined />
-          Browse Teachers
+          {t("BROWSE_TEACHERS")}
         </span>
       ),
       key: "2",
@@ -32,9 +35,9 @@ const AdminTeachersPage = () => {
 
   return (
     <>
-      <Typography.Title level={1}>Teachers List</Typography.Title>
+      <Typography.Title level={1}>{t("TEACHERS_LIST")}</Typography.Title>
       <Typography.Title level={5} type={"secondary"}>
-        Add, view, edit or delete teachers from the internship program ...
+        {t("ADD_VIEW_EDIT_TEACHERS")}
       </Typography.Title>
 
       <Tabs tabList={tabs} />

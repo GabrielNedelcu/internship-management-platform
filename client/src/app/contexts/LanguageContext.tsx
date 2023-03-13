@@ -16,6 +16,7 @@ import { updateUserLanguage } from "./api";
 import { useLocalStorage } from "common/hooks";
 
 import i18n from "i18n";
+import { useTranslation } from "react-i18next";
 
 const initialState = {
   language: "en",
@@ -35,6 +36,7 @@ const LanguageContext = createContext<ILanguagerContext>(initialState);
 
 const LanguageContextWrapper = ({ children }: ILanguageContextWrapperProps) => {
   const { userID } = useContext(UserContext);
+  const { t } = useTranslation();
 
   const [language, setLanguage] = useLocalStorage("lang", "en");
 
@@ -45,8 +47,7 @@ const LanguageContextWrapper = ({ children }: ILanguageContextWrapperProps) => {
       onError: () => {
         notification.error({
           message: "Ooops ...",
-          description:
-            "We've encountered an error while updating the language preference in you account! The change was not saved!",
+          description: t("LANGUAGE_CHANGE_ERR"),
           duration: 2,
         });
       },

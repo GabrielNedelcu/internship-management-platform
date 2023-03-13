@@ -21,6 +21,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { updateStudentData } from "../api";
+import { useTranslation } from "react-i18next";
 
 interface IProfileFormProps {
   profileData?: IStudentData;
@@ -45,6 +46,8 @@ const ProfileForm = ({
   finishPrompt,
   displayLabels,
 }: IProfileFormProps) => {
+  const { t } = useTranslation();
+
   const [loading, setLoading] = useState(false);
 
   const { mutate: mutateUpdateSelfStudent } = useMutation(
@@ -57,9 +60,8 @@ const ProfileForm = ({
       onSuccess: () => {
         setLoading(false);
         notification.success({
-          message: "Profile updated!",
-          description:
-            "You have successfully updated your profile information!",
+          message: t("ACCOUNT_UPDATED"),
+          description: t("UPDATE_ACCOUNT_SUCCESS_MSG"),
           duration: 10,
         });
         onSuccess?.();
@@ -68,16 +70,14 @@ const ProfileForm = ({
         setLoading(false);
         notification.error({
           message: "Ooops ...",
-          description:
-            "Error occured while updating your profile information ... Please try again later!",
+          description: t("UPDATE_ACCOUNT_ERR_MSG"),
           duration: 10,
         });
       },
     }
   );
 
-  if (loading)
-    return <LoadingPage message="Updating profile information ..." />;
+  if (loading) return <LoadingPage message={t("UPDATING_ACCOUNT")} />;
 
   return (
     <>
@@ -101,17 +101,17 @@ const ProfileForm = ({
           rules={[
             {
               required: true,
-              message: "Please provide your citizenship",
+              message: t("PROVIDE_CITIZENSHIP").toString(),
             },
           ]}
           hasFeedback
           {...(displayLabels && {
-            label: "Citizenship",
+            label: t("CITIZENSHIP"),
           })}
         >
           <Input
             suffix={<FlagOutlined />}
-            placeholder="Type in the your citizenship (Eg: Romana)"
+            placeholder={t("PROVIDE_CITIZENSHIP").toString()}
           />
         </Form.Item>
 
@@ -120,17 +120,17 @@ const ProfileForm = ({
           rules={[
             {
               required: true,
-              message: "Please provide your full home address",
+              message: t("PROVIDE_HOME_ADDRESS").toString(),
             },
           ]}
           hasFeedback
           {...(displayLabels && {
-            label: "Legal Address",
+            label: t("HOME_ADDRESS"),
           })}
         >
           <Input
             suffix={<HomeOutlined />}
-            placeholder="Type in your home address ..."
+            placeholder={t("PROVIDE_HOME_ADDRESS").toString()}
           />
         </Form.Item>
         <Form.Item
@@ -138,17 +138,17 @@ const ProfileForm = ({
           rules={[
             {
               required: true,
-              message: "Please provide your address",
+              message: t("PROVIDE_RESIDENCY_ADDRESS").toString(),
             },
           ]}
           hasFeedback
           {...(displayLabels && {
-            label: "Current Address",
+            label: t("RESIDENCY_ADDRESS"),
           })}
         >
           <Input
             suffix={<PushpinOutlined />}
-            placeholder="Type in the full address where you will be staying during the internship"
+            placeholder={t("PROVIDE_RESIDENCY_ADDRESS").toString()}
           />
         </Form.Item>
 
@@ -157,15 +157,15 @@ const ProfileForm = ({
           rules={[
             {
               required: true,
-              message: "Please provide your birth day",
+              message: t("PROVIDE_BIRTHDAY").toString(),
             },
           ]}
           hasFeedback
-          {...(displayLabels && { label: "Birthday" })}
+          {...(displayLabels && { label: t("BIRTHDAY") })}
         >
           <DatePicker
             style={{ width: "100%" }}
-            placeholder="Please select your birthday"
+            placeholder={t("PROVIDE_BIRTHDAY").toString()}
           />
         </Form.Item>
 
@@ -174,15 +174,15 @@ const ProfileForm = ({
           rules={[
             {
               required: true,
-              message: "Please provide your full birth place address",
+              message: t("PROVIDE_BIRTHPLACE").toString(),
             },
           ]}
           hasFeedback
-          {...(displayLabels && { label: "Birthplace" })}
+          {...(displayLabels && { label: t("BIRTHPLACE") })}
         >
           <Input
             suffix={<PushpinOutlined />}
-            placeholder="Type in the your birth place"
+            placeholder={t("PROVIDE_BIRTHPLACE").toString()}
           />
         </Form.Item>
 
@@ -191,18 +191,18 @@ const ProfileForm = ({
           rules={[
             {
               required: true,
-              message: "Please provide your phone number",
+              message: t("PROVIDE_PHONE_NUMBER").toString(),
             },
             {
               len: 9,
-              message: "The phone number must have exactly 9 characters",
+              message: t("TYPE_VALID_PHONE_NUMBER").toString(),
             },
           ]}
           hasFeedback
-          {...(displayLabels && { label: "Phone" })}
+          {...(displayLabels && { label: t("PHONE_NUMBER") })}
         >
           <Input
-            placeholder="Type in your phone number"
+            placeholder={t("PROVIDE_PHONE_NUMBER").toString()}
             suffix={<PhoneOutlined />}
             addonBefore="+40"
           />
@@ -210,7 +210,7 @@ const ProfileForm = ({
 
         <Form.Item name="cv" {...(displayLabels && { label: "CV" })}>
           <Upload {...uploadProps}>
-            <Button icon={<UploadOutlined />}>Upload your CV</Button>
+            <Button icon={<UploadOutlined />}>{t("UPLOAD_CV")}</Button>
           </Upload>
         </Form.Item>
 

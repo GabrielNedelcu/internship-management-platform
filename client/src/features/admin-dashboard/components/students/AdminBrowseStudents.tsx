@@ -1,5 +1,6 @@
 import useStudentsTable from "../../hooks/useStudentsTable";
 import { Row, Col, Table, Input, Button } from "antd";
+import { t } from "i18next";
 
 const { Search } = Input;
 
@@ -20,7 +21,7 @@ const AdminBrowseStudents = () => {
       <Row gutter={[16, 16]}>
         <Col span="12">
           <Search
-            placeholder="Search for students by name or email"
+            placeholder={t("SEARCH_STUDENT_EMAIL_NAME").toString()}
             onSearch={handleSearchBy}
             onChange={(e) => {
               setSearchText(e.target.value);
@@ -32,7 +33,7 @@ const AdminBrowseStudents = () => {
         </Col>
         <Col style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button size="large" type="primary" onClick={handleClearSearch}>
-            Clear Search
+            {t("CLEAR_SEARCH")}
           </Button>
         </Col>
         <Col>

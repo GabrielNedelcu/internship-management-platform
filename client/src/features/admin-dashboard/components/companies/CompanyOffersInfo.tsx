@@ -1,4 +1,5 @@
 import { Input, Row, Col, Button, Table, Spin } from "antd";
+import { useTranslation } from "react-i18next";
 import useOffersTable from "../../hooks/useOffersTable";
 const { Search } = Input;
 
@@ -7,6 +8,8 @@ interface ICompanyGeneralInfoData {
 }
 
 const CompanyOffersInfo = ({ companyId }: ICompanyGeneralInfoData) => {
+  const { t } = useTranslation();
+
   const {
     loading,
     tableData,
@@ -23,7 +26,7 @@ const CompanyOffersInfo = ({ companyId }: ICompanyGeneralInfoData) => {
       <Row gutter={[16, 16]}>
         <Col span="12">
           <Search
-            placeholder="Search for offers by job title"
+            placeholder={t("SEARCH_OFFER_JOB_TITLE").toString()}
             onSearch={handleSearchBy}
             enterButton
             size="large"

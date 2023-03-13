@@ -2,8 +2,11 @@ import { useState } from "react";
 import { notification } from "antd";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { getOffer, applyToOffer } from "../api";
+import { useTranslation } from "react-i18next";
 
 const useOfferProfile = (offerId: string) => {
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(false);
 
   const { data: offerData, refetch: refetchOfferData } = useQuery(
@@ -20,8 +23,7 @@ const useOfferProfile = (offerId: string) => {
         setIsLoading(false);
         notification.error({
           message: "Ooops ...",
-          description:
-            "Cannot retrieve the offer data from the server ... please try again!",
+          description: t("CANNOT_RETRIEVE_OFFER_DATA"),
           duration: 10,
         });
       },
@@ -39,8 +41,8 @@ const useOfferProfile = (offerId: string) => {
         setIsLoading(false);
         refetchOfferData();
         notification.success({
-          message: "Applied successfully",
-          description: `Great! You have just applied to this offer. Keep an eye on "My Applications" page to see the status of your application`,
+          message: t("APPLIED_SUCCESSFULLY"),
+          description: t("APPLIED_SUCCESSFULLY_MSG"),
           duration: 10,
         });
       },
@@ -48,7 +50,7 @@ const useOfferProfile = (offerId: string) => {
         setIsLoading(false);
         notification.error({
           message: "Ooops ...",
-          description: "An unexpected error occured! Please try again later...",
+          description: t("ERROR_OCCURED"),
           duration: 10,
         });
       },

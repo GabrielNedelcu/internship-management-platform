@@ -16,12 +16,15 @@ import { OfferGeneralInfo } from "../components";
 import { Tabs } from "common";
 import EmployeeInfo from "../components/EmployeeInfo";
 import { ITabProps } from "common/types";
+import { useTranslation } from "react-i18next";
 
 const AdminOfferProfile = () => {
+  const { t } = useTranslation();
+
   const params = useParams();
   const offerId = params.offerId;
 
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
 
   const { data } = useQuery(
     ["getOffer", offerId],
@@ -37,8 +40,7 @@ const AdminOfferProfile = () => {
         setLoading(false);
         notification.error({
           message: "Ooops ...",
-          description:
-            "Cannot retrieve the offer's data from the server ... please try again!",
+          description: t("CANNOT_RETRIEVE_OFFER_DATA"),
           duration: 10,
         });
       },
@@ -48,7 +50,7 @@ const AdminOfferProfile = () => {
   if (!data)
     return (
       <>
-        <Spin spinning={true} size="large" tip={"Fetching company data ..."} />
+        <Spin spinning={true} size="large" tip={t("FETCHING_OFFER_DATA")} />
       </>
     );
 
@@ -57,7 +59,7 @@ const AdminOfferProfile = () => {
       label: (
         <span>
           <ContainerOutlined />
-          General Information
+          {t("GENERAL_INFORMATION")}
         </span>
       ),
       key: "1",
@@ -76,7 +78,7 @@ const AdminOfferProfile = () => {
       label: (
         <span>
           <UserOutlined />
-          Supervisor
+          {t("SUPERVISOR")}
         </span>
       ),
       key: "2",
@@ -86,7 +88,7 @@ const AdminOfferProfile = () => {
       label: (
         <span>
           <SendOutlined />
-          Applications
+          {t("APPLICATIONS")}
         </span>
       ),
       key: "3",
@@ -96,7 +98,7 @@ const AdminOfferProfile = () => {
       label: (
         <span>
           <LikeOutlined />
-          Accepted Students
+          {t("ACCEPTED_STUDENTS")}
         </span>
       ),
       key: "4",
@@ -106,7 +108,7 @@ const AdminOfferProfile = () => {
 
   return (
     <>
-      <Spin spinning={loading} size="large" tip={"Fetching company data ..."}>
+      <Spin spinning={loading} size="large" tip={t("FETCHING_OFFER_DATA")}>
         <Typography.Title level={1}>{data.title}</Typography.Title>
         <Typography.Title level={5} type={"secondary"}>
           {data.companyName}

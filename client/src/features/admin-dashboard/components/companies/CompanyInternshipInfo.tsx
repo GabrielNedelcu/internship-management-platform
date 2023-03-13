@@ -1,4 +1,5 @@
 import { Typography, Row, Col } from "antd";
+import { useTranslation } from "react-i18next";
 
 interface IInternshipInfoProps {
   internshipMainAddress: string;
@@ -15,15 +16,17 @@ const CompanyInternshipInfo: React.FC<IInternshipInfoProps> = ({
   internshipCompensation,
   internshipContract,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <Typography.Title level={4}>Main Address</Typography.Title>
+          <Typography.Title level={4}>{t("MAIN_ADDRESS")}</Typography.Title>
           <Typography.Paragraph>{internshipMainAddress}</Typography.Paragraph>
         </Col>
         <Col span={12}>
-          <Typography.Title level={4}>Other Addresses</Typography.Title>
+          <Typography.Title level={4}>{t("OTHER_ADDRESSES")}</Typography.Title>
           <Typography.Paragraph>
             {internshipOtherAddresses}
           </Typography.Paragraph>
@@ -31,19 +34,21 @@ const CompanyInternshipInfo: React.FC<IInternshipInfoProps> = ({
       </Row>
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <Typography.Title level={4}>Contract Offered</Typography.Title>
+          <Typography.Title level={4}>{t("CONTRACT_OFFERED")}</Typography.Title>
           <Typography.Paragraph>
-            {internshipContract ? "Yes" : "No"}
+            {internshipContract ? t("YES") : t("NO")}
           </Typography.Paragraph>
         </Col>
         <Col span={12}>
-          <Typography.Title level={4}>Compensation Offered</Typography.Title>
+          <Typography.Title level={4}>
+            {t("COMPENSATION_OFFERED")}
+          </Typography.Title>
           <Typography.Paragraph>
-            {internshipCompensation ? "Yes" : "No"}
+            {internshipCompensation ? t("YES") : t("NO")}
           </Typography.Paragraph>
         </Col>
       </Row>
-      <Typography.Title level={4}>Advantages</Typography.Title>
+      <Typography.Title level={4}>{t("ADVANTAGES")}</Typography.Title>
       <Typography.Paragraph>
         {internshipOtherAdvantages || "-"}
       </Typography.Paragraph>

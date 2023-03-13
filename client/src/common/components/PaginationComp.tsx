@@ -1,4 +1,5 @@
 import { Row, Col, Pagination } from "antd";
+import { useTranslation } from "react-i18next";
 
 interface IPaginationCompProps {
   total: number;
@@ -6,6 +7,8 @@ interface IPaginationCompProps {
 }
 
 const PaginationComp = ({ ...props }: IPaginationCompProps) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <br />
@@ -14,7 +17,7 @@ const PaginationComp = ({ ...props }: IPaginationCompProps) => {
           <Pagination
             total={props.total}
             showTotal={(total, range) =>
-              `${range[0]}-${range[1]} of ${total} items`
+              `${range[0]}-${range[1]} ${t("OF")} ${total} ${t("ITEMS")}`
             }
             defaultPageSize={21}
             defaultCurrent={1}

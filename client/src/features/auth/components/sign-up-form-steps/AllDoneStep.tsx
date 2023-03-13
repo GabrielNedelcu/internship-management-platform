@@ -1,16 +1,15 @@
 import { Button, Form } from "antd";
+import { useTranslation } from "react-i18next";
 import allDoneImg from "../../../../assets/Checklist.jpg";
 
 const AllDoneStep = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <img src={allDoneImg} alt="All done here!"></img>
-      <h1 className="header">Great, looks like you're done!</h1>
-      <p className="paragraph">
-        After submitting your company data, a faculty member will review your
-        application and decide to accept, or decline your request. Either way,
-        we will let you know :)
-      </p>
+      <h1 className="header">{t("ALL_DONE")}</h1>
+      <p className="paragraph">{t("ALL_DONE_MSG")}</p>
       <Form.Item>
         <Button type="primary" block htmlType="submit">
           Sign Up

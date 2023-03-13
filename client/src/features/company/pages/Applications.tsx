@@ -1,11 +1,14 @@
 import { Typography } from "antd";
+import { useTranslation } from "react-i18next";
 import ApplicationsList from "../components/ApplicationsList";
 const Applications = () => {
+  const { t } = useTranslation();
+
   return (
     <>
-      <Typography.Title level={1}>Aplications</Typography.Title>
+      <Typography.Title level={1}>{t("APPLICATIONS_LIST")}</Typography.Title>
       <Typography.Title level={5} type={"secondary"}>
-        Here is the list of all aplications to your company ...
+        {t("APPLICATIONS_LIST_MSG")}
       </Typography.Title>
 
       <ApplicationsList />

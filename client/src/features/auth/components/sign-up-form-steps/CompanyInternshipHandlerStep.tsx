@@ -1,43 +1,46 @@
 import { Form, Input } from "antd";
+import { useTranslation } from "react-i18next";
 
 const CompanyInternshipHandlerStep = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <Form.Item
-        label="Full Name"
+        label={t("NAME")}
         name={["handler", "name"]}
         rules={[
           {
             required: true,
-            message: "Please provide the full name for the handler!",
+            message: t("PROVIDE_NAME").toString(),
           },
         ]}
         hasFeedback
       >
-        <Input placeholder="Company's Internship Handler Full Name" />
+        <Input placeholder={t("PROVIDE_NAME").toString()} />
       </Form.Item>
 
       <Form.Item
-        label="Job Title"
+        label={t("JOB_TITLE")}
         name={["handler", "jobTitle"]}
         rules={[
           {
             required: true,
-            message: "Please provide the job title for the handler!",
+            message: t("PROVIDE_JOB_TITLE").toString(),
           },
         ]}
         hasFeedback
       >
-        <Input placeholder="Company's Internship Handler Job Title" />
+        <Input placeholder={t("PROVIDE_JOB_TITLE").toString()} />
       </Form.Item>
 
       <Form.Item
-        label="Phone Number"
+        label={t("PHONE_NUMBER")}
         name={["handler", "phoneNumber"]}
         rules={[
           {
             required: true,
-            message: "Please provide the phone number for the representative!",
+            message: t("PROVIDE_PHONE_NUMBER").toString(),
           },
           () => ({
             validator(_, value) {
@@ -45,7 +48,7 @@ const CompanyInternshipHandlerStep = () => {
                 return Promise.resolve();
               }
               return Promise.reject(
-                new Error("Please provide a phone number containnig 9 digits")
+                new Error(t("TYPE_VALID_PHONE_NUMBER").toString())
               );
             },
           }),
@@ -54,26 +57,26 @@ const CompanyInternshipHandlerStep = () => {
       >
         <Input
           addonBefore="+40"
-          placeholder="Company's Internship Handler Phone Number"
+          placeholder={t("PROVIDE_PHONE_NUMBER").toString()}
         />
       </Form.Item>
 
       <Form.Item
-        label="Email"
+        label={t("EMAIL")}
         name={["handler", "email"]}
         rules={[
           {
             type: "email",
-            message: "Please provide a valid email address!",
+            message: t("TYPE_VALID_EMAIL").toString(),
           },
           {
             required: true,
-            message: "Please provide the email address for the handler!",
+            message: t("PROVIDE_AN_EMAIL").toString(),
           },
         ]}
         hasFeedback
       >
-        <Input placeholder="Company's Internship Handler Email" />
+        <Input placeholder={t("PROVIDE_AN_EMAIL").toString()} />
       </Form.Item>
     </>
   );

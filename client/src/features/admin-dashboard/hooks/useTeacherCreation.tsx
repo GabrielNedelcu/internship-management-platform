@@ -4,8 +4,11 @@ import { useMutation } from "@tanstack/react-query";
 
 import { checkAccountEmail } from "common";
 import { createProfessor, uploadProfessorsFile } from "../api/professorsAPI";
+import { useTranslation } from "react-i18next";
 
 const useTeacherCreation = () => {
+  const { t } = useTranslation();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [title, setTitle] = useState("");
@@ -56,8 +59,8 @@ const useTeacherCreation = () => {
         setLoading(false);
 
         notification.success({
-          message: "Professor created",
-          description: `Great! We've just created a new professor with id ${res._id}`,
+          message: t("ACCOUNT_CREATED"),
+          description: t("ACCOUNT_CREATED_MSG"),
           duration: 10,
         });
 
@@ -68,8 +71,7 @@ const useTeacherCreation = () => {
 
         notification.error({
           message: "Ooops ...",
-          description:
-            "Error while creating the professor! Please try again ...",
+          description: t("ACCOUNT_CREATION_ERROR"),
           duration: 10,
         });
 
@@ -101,8 +103,7 @@ const useTeacherCreation = () => {
 
         notification.error({
           message: "Ooops ...",
-          description:
-            "The file could not be uploaded to the server ... Please try again!",
+          description: t("FILE_UPLOAD_ERROR"),
           duration: 10,
         });
 

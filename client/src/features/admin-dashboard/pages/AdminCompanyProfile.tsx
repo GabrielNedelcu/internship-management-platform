@@ -28,8 +28,11 @@ import {
 } from "../components";
 import { getCompany, acceptCompany } from "../api/companiesAPI";
 import { ITabProps } from "common/types";
+import { useTranslation } from "react-i18next";
 
 const AdminCompanyProfile = () => {
+  const { t } = useTranslation();
+
   const params = useParams();
   const companyID = params.companyId || "0";
 
@@ -51,8 +54,7 @@ const AdminCompanyProfile = () => {
         setLoading(false);
         notification.error({
           message: "Ooops ...",
-          description:
-            "Cannot retrieve the company's data from the server ... please try again!",
+          description: t("CANNOT_RETRIEVE_COMPANY_DATA"),
           duration: 10,
         });
       },
@@ -72,17 +74,16 @@ const AdminCompanyProfile = () => {
         queryClient.invalidateQueries(["getCompany", companyID]);
 
         notification.success({
-          message: "Great!",
-          description: "The company has just been accepted on the platform!",
+          message: t("GREAT"),
+          description: t("COMPANY_ACCEPTED"),
           duration: 10,
         });
       },
       onError: () => {
         setLoading(false);
         notification.error({
-          message: "Something went wrong ...",
-          description:
-            "An error occured while accepting the company on the platform! Please try again later ...",
+          message: "Ooops ...",
+          description: t("CANNOT_ACCEPT_COMPANIES"),
           duration: 10,
         });
       },
@@ -92,7 +93,7 @@ const AdminCompanyProfile = () => {
   if (!data)
     return (
       <>
-        <Spin spinning={true} size="large" tip={"Fetching company data ..."} />
+        <Spin spinning={true} size="large" tip={t("FETCHING_COMPANY_DATA")} />
       </>
     );
 
@@ -101,7 +102,7 @@ const AdminCompanyProfile = () => {
       label: (
         <span>
           <ContainerOutlined />
-          General Information
+          {t("GENERAL_INFORMATION")}
         </span>
       ),
       key: "1",
@@ -118,7 +119,7 @@ const AdminCompanyProfile = () => {
       label: (
         <span>
           <UserOutlined />
-          Employees
+          {t("EMPLOYEES")}
         </span>
       ),
       key: "2",
@@ -130,7 +131,7 @@ const AdminCompanyProfile = () => {
       label: (
         <span>
           <ControlOutlined />
-          Internship Options
+          {t("INTERNSHIP_OPTIONS")}
         </span>
       ),
       key: "3",
@@ -148,7 +149,7 @@ const AdminCompanyProfile = () => {
       label: (
         <span>
           <UnorderedListOutlined />
-          Offers
+          {t("OFFERS")}
         </span>
       ),
       key: "4",
@@ -158,7 +159,7 @@ const AdminCompanyProfile = () => {
 
   return (
     <>
-      <Spin spinning={loading} size="large" tip={"Fetching company data ..."}>
+      <Spin spinning={loading} size="large" tip={t("FETCHING_COMPANY_DATA")}>
         <Row gutter={[16, 16]}>
           <Col span={18}>
             <Typography.Title level={1}>{data.name}</Typography.Title>
@@ -175,7 +176,7 @@ const AdminCompanyProfile = () => {
                     mutateAcceptCompany(companyID);
                   }}
                 >
-                  Accept Company
+                  {t("ACCEPT_COMPANY")}
                 </Button>
                 <Button
                   danger
@@ -184,7 +185,7 @@ const AdminCompanyProfile = () => {
                     //TODO
                   }}
                 >
-                  Reject Company
+                  {t("REJECT_COMPANY")}
                 </Button>
               </Space>
             </Col>

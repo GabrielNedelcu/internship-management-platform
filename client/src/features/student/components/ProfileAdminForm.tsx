@@ -6,12 +6,15 @@ import {
   UserOutlined,
   UserSwitchOutlined,
 } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 interface IProfileAdminForm {
   profileData: IStudentData;
 }
 
 const ProfileAdminForm = ({ profileData }: IProfileAdminForm) => {
+  const { t } = useTranslation();
+
   // FORM IS ALWAYS READ ONLY
   return (
     <>
@@ -22,14 +25,14 @@ const ProfileAdminForm = ({ profileData }: IProfileAdminForm) => {
         labelCol={{ span: 5 }}
         disabled
       >
-        <Form.Item name="email" label="Email">
+        <Form.Item name="email" label={t("EMAIL")}>
           <Input suffix={<MailOutlined />} />
         </Form.Item>
 
-        <Form.Item name="name" label="Name">
+        <Form.Item name="name" label={t("NAME")}>
           <Input suffix={<UserOutlined />} />
         </Form.Item>
-        <Form.Item name="group" label="Group">
+        <Form.Item name="group" label={t("GROUP")}>
           <Input suffix={<UserSwitchOutlined />} />
         </Form.Item>
 
@@ -37,7 +40,7 @@ const ProfileAdminForm = ({ profileData }: IProfileAdminForm) => {
           <Input suffix={<IdcardOutlined />} />
         </Form.Item>
 
-        <Form.Item name="passport" label="Passport">
+        <Form.Item name="passport" label={t("PASSPORT")}>
           <Input suffix={<IdcardOutlined />} />
         </Form.Item>
       </Form>

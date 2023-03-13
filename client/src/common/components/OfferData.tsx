@@ -1,6 +1,7 @@
 import { Row, Col, Typography, Descriptions } from "antd";
 import { Card } from "common";
 import { IOfferData } from "common/types";
+import { useTranslation } from "react-i18next";
 
 interface IOfferDataProps {
   offerData: IOfferData;
@@ -8,27 +9,29 @@ interface IOfferDataProps {
 }
 
 const OfferData = ({ offerData, companyView }: IOfferDataProps) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <Row gutter={[16, 16]}>
         {companyView && (
           <Col span={24}>
             <Card
-              title="Supervisor"
+              title={t("SUPERVISOR")}
               content={
                 <>
                   <br />
                   <Descriptions layout="horizontal">
-                    <Descriptions.Item label="Name" span={0.5}>
+                    <Descriptions.Item label={t("NAME")} span={0.5}>
                       {offerData.supervisor?.name}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Email" span={1}>
+                    <Descriptions.Item label={t("EMAIL")} span={1}>
                       {offerData.supervisor?.email}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Phone Number" span={0.5}>
+                    <Descriptions.Item label={t("PHONE_NUMBER")} span={0.5}>
                       +40{offerData.supervisor?.phoneNumber}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Job Title" span={1}>
+                    <Descriptions.Item label={t("JOB_TITLE")} span={1}>
                       {offerData.supervisor?.jobTitle}
                     </Descriptions.Item>
                   </Descriptions>
@@ -39,7 +42,7 @@ const OfferData = ({ offerData, companyView }: IOfferDataProps) => {
         )}
         <Col span={24}>
           <Card
-            title="Job description"
+            title={t("JOB_DESCRIPTION")}
             content={
               <Typography.Paragraph>
                 <br />
@@ -50,7 +53,7 @@ const OfferData = ({ offerData, companyView }: IOfferDataProps) => {
         </Col>
         <Col span={24}>
           <Card
-            title="Job requirements"
+            title={t("JOB_REQUIREMENTS")}
             content={
               <Typography.Paragraph>
                 <br />
@@ -61,7 +64,7 @@ const OfferData = ({ offerData, companyView }: IOfferDataProps) => {
         </Col>
         <Col span={24}>
           <Card
-            title="Other mentions"
+            title={t("OTHER_MENTIONS")}
             content={
               <Typography.Paragraph>
                 <br />
