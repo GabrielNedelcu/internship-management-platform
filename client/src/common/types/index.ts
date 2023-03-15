@@ -69,6 +69,7 @@ export interface ICompanyData {
   numOffers?: number;
   numPositions?: number;
   createdAt?: Date;
+  annex?: string;
 }
 
 export interface IPagination {

@@ -247,5 +247,11 @@
   "PROFILE_SETUP": "Setting up your profile ...",
   "PROFILE_SETUP_MSG": "Before using the platform, we need some information in order to generate the legal documents (contracts, etc.)",
   "FINISH_PROFILE_SETUP": "Finish Profile Setup",
-  "CHANGE_ACCOUNT_PASSWORD": "Change your account's password ..."
+  "CHANGE_ACCOUNT_PASSWORD": "Change your account's password ...",
+  "COMPANY_ANNEX_TITLE": "First things first ...",
+  "COMPANY_ANNEX_MSG": "Before using the platform, we need you to sign a collaboration contract with us",
+  "DOWNLOAD_CONTRACT": "Download contract",
+  "UPLOAD_CONTRACT": "Select the .pdf file containing the signed contract",
+  "CONTRACT_UPLOADED": "Contract successfully uploaded",
+  "CONTRACT_UPLOAD_ERR": "An error occured. Your contracted has not been uploaded to the server!"
 }

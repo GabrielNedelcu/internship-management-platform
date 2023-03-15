@@ -247,5 +247,11 @@
   "PROFILE_SETUP": "Configurarea profilului dvs. ...",
   "PROFILE_SETUP_MSG": "Inainte de a folosi platforma, avem nevoie de cateva informatii pentru a putea genera documentele legale (contracte, etc.)",
   "FINISH_PROFILE_SETUP": "Configureaza profil",
-  "CHANGE_ACCOUNT_PASSWORD": "Schimba-ti parola contului ..."
+  "CHANGE_ACCOUNT_PASSWORD": "Schimba-ti parola contului ...",
+  "COMPANY_ANNEX_TITLE": "Sa incepem cu inceputul ...",
+  "COMPANY_ANNEX_MSG": "Inainte de a folosi platforma, avem nevoie sa semnezi un contract de colaborare cu noi",
+  "DOWNLOAD_CONTRACT": "Descarca contractul",
+  "UPLOAD_CONTRACT": "Selecteaza fisierul pdf ce contine contractul semnat",
+  "CONTRACT_UPLOADED": "Contract a fost incarcat cu succes",
+  "CONTRACT_UPLOAD_ERR": "Am intampinat o eroare. Contractul nu a putu fi incarcat pe server!"
 }

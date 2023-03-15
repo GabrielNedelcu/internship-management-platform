@@ -87,9 +87,13 @@ const companiesSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    contractSigned: {
+    annexValidated: {
       type: Boolean,
       default: false,
+    },
+    annex: {
+      type: String,
+      default: null,
     },
     numOffers: {
       type: Number,

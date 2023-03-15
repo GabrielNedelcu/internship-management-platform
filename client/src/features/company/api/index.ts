@@ -1,6 +1,6 @@
 import axiosClient from "app/axiosClient";
 import { URL_ROUTES } from "common/constants";
-import { IQueryParameters } from "common/types";
+import { ICompanyData, IQueryParameters } from "common/types";
 import { addParameterToQuery, buildQuery } from "common/utils";
 
 /**
@@ -74,5 +74,34 @@ export const getOffer = async (
  */
 export const getOfferStats = async (offerID: string) => {
   const res = await axiosClient.get(`${URL_ROUTES.OFFERS}/${offerID}/stats`);
+  return res.data;
+};
+
+export const getAnnex1Template = async () => {
+  const res = await axiosClient.get(`${URL_ROUTES.TEMPLATES}/annex_1`, {
+    responseType: "blob",
+  });
+  return res.data;
+};
+
+/**
+ * Update the logged in student data
+ * @param data new data
+ * @returns server response
+ */
+export const uploadCompanyAnnex = async (
+  companyID: string,
+  data: ICompanyData
+) => {
+  const res = await axiosClient.patch(
+    `${URL_ROUTES.COMPANIES}/${companyID}`,
+    data,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
   return res.data;
 };

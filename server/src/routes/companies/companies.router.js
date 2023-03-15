@@ -1,5 +1,6 @@
 const express = require("express");
 const asyncHandler = require("express-async-handler");
+const expressFileUpload = require("express-fileupload");
 const authz = require("../../middleware/authz.middleware");
 const auth = require("../../middleware/auth.middleware");
 
@@ -32,8 +33,9 @@ companiesRouter.get(
 companiesRouter.patch(
   "/:companyId",
   auth,
-  authz(["admin"]),
+  authz(["admin", "company"]),
   validatePatchCompany,
+  expressFileUpload(),
   asyncHandler(httpPatchCompany)
 );
 

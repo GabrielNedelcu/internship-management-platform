@@ -8,6 +8,7 @@ const {
   updateOneCompany,
 } = require("../../models/companies/companies.model");
 const { createOffer } = require("../../models/offers/offers.model");
+const { uploadFilesFromRequest } = require("../../utils/files.utils");
 const {
   getSort,
   getPagination,
@@ -140,7 +141,14 @@ async function httpPatchCompany(req, res) {
     throw err;
   }
 
-  await updateOneCompany(companyId, newData);
+  let data = newData;
+  if (req.files) {
+    const fileName = `${companyId}.pdf`;
+    await uploadFilesFromRequest(req, "company_contracts", fileName);
+    data = { ...newData, annex: fileName };
+  }
+
+  await updateOneCompany(companyId, data);
 
   //TODO: if "validated" field has changed, send email
 

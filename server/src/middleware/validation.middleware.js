@@ -344,6 +344,8 @@ async function validatePatchCompany(req, res, next) {
     internshipOtherAdvantages: "string",
 
     validated: "boolean",
+
+    annex: "string",
   };
 
   // verify user sends only accepted fields

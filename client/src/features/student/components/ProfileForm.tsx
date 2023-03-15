@@ -51,7 +51,7 @@ const ProfileForm = ({
   const [loading, setLoading] = useState(false);
 
   const { mutate: mutateUpdateSelfStudent } = useMutation(
-    ["getSelfStudent"],
+    ["updateSelfStudent"],
     (data: IStudentData) => {
       setLoading(true);
       return updateStudentData(data);

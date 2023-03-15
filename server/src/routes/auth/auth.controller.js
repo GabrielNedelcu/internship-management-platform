@@ -74,11 +74,11 @@ async function httpPostLogin(req, res) {
     if (account.role === "company") {
       const companyData = await getOneCompany(account._id, {
         validated: 1,
-        contractSigned: 1,
+        annex: 1,
       });
 
       resData["validated"] = companyData.validated;
-      resData["contractSigned"] = companyData.contractSigned;
+      resData["annex"] = companyData.annex;
     }
 
     return res.status(200).json(resData);

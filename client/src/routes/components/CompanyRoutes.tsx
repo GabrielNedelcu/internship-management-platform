@@ -8,6 +8,7 @@ import {
   Offers,
   Applications,
   OfferProfile,
+  SignAnnex,
 } from "features/company";
 import { USER_ROLES } from "common/constants";
 
@@ -63,6 +64,7 @@ const CompanyRoutes = () => {
               />
             }
           />
+          <Route path="/annex" element={<SignAnnex />} />
         </Route>
       </Routes>
     </>

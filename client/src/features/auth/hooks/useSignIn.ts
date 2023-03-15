@@ -56,13 +56,8 @@ const useSignIn = () => {
               duration: 10,
             });
           else {
-            if (data?.contractSigned) redirectAfterLogin(data?.accountRole);
-            else
-              notification.error({
-                message: "Ooops ...",
-                description: "N-AI SEMNAT INCA CONTRACTUL",
-                duration: 10,
-              });
+            if (data?.annex) redirectAfterLogin(data?.accountRole);
+            else return navigate("/company/annex");
           }
         } else redirectAfterLogin(data?.accountRole);
       },

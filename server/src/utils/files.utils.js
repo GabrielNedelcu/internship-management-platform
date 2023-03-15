@@ -74,8 +74,23 @@ async function downloadUploadedFile(res, directory, fileName) {
   return res.status(200).download(getUploadedFilePath(directory, fileName));
 }
 
+/**
+ * Downlaod a template file
+ * @param {*} res The response that will carry the file
+ * @param {*} templateName The template name
+ * @returns
+ */
+async function downloadTemplate(res, templateName) {
+  return res
+    .status(200)
+    .download(
+      path.join(__dirname, "..", "..", "public", "templates", templateName)
+    );
+}
+
 module.exports = {
   uploadFilesFromRequest,
   deleteUploadedFile,
   downloadUploadedFile,
+  downloadTemplate,
 };

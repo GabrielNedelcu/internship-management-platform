@@ -1,8 +1,9 @@
 import { Col, Row, Typography } from "antd";
-import "../../../style/SignInPage.css";
 import { ProfileForm } from "../components";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
+import "../../../style/SignInPage.css";
 
 const ProfileSetup = () => {
   const { t } = useTranslation();
