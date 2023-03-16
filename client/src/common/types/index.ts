@@ -1,3 +1,4 @@
+import { APPLICATION_STATUS } from "common/constants";
 import React from "react";
 
 export interface IEditableStudentData {
@@ -175,4 +176,9 @@ export interface ITabProps {
   label: React.ReactElement | string;
   key: string;
   children: React.ReactElement | string;
+}
+
+export interface IApplicationStatusUpdateData {
+  applicationId: string;
+  newStatus: APPLICATION_STATUS;
 }

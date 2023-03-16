@@ -19,7 +19,11 @@ import {
   getStudentCV,
   updateApplicationStatus,
 } from "../api";
-import { IApplicationData, IServerResponseMultipleFetch } from "common/types";
+import {
+  IApplicationData,
+  IApplicationStatusUpdateData,
+  IServerResponseMultipleFetch,
+} from "common/types";
 import { APPLICATION_STATUS, initialFetchOptions } from "common/constants";
 import {
   getApplicationStatusOptionsForCompany,
@@ -28,11 +32,6 @@ import {
   parseTableFiltersObject,
   parseTableSortObject,
 } from "common/utils";
-
-interface IApplicationStatusUpdateData {
-  applicationId: string;
-  newStatus: APPLICATION_STATUS;
-}
 
 const useApplicationsList = (offerId?: string) => {
   const { t } = useTranslation();
@@ -196,7 +195,7 @@ const useApplicationsList = (offerId?: string) => {
         return (
           <>
             <Space size="small">
-              {record.status === "inReview" && (
+              {record.status === APPLICATION_STATUS.IN_REVIEW && (
                 <Tooltip title={t("ACCEPT_FOR_INTERVIEW")}>
                   <Button
                     type="primary"
@@ -211,8 +210,8 @@ const useApplicationsList = (offerId?: string) => {
                   />
                 </Tooltip>
               )}
-              {(record.status === "inReview" ||
-                record.status === "interviewAccepted") && (
+              {(record.status === APPLICATION_STATUS.IN_REVIEW ||
+                record.status === APPLICATION_STATUS.ACCEPTED_INTERVIEW) && (
                 <Tooltip title={t("ACCEPT")}>
                   <Button
                     type="primary"
@@ -229,8 +228,8 @@ const useApplicationsList = (offerId?: string) => {
                 </Tooltip>
               )}
 
-              {(record.status === "inReview" ||
-                record.status === "interviewAccepted") && (
+              {(record.status === APPLICATION_STATUS.IN_REVIEW ||
+                record.status === APPLICATION_STATUS.ACCEPTED_INTERVIEW) && (
                 <Tooltip title={t("REJECT")}>
                   <Button
                     type="primary"
