@@ -9,6 +9,7 @@ const {
 } = require("../../middleware/validation.middleware");
 
 const {
+  httpGetStudentCV,
   httpCreateStudent,
   httpGetAllStudents,
   httpGetSelfStudent,
@@ -36,6 +37,12 @@ studentsRouter.get(
   "/",
   authz(["admin", "company"]),
   asyncHandler(httpGetAllStudents)
+);
+
+studentsRouter.get(
+  "/:studentId/cv",
+  authz(["admin", "company"]),
+  asyncHandler(httpGetStudentCV)
 );
 
 studentsRouter.patch(

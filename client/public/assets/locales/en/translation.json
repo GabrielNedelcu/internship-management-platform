@@ -200,7 +200,7 @@
   "FETCHING_OFFERS": "Fetching Offers ...",
   "FETCHING_COMPANIES": "Fetching Companies ...",
   "ACCEPTED": "Accepted",
-  "REJECTED": "Refuzati",
+  "REJECTED": "Rejected",
   "POSITIONS_TO_FILL": "Positions to fill",
   "STUDENT_NAME": "Student Name",
   "STUDENT_EMAIL": "Student Email",
@@ -253,5 +253,8 @@
   "DOWNLOAD_CONTRACT": "Download contract",
   "UPLOAD_CONTRACT": "Select the .pdf file containing the signed contract",
   "CONTRACT_UPLOADED": "Contract successfully uploaded",
-  "CONTRACT_UPLOAD_ERR": "An error occured. Your contracted has not been uploaded to the server!"
+  "CONTRACT_UPLOAD_ERR": "An error occured. Your contracted has not been uploaded to the server!",
+  "ACCEPT": "Accept",
+  "REJECT": "Reject",
+  "DOWNLOAD_CV_ZIP": "Download CVs as zip"
 }

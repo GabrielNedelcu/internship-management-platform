@@ -89,6 +89,7 @@ async function downloadTemplate(res, templateName) {
 }
 
 module.exports = {
+  getUploadedFilePath,
   uploadFilesFromRequest,
   deleteUploadedFile,
   downloadUploadedFile,

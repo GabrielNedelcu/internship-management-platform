@@ -1,3 +1,5 @@
+const AdmZip = require("adm-zip");
+
 const {
   createApplication,
   getAllApplications,
@@ -15,6 +17,7 @@ const {
   getPagination,
   getProjection,
 } = require("../../utils/query.utils");
+const { getUploadedFilePath } = require("../../utils/files.utils");
 
 /**
  *
@@ -95,6 +98,8 @@ async function httpGetAllApplications(req, res) {
   const { pageSize, skipCount } = getPagination(req.query);
   const projection = getProjection(req.query);
 
+  if (projection.cv == 1) return await httpGetApplicationsCV(req, res);
+
   const regex = new RegExp(searchFor, "i");
 
   let query = {
@@ -130,6 +135,48 @@ async function httpGetAllApplications(req, res) {
 
 /**
  *
+ * @api {GET} /applications/cv
+ * @apiDescription Get the applications
+ *
+ * @apiSuccess  {Object[]}  All the cvs for applications
+ */
+async function httpGetApplicationsCV(req, res) {
+  const userId = req.userId;
+  const userRole = req.userRole;
+  const offer = req.query.offer;
+
+  if (userRole === "student" || userRole === "admin")
+    return res.status(403).send({});
+
+  let query = {};
+  if (userRole === "company") {
+    query = { ...query, company: userId };
+    if (offer) query = { ...query, offer };
+  }
+
+  const resp = await queryApplications(query, { student: 1, studentName: 1 });
+
+  if (!resp.totalCount) return res.status(204).send();
+
+  const files = resp.data.map((application) => {
+    return {
+      path: getUploadedFilePath("cv", `${application.student}.pdf`),
+      name: `${application.studentName}.pdf`,
+    };
+  });
+
+  console.log(files);
+
+  const zip = new AdmZip();
+  files.forEach((file) => {
+    zip.addLocalFile(file.path, "", file.name);
+  });
+
+  return res.status(200).end(zip.toBuffer());
+}
+
+/**
+ *
  * @api {GET} /applications/:applicationId
  * @apiDescription Get the data of an application
  *
@@ -150,7 +197,8 @@ async function httpGetApplication(req, res) {
 }
 
 module.exports = {
+  httpGetApplication,
+  httpGetApplicationsCV,
   httpCreateApplication,
   httpGetAllApplications,
-  httpGetApplication,
 };

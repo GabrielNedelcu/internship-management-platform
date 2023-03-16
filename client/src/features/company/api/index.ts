@@ -85,6 +85,33 @@ export const getAnnex1Template = async () => {
 };
 
 /**
+ * Download the cv of a student
+ * @param studentId id of the student
+ * @returns server response
+ */
+export const getStudentCV = async (studentId: string) => {
+  const res = await axiosClient.get(`${URL_ROUTES.STUDENTS}/${studentId}/cv`, {
+    responseType: "blob",
+  });
+  return res.data;
+};
+
+/**
+ * Download the cv of a student
+ * @param studentId id of the student
+ * @returns server response
+ */
+export const getApplicationsCV = async (offerId?: string) => {
+  let url = buildQuery(`${URL_ROUTES.APPLICATIONS}`, { fields: "cv" });
+  if (offerId) url = addParameterToQuery(url, "offer", offerId);
+  const res = await axiosClient.get(url, {
+    responseType: "blob",
+  });
+
+  return res.data;
+};
+
+/**
  * Update the logged in student data
  * @param data new data
  * @returns server response

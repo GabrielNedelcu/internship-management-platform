@@ -15,6 +15,7 @@ const { getStudentMajor } = require("../../utils/models.utils");
 const {
   uploadFilesFromRequest,
   deleteUploadedFile,
+  downloadUploadedFile,
 } = require("../../utils/files.utils");
 const { parseExcel, studentSchema } = require("../../utils/excel.utils");
 
@@ -209,7 +210,28 @@ async function httpGetSelfStudent(req, res) {
   return res.status(200).json(studentData);
 }
 
+/**
+ * @api {GET} /students/:studentId/cv
+ * @apiDescription Get the cv of a student
+ *
+ * @apiSuccess 204
+ */
+async function httpGetStudentCV(req, res) {
+  const studentId = req.params.studentId;
+
+  const studentData = await getOneStudent(studentId);
+
+  if (!studentData) {
+    const err = new Error("Student not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  return downloadUploadedFile(res, "cv", studentData.cv);
+}
+
 module.exports = {
+  httpGetStudentCV,
   httpCreateStudent,
   httpGetAllStudents,
   httpGetSelfStudent,

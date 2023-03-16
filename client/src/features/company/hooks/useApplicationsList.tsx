@@ -1,17 +1,21 @@
+import dayjs from "dayjs";
+import download from "downloadjs";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
 import { TableProps, notification, Space, Tooltip, Button, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table/interface";
-import { useQuery } from "@tanstack/react-query";
+
 import {
   DeleteOutlined,
   DownloadOutlined,
   QuestionOutlined,
   CheckOutlined,
 } from "@ant-design/icons";
-import { getSelfApplications } from "../api";
+
+import { getApplicationsCV, getSelfApplications, getStudentCV } from "../api";
 import { IApplicationData, IServerResponseMultipleFetch } from "common/types";
 import { initialFetchOptions } from "common/constants";
-import dayjs from "dayjs";
 import {
   getApplicationStatusOptionsForCompany,
   getApplicationStatusTag,
@@ -19,7 +23,6 @@ import {
   parseTableFiltersObject,
   parseTableSortObject,
 } from "common/utils";
-import { useTranslation } from "react-i18next";
 
 const useApplicationsList = (offerId?: string) => {
   const { t } = useTranslation();
@@ -149,7 +152,7 @@ const useApplicationsList = (offerId?: string) => {
     {
       key: "5",
       title: t("ACTIONS"),
-      render: (record) => {
+      render: (record: IApplicationData) => {
         return (
           <>
             <Space size="small">
@@ -161,7 +164,7 @@ const useApplicationsList = (offerId?: string) => {
                   onClick={() => {}}
                 />
               </Tooltip>
-              <Tooltip title={t("ACCEPTED")}>
+              <Tooltip title={t("ACCEPT")}>
                 <Button
                   type="primary"
                   shape="circle"
@@ -170,7 +173,7 @@ const useApplicationsList = (offerId?: string) => {
                   onClick={() => {}}
                 />
               </Tooltip>
-              <Tooltip title={t("REJECTED")}>
+              <Tooltip title={t("REJECT")}>
                 <Button
                   type="primary"
                   shape="circle"
@@ -183,7 +186,10 @@ const useApplicationsList = (offerId?: string) => {
                 <Button
                   shape="circle"
                   icon={<DownloadOutlined />}
-                  onClick={() => {}}
+                  onClick={async () => {
+                    const fileData = await getStudentCV(record.student || "");
+                    download(fileData, `${record.studentName}_CV.pdf`);
+                  }}
                 />
               </Tooltip>
             </Space>
@@ -194,6 +200,11 @@ const useApplicationsList = (offerId?: string) => {
     },
   ];
 
+  const handleDownloadCVs = async () => {
+    const fileData = await getApplicationsCV(offerId);
+    download(fileData, "cv_zip.zip");
+  };
+
   return {
     isLoading,
     columns,
@@ -201,6 +212,7 @@ const useApplicationsList = (offerId?: string) => {
     setFetchOptions,
     handleTablePropsChange,
     applicationsList,
+    handleDownloadCVs,
   };
 };
 

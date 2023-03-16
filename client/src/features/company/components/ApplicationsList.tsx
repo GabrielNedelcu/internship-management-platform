@@ -1,6 +1,8 @@
-import { Col, Row, Table } from "antd";
-import { FilterSortData, LoadingPage } from "common";
+import { Button, Col, Row, Table } from "antd";
 import { useTranslation } from "react-i18next";
+import { DownloadOutlined } from "@ant-design/icons";
+
+import { FilterSortData, LoadingPage } from "common";
 import useApplicationsList from "../hooks/useApplicationsList";
 
 interface IApplicationsTableProps {
@@ -17,6 +19,7 @@ const ApplicationsList = ({ offerId }: IApplicationsTableProps) => {
     applicationsList,
     fetchOptions,
     setFetchOptions,
+    handleDownloadCVs,
   } = useApplicationsList(offerId);
 
   if (!applicationsList)
@@ -40,6 +43,15 @@ const ApplicationsList = ({ offerId }: IApplicationsTableProps) => {
           });
         }}
       />
+
+      <br />
+      <Button
+        icon={<DownloadOutlined />}
+        size="large"
+        onClick={handleDownloadCVs}
+      >
+        {t("DOWNLOAD_CV_ZIP")}
+      </Button>
 
       <Row gutter={[16, 16]}>
         <Col>

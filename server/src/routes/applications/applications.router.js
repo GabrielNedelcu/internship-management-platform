@@ -3,9 +3,10 @@ const asyncHandler = require("express-async-handler");
 const authz = require("../../middleware/authz.middleware");
 
 const {
-  httpCreateApplication,
-  httpGetAllApplications,
   httpGetApplication,
+  httpCreateApplication,
+  httpGetApplicationsCV,
+  httpGetAllApplications,
 } = require("./applications.controller");
 
 const {
@@ -20,6 +21,7 @@ applicationsRouter.post(
   validateApplicationCreation,
   asyncHandler(httpCreateApplication)
 );
+
 applicationsRouter.get(
   "/",
   authz(["admin", "student", "company"]),

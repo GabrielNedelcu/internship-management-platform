@@ -253,5 +253,8 @@
   "DOWNLOAD_CONTRACT": "Descarca contractul",
   "UPLOAD_CONTRACT": "Selecteaza fisierul pdf ce contine contractul semnat",
   "CONTRACT_UPLOADED": "Contract a fost incarcat cu succes",
-  "CONTRACT_UPLOAD_ERR": "Am intampinat o eroare. Contractul nu a putu fi incarcat pe server!"
+  "CONTRACT_UPLOAD_ERR": "Am intampinat o eroare. Contractul nu a putu fi incarcat pe server!",
+  "ACCEPT": "Accepta",
+  "REJECT": "Refuza",
+  "DOWNLOAD_CV_ZIP": "Descarca CV-urile ca zip"
 }
