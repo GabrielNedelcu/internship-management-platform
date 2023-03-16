@@ -179,8 +179,8 @@ async function httpGetOneOfferStats(req, res) {
 
   return res.status(200).json({
     ...response,
-    rejected: rejectedApplications.length || 0,
-    accepted: acceptedApplications.length || 0,
+    rejected: rejectedApplications.totalCount,
+    accepted: acceptedApplications.totalCount,
   });
 }
 

@@ -83,6 +83,11 @@ const studentsSchema = new mongoose.Schema(
         default: 0,
       },
     },
+    internship: {
+      type: mongoose.Schema.Types.ObjectId,
+      default: null,
+      unique: true,
+    },
   },
   { timestamps: true }
 );

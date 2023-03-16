@@ -8,7 +8,10 @@ const {
   updateOneApplication,
 } = require("../../models/applications/applications.model");
 const { getOneCompany } = require("../../models/companies/companies.model");
-const { getOneStudent } = require("../../models/students/students.model");
+const {
+  getOneStudent,
+  updateOneStudent,
+} = require("../../models/students/students.model");
 const {
   getOneOffer,
   updateOneOffer,
@@ -19,6 +22,12 @@ const {
   getProjection,
 } = require("../../utils/query.utils");
 const { getUploadedFilePath } = require("../../utils/files.utils");
+const {
+  validateApplicationStatusUpdate,
+} = require("../../middleware/validation.middleware");
+const {
+  createInternship,
+} = require("../../models/internships/internships.model");
 
 /**
  *
@@ -218,64 +227,33 @@ async function httpPatchApplication(req, res) {
     throw err;
   }
 
-  const currentStatus = application.status;
-  const newStatus = newData.status;
-
-  console.log(application.company);
-  console.log(userId);
-  console.log(userRole);
-
   // Validation
-  let validRequest = true;
-  switch (userRole) {
-    case "company":
-      if (userId != application.company) {
-        const err = new Error("You are not allowed to access this resource");
-        err.statusCode = 403;
-        throw err;
-      }
-
-      if (
-        newStatus !== "interviewAccepted" &&
-        newStatus !== "companyAccepted" &&
-        newStatus !== "companyDeclined"
-      )
-        validRequest = false;
-      break;
-    case "student":
-      if (userId != application.student) {
-        const err = new Error("You are not allowed to access this resource");
-        err.statusCode = 403;
-        throw err;
-      }
-
-      if (newStatus !== "studentAccepted" && newStatus !== "studentDeclined")
-        validRequest = false;
-      break;
-  }
-
-  // after company accepted, cannot decline
-  if (currentStatus === "companyAccepted" && newStatus === "companyDeclined")
-    validRequest = false;
-
-  // after student accepted, cannot decline
-  if (currentStatus === "studentAccepted" && newStatus === "studentDeclined")
-    validRequest = false;
-
-  // cannot assign a professor unless the student has accepted the offer
-  if (currentStatus !== "studentAccepted" && newStatus === "professorAssgined")
-    validRequest = false;
-
-  // a student cannot accept or decline unless the company has accepted him
-  if (
-    (newStatus === "studentAccepted" || newStatus === "studentDeclined") &&
-    currentStatus !== "companyAccepted"
-  )
-    validRequest = false;
-
-  if (!validRequest) return res.status(412).send({});
+  if (!validateApplicationStatusUpdate(application, req))
+    return res.status(412).send({});
 
   await updateOneApplication(applicationId, newData);
+
+  // if student accepted, create the internship object
+  if (newData.status == "studentAccepted") {
+    // create the object
+    const internship = await createInternship({
+      student: application.student,
+      company: application.company,
+      offer: application.offer,
+    });
+
+    // set the internship on the student model
+    await updateOneStudent(application.student, { internship: internship._id });
+
+    // decrement available positions for the offer
+    const offer = await getOneOffer(application.offer, {
+      remainingAvailablePos: 1,
+    });
+
+    await updateOneOffer(application.offer, {
+      remainingAvailablePos: offer.remainingAvailablePos - 1,
+    });
+  }
 
   return res.status(204).json();
 }

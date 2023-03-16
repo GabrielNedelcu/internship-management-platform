@@ -448,6 +448,70 @@ async function validatePatchProfessor(req, res, next) {
   });
 }
 
+/**
+ * Validate the status update of an application
+ * @param {*} application application data
+ * @param {*} req request object
+ * @returns true if ok, false otherwise
+ */
+function validateApplicationStatusUpdate(application, req) {
+  const userRole = req.userRole;
+  const userId = req.userId;
+
+  const currentStatus = application.status;
+  const newStatus = req.body.status;
+
+  let validRequest = true;
+
+  switch (userRole) {
+    case "company":
+      if (userId != application.company) {
+        const err = new Error("You are not allowed to access this resource");
+        err.statusCode = 403;
+        throw err;
+      }
+
+      if (
+        newStatus !== "interviewAccepted" &&
+        newStatus !== "companyAccepted" &&
+        newStatus !== "companyDeclined"
+      )
+        validRequest = false;
+      break;
+    case "student":
+      if (userId != application.student) {
+        const err = new Error("You are not allowed to access this resource");
+        err.statusCode = 403;
+        throw err;
+      }
+
+      if (newStatus !== "studentAccepted" && newStatus !== "studentDeclined")
+        validRequest = false;
+      break;
+  }
+
+  // after company accepted, cannot decline
+  if (currentStatus === "companyAccepted" && newStatus === "companyDeclined")
+    validRequest = false;
+
+  // after student accepted, cannot decline
+  if (currentStatus === "studentAccepted" && newStatus === "studentDeclined")
+    validRequest = false;
+
+  // cannot assign a professor unless the student has accepted the offer
+  if (currentStatus !== "studentAccepted" && newStatus === "professorAssgined")
+    validRequest = false;
+
+  // a student cannot accept or decline unless the company has accepted him
+  if (
+    (newStatus === "studentAccepted" || newStatus === "studentDeclined") &&
+    currentStatus !== "companyAccepted"
+  )
+    validRequest = false;
+
+  return validRequest;
+}
+
 module.exports = {
   validateLogin,
   validatePatchCompany,
@@ -460,4 +524,5 @@ module.exports = {
   validateApplicationPatch,
   validateProfessorCreation,
   validateApplicationCreation,
+  validateApplicationStatusUpdate,
 };
