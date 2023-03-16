@@ -41,7 +41,7 @@ studentsRouter.get(
 
 studentsRouter.get(
   "/:studentId/cv",
-  authz(["admin", "company"]),
+  authz(["admin", "company", "student"]),
   asyncHandler(httpGetStudentCV)
 );
 

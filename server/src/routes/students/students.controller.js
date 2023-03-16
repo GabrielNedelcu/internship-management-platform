@@ -218,6 +218,9 @@ async function httpGetSelfStudent(req, res) {
  */
 async function httpGetStudentCV(req, res) {
   const studentId = req.params.studentId;
+  const userId = req.userId;
+
+  if (userId !== studentId) return res.status(403).send({});
 
   const studentData = await getOneStudent(studentId);
 
