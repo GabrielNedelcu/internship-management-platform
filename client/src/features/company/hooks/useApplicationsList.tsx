@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import download from "downloadjs";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { TableProps, notification, Space, Tooltip, Button, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table/interface";
 
@@ -13,9 +13,14 @@ import {
   CheckOutlined,
 } from "@ant-design/icons";
 
-import { getApplicationsCV, getSelfApplications, getStudentCV } from "../api";
+import {
+  getApplicationsCV,
+  getSelfApplications,
+  getStudentCV,
+  updateApplicationStatus,
+} from "../api";
 import { IApplicationData, IServerResponseMultipleFetch } from "common/types";
-import { initialFetchOptions } from "common/constants";
+import { APPLICATION_STATUS, initialFetchOptions } from "common/constants";
 import {
   getApplicationStatusOptionsForCompany,
   getApplicationStatusTag,
@@ -23,6 +28,11 @@ import {
   parseTableFiltersObject,
   parseTableSortObject,
 } from "common/utils";
+
+interface IApplicationStatusUpdateData {
+  applicationId: string;
+  newStatus: APPLICATION_STATUS;
+}
 
 const useApplicationsList = (offerId?: string) => {
   const { t } = useTranslation();
@@ -69,6 +79,36 @@ const useApplicationsList = (offerId?: string) => {
   useEffect(() => {
     refetchApplicationsList();
   }, [fetchOptions]);
+
+  const { mutate: mutateUpdateApplicationStatus } = useMutation(
+    ["updateApplicationStatus"],
+    (updateData: IApplicationStatusUpdateData) => {
+      setIsLoading(true);
+      return updateApplicationStatus(
+        updateData.applicationId,
+        updateData.newStatus
+      );
+    },
+    {
+      onSuccess: () => {
+        refetchApplicationsList();
+        setIsLoading(false);
+        notification.success({
+          message: t("GREAT"),
+          description: t("APPLICATION_STATUS_UPDATED"),
+          duration: 10,
+        });
+      },
+      onError: () => {
+        setIsLoading(false);
+        notification.error({
+          message: "Ooops ...",
+          description: t("APPLICATION_STATUS_UPDAT_ERR"),
+          duration: 10,
+        });
+      },
+    }
+  );
 
   const handleTablePropsChange: TableProps<IApplicationData>["onChange"] = (
     pagination,
@@ -156,32 +196,57 @@ const useApplicationsList = (offerId?: string) => {
         return (
           <>
             <Space size="small">
-              <Tooltip title={t("ACCEPT_FOR_INTERVIEW")}>
-                <Button
-                  type="primary"
-                  shape="circle"
-                  icon={<QuestionOutlined />}
-                  onClick={() => {}}
-                />
-              </Tooltip>
-              <Tooltip title={t("ACCEPT")}>
-                <Button
-                  type="primary"
-                  shape="circle"
-                  icon={<CheckOutlined />}
-                  style={{ backgroundColor: "#52c41a" }}
-                  onClick={() => {}}
-                />
-              </Tooltip>
-              <Tooltip title={t("REJECT")}>
-                <Button
-                  type="primary"
-                  shape="circle"
-                  icon={<DeleteOutlined />}
-                  onClick={() => {}}
-                  danger
-                />
-              </Tooltip>
+              {record.status === "inReview" && (
+                <Tooltip title={t("ACCEPT_FOR_INTERVIEW")}>
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<QuestionOutlined />}
+                    onClick={() => {
+                      mutateUpdateApplicationStatus({
+                        applicationId: record._id || "",
+                        newStatus: APPLICATION_STATUS.ACCEPTED_INTERVIEW,
+                      });
+                    }}
+                  />
+                </Tooltip>
+              )}
+              {(record.status === "inReview" ||
+                record.status === "interviewAccepted") && (
+                <Tooltip title={t("ACCEPT")}>
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<CheckOutlined />}
+                    style={{ backgroundColor: "#52c41a" }}
+                    onClick={() => {
+                      mutateUpdateApplicationStatus({
+                        applicationId: record._id || "",
+                        newStatus: APPLICATION_STATUS.COMPANY_ACCEPTED,
+                      });
+                    }}
+                  />
+                </Tooltip>
+              )}
+
+              {(record.status === "inReview" ||
+                record.status === "interviewAccepted") && (
+                <Tooltip title={t("REJECT")}>
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<DeleteOutlined />}
+                    onClick={() => {
+                      mutateUpdateApplicationStatus({
+                        applicationId: record._id || "",
+                        newStatus: APPLICATION_STATUS.COMPANY_REJECTED,
+                      });
+                    }}
+                    danger
+                  />
+                </Tooltip>
+              )}
+
               <Tooltip title={t("DOWNLOAD_CV")}>
                 <Button
                   shape="circle"

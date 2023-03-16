@@ -132,3 +132,21 @@ export const uploadCompanyAnnex = async (
 
   return res.data;
 };
+
+/**
+ * Update the status of an application
+ * @param applicationId id of the application
+ * @param newStatus new status
+ * @returns server response
+ */
+export const updateApplicationStatus = async (
+  applicationId: string,
+  newStatus: string
+) => {
+  const res = await axiosClient.patch(
+    `${URL_ROUTES.APPLICATIONS}/${applicationId}`,
+    { status: newStatus }
+  );
+
+  return res.data;
+};

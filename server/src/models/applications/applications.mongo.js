@@ -44,7 +44,6 @@ const applicationsSchema = new mongoose.Schema(
           "companyDeclined",
           "studentAccepted",
           "studentDeclined",
-          "waitingProffesor",
           "professorAssgined",
         ],
         message: "{VALUE} is not supported",

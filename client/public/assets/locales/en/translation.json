@@ -256,5 +256,7 @@
   "CONTRACT_UPLOAD_ERR": "An error occured. Your contracted has not been uploaded to the server!",
   "ACCEPT": "Accept",
   "REJECT": "Reject",
-  "DOWNLOAD_CV_ZIP": "Download CVs as zip"
+  "DOWNLOAD_CV_ZIP": "Download CVs as zip",
+  "APPLICATION_STATUS_UPDATED": "The application status has been successfully changed!",
+  "APPLICATION_STATUS_UPDAT_ERR": "An error occured. The application status could not be modified!"
 }

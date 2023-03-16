@@ -256,5 +256,7 @@
   "CONTRACT_UPLOAD_ERR": "Am intampinat o eroare. Contractul nu a putu fi incarcat pe server!",
   "ACCEPT": "Accepta",
   "REJECT": "Refuza",
-  "DOWNLOAD_CV_ZIP": "Descarca CV-urile ca zip"
+  "DOWNLOAD_CV_ZIP": "Descarca CV-urile ca zip",
+  "APPLICATION_STATUS_UPDATED": "Statusul aplicatiei a fost modificat cu success!",
+  "APPLICATION_STATUS_UPDAT_ERR": "Am intampinat o eroare. Statusul aplicatiei nu a putut fi modificat!"
 }

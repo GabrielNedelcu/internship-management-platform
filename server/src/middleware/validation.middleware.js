@@ -310,6 +310,42 @@ async function validateApplicationCreation(req, res, next) {
 }
 
 /**
+ * Validate the request body in order to update an application
+ * Endpoint in scope: {PATCH} /applications/:applicationId
+ *
+ * @param {*} req       http request
+ * @param {*} res       http response
+ * @param {*} next      next middleware in the chain
+ */
+async function validateApplicationPatch(req, res, next) {
+  const validationRule = {
+    status:
+      "string|in:inReview,interviewAccepted,companyAccepted,companyDeclined,studentAccepted,studentDeclined,professorAssgined",
+  };
+
+  // verify user sends only accepted fields
+  const reqFields = Object.keys(req.body);
+  for (key of reqFields) {
+    if (!Object.keys(validationRule).includes(key)) {
+      return res.status(412).send({
+        message: "Validation failed",
+      });
+    }
+  }
+
+  await validator(req.body, validationRule, {}, (err, success) => {
+    if (success) {
+      next();
+    } else {
+      res.status(412).send({
+        message: "Validation failed",
+        data: err,
+      });
+    }
+  });
+}
+
+/**
  * Validate the request body in order to patch a company
  * Endpoint in scope: {PATCH} /companies/:companyId
  *
@@ -421,6 +457,7 @@ module.exports = {
   validateStudentCreation,
   validateStudentSelfPatch,
   validatePatchSelfAccount,
+  validateApplicationPatch,
   validateProfessorCreation,
   validateApplicationCreation,
 };

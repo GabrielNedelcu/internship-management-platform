@@ -5,11 +5,12 @@ const authz = require("../../middleware/authz.middleware");
 const {
   httpGetApplication,
   httpCreateApplication,
-  httpGetApplicationsCV,
   httpGetAllApplications,
+  httpPatchApplication,
 } = require("./applications.controller");
 
 const {
+  validateApplicationPatch,
   validateApplicationCreation,
 } = require("../../middleware/validation.middleware");
 
@@ -29,5 +30,11 @@ applicationsRouter.get(
 );
 
 applicationsRouter.get("/:applicationId", asyncHandler(httpGetApplication));
+
+applicationsRouter.patch(
+  "/:applicationId",
+  validateApplicationPatch,
+  asyncHandler(httpPatchApplication)
+);
 
 module.exports = applicationsRouter;

@@ -24,3 +24,13 @@ export enum USER_ROLES {
   STUDENT = "student",
   COMPANY = "company",
 }
+
+export enum APPLICATION_STATUS {
+  IN_REVIEW = "inReview",
+  ACCEPTED_INTERVIEW = "interviewAccepted",
+  COMPANY_ACCEPTED = "companyAccepted",
+  COMPANY_REJECTED = "companyDeclined",
+  STUDENT_ACCEPTED = "studentAccepted",
+  STUDENT_DECLINED = "studentDeclined",
+  PROFESSOR_ASSIGNED = "professorAssgined",
+}

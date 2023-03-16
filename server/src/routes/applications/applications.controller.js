@@ -5,6 +5,7 @@ const {
   getAllApplications,
   getOneApplication,
   queryApplications,
+  updateOneApplication,
 } = require("../../models/applications/applications.model");
 const { getOneCompany } = require("../../models/companies/companies.model");
 const { getOneStudent } = require("../../models/students/students.model");
@@ -196,8 +197,92 @@ async function httpGetApplication(req, res) {
   return res.status(200).json(application);
 }
 
+/**
+ *
+ * @api {PATCH} /applications/:applicationId
+ * @apiDescription Update application data
+ *
+ * @apiParam    {String}    applicationId   Application's unique ObjectId
+ * @apiSuccess  {Object}                    The data of the Application
+ */
+async function httpPatchApplication(req, res) {
+  const userRole = req.userRole;
+  const userId = req.userId;
+  const applicationId = req.params.applicationId;
+  const newData = req.body;
+
+  const application = await getOneApplication(applicationId);
+  if (!application) {
+    const err = new Error("Application not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  const currentStatus = application.status;
+  const newStatus = newData.status;
+
+  console.log(application.company);
+  console.log(userId);
+  console.log(userRole);
+
+  // Validation
+  let validRequest = true;
+  switch (userRole) {
+    case "company":
+      if (userId != application.company) {
+        const err = new Error("You are not allowed to access this resource");
+        err.statusCode = 403;
+        throw err;
+      }
+
+      if (
+        newStatus !== "interviewAccepted" &&
+        newStatus !== "companyAccepted" &&
+        newStatus !== "companyDeclined"
+      )
+        validRequest = false;
+      break;
+    case "student":
+      if (userId != application.student) {
+        const err = new Error("You are not allowed to access this resource");
+        err.statusCode = 403;
+        throw err;
+      }
+
+      if (newStatus !== "studentAccepted" && newStatus !== "studentDeclined")
+        validRequest = false;
+      break;
+  }
+
+  // after company accepted, cannot decline
+  if (currentStatus === "companyAccepted" && newStatus === "companyDeclined")
+    validRequest = false;
+
+  // after student accepted, cannot decline
+  if (currentStatus === "studentAccepted" && newStatus === "studentDeclined")
+    validRequest = false;
+
+  // cannot assign a professor unless the student has accepted the offer
+  if (currentStatus !== "studentAccepted" && newStatus === "professorAssgined")
+    validRequest = false;
+
+  // a student cannot accept or decline unless the company has accepted him
+  if (
+    (newStatus === "studentAccepted" || newStatus === "studentDeclined") &&
+    currentStatus !== "companyAccepted"
+  )
+    validRequest = false;
+
+  if (!validRequest) return res.status(412).send({});
+
+  await updateOneApplication(applicationId, newData);
+
+  return res.status(204).json();
+}
+
 module.exports = {
   httpGetApplication,
+  httpPatchApplication,
   httpGetApplicationsCV,
   httpCreateApplication,
   httpGetAllApplications,
