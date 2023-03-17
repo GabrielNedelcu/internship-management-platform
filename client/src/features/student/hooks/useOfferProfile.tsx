@@ -1,15 +1,32 @@
 import { useState } from "react";
 import { notification } from "antd";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { getOffer, applyToOffer } from "../api";
+import { getOffer, applyToOffer, getSelfStudent } from "../api";
 import { useTranslation } from "react-i18next";
+import { IOfferData, IStudentData } from "common/types";
 
 const useOfferProfile = (offerId: string) => {
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const { data: offerData, refetch: refetchOfferData } = useQuery(
+  const { data: studentData } = useQuery<IStudentData>(
+    ["getSelfStudent"],
+    () => {
+      setIsLoading(true);
+      return getSelfStudent({ fields: "internship" });
+    },
+    {
+      onSuccess: () => {
+        setIsLoading(false);
+      },
+      onError: () => {
+        setIsLoading(false);
+      },
+    }
+  );
+
+  const { data: offerData, refetch: refetchOfferData } = useQuery<IOfferData>(
     ["getOffer", offerId],
     () => {
       setIsLoading(true);
@@ -34,7 +51,7 @@ const useOfferProfile = (offerId: string) => {
     ["applyToOffer", offerId],
     () => {
       setIsLoading(true);
-      return applyToOffer(offerId, offerData.companyID);
+      return applyToOffer(offerId, offerData?.companyID || "");
     },
     {
       onSuccess: () => {
@@ -61,9 +78,7 @@ const useOfferProfile = (offerId: string) => {
     mutateApply();
   };
 
-  const handleRemoveApplication = () => {};
-
-  return { offerData, isLoading, handleApply, handleRemoveApplication };
+  return { studentData, offerData, isLoading, handleApply };
 };
 
 export default useOfferProfile;

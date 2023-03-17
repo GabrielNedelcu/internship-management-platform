@@ -192,73 +192,91 @@ const useApplicationsList = (offerId?: string) => {
       key: "5",
       title: t("ACTIONS"),
       render: (record: IApplicationData) => {
-        return (
-          <>
-            <Space size="small">
-              {record.status === APPLICATION_STATUS.IN_REVIEW && (
-                <Tooltip title={t("ACCEPT_FOR_INTERVIEW")}>
-                  <Button
-                    type="primary"
-                    shape="circle"
-                    icon={<QuestionOutlined />}
-                    onClick={() => {
-                      mutateUpdateApplicationStatus({
-                        applicationId: record._id || "",
-                        newStatus: APPLICATION_STATUS.ACCEPTED_INTERVIEW,
-                      });
-                    }}
-                  />
-                </Tooltip>
-              )}
-              {(record.status === APPLICATION_STATUS.IN_REVIEW ||
-                record.status === APPLICATION_STATUS.ACCEPTED_INTERVIEW) && (
-                <Tooltip title={t("ACCEPT")}>
-                  <Button
-                    type="primary"
-                    shape="circle"
-                    icon={<CheckOutlined />}
-                    style={{ backgroundColor: "#52c41a" }}
-                    onClick={() => {
-                      mutateUpdateApplicationStatus({
-                        applicationId: record._id || "",
-                        newStatus: APPLICATION_STATUS.COMPANY_ACCEPTED,
-                      });
-                    }}
-                  />
-                </Tooltip>
-              )}
+        if (!record.studentData?.at(0)?.internship)
+          if (record.offerData?.at(0)?.remainingAvailablePos !== 0)
+            return (
+              <>
+                <Space size="small">
+                  {record.status === APPLICATION_STATUS.IN_REVIEW && (
+                    <Tooltip title={t("ACCEPT_FOR_INTERVIEW")}>
+                      <Button
+                        type="primary"
+                        shape="circle"
+                        icon={<QuestionOutlined />}
+                        onClick={() => {
+                          mutateUpdateApplicationStatus({
+                            applicationId: record._id || "",
+                            newStatus: APPLICATION_STATUS.ACCEPTED_INTERVIEW,
+                          });
+                        }}
+                      />
+                    </Tooltip>
+                  )}
+                  {(record.status === APPLICATION_STATUS.IN_REVIEW ||
+                    record.status ===
+                      APPLICATION_STATUS.ACCEPTED_INTERVIEW) && (
+                    <Tooltip title={t("ACCEPT")}>
+                      <Button
+                        type="primary"
+                        shape="circle"
+                        icon={<CheckOutlined />}
+                        style={{ backgroundColor: "#52c41a" }}
+                        onClick={() => {
+                          mutateUpdateApplicationStatus({
+                            applicationId: record._id || "",
+                            newStatus: APPLICATION_STATUS.COMPANY_ACCEPTED,
+                          });
+                        }}
+                      />
+                    </Tooltip>
+                  )}
 
-              {(record.status === APPLICATION_STATUS.IN_REVIEW ||
-                record.status === APPLICATION_STATUS.ACCEPTED_INTERVIEW) && (
-                <Tooltip title={t("REJECT")}>
-                  <Button
-                    type="primary"
-                    shape="circle"
-                    icon={<DeleteOutlined />}
-                    onClick={() => {
-                      mutateUpdateApplicationStatus({
-                        applicationId: record._id || "",
-                        newStatus: APPLICATION_STATUS.COMPANY_REJECTED,
-                      });
-                    }}
-                    danger
-                  />
-                </Tooltip>
-              )}
+                  {(record.status === APPLICATION_STATUS.IN_REVIEW ||
+                    record.status ===
+                      APPLICATION_STATUS.ACCEPTED_INTERVIEW) && (
+                    <Tooltip title={t("REJECT")}>
+                      <Button
+                        type="primary"
+                        shape="circle"
+                        icon={<DeleteOutlined />}
+                        onClick={() => {
+                          mutateUpdateApplicationStatus({
+                            applicationId: record._id || "",
+                            newStatus: APPLICATION_STATUS.COMPANY_REJECTED,
+                          });
+                        }}
+                        danger
+                      />
+                    </Tooltip>
+                  )}
 
-              <Tooltip title={t("DOWNLOAD_CV")}>
-                <Button
-                  shape="circle"
-                  icon={<DownloadOutlined />}
-                  onClick={async () => {
-                    const fileData = await getStudentCV(record.student || "");
-                    download(fileData, `${record.studentName}_CV.pdf`);
-                  }}
-                />
-              </Tooltip>
-            </Space>
-          </>
-        );
+                  <Tooltip title={t("DOWNLOAD_CV")}>
+                    <Button
+                      shape="circle"
+                      icon={<DownloadOutlined />}
+                      onClick={async () => {
+                        const fileData = await getStudentCV(
+                          record.student || ""
+                        );
+                        download(fileData, `${record.studentName}_CV.pdf`);
+                      }}
+                    />
+                  </Tooltip>
+                </Space>
+              </>
+            );
+          else
+            return (
+              <>
+                <Tag color="#108ee9">{t("NO_POS_AVAILABLE")}</Tag>
+              </>
+            );
+        else
+          return (
+            <>
+              <Tag color="#f50">{t("HAS_INTERNSHIP")}</Tag>
+            </>
+          );
       },
       ellipsis: true,
     },

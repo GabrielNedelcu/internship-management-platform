@@ -258,5 +258,8 @@
   "REJECT": "Refuza",
   "DOWNLOAD_CV_ZIP": "Descarca CV-urile ca zip",
   "APPLICATION_STATUS_UPDATED": "Statusul aplicatiei a fost modificat cu success!",
-  "APPLICATION_STATUS_UPDAT_ERR": "Am intampinat o eroare. Statusul aplicatiei nu a putut fi modificat!"
+  "APPLICATION_STATUS_UPDAT_ERR": "Am intampinat o eroare. Statusul aplicatiei nu a putut fi modificat!",
+  "ALREADY_APPLIED": "Ai aplicat deja ...",
+  "HAS_INTERNSHIP": "Are Stagiu",
+  "NO_POS_AVAILABLE": "Nicio Pozitie Disponibila"
 }

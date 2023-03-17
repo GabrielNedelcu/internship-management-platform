@@ -10,8 +10,9 @@ const OfferProfile = () => {
 
   const params = useParams();
   const offerId = params.offerID;
-  const { offerData, isLoading, handleApply, handleRemoveApplication } =
-    useOfferProfile(offerId || "");
+  const { studentData, offerData, isLoading, handleApply } = useOfferProfile(
+    offerId || ""
+  );
 
   if (!offerData || isLoading)
     return <LoadingPage message={t("FETCHING_OFFER_DATA")} />;
@@ -27,26 +28,30 @@ const OfferProfile = () => {
         </Col>
 
         <Col span={6}>
-          {offerData.application ? (
-            <Button
-              size="large"
-              icon={<SendOutlined />}
-              onClick={handleRemoveApplication}
-              block
-              danger
-            >
-              {t("REMOVE_APPLICATION")}
-            </Button>
-          ) : (
-            <Button
-              size="large"
-              icon={<SendOutlined />}
-              onClick={handleApply}
-              block
-            >
-              {t("APPLY_TO_OFFER")}
-            </Button>
-          )}
+          <>
+            {!studentData || studentData?.internship ? (
+              ""
+            ) : offerData.remainingAvailablePos !== 0 ? (
+              offerData.application ? (
+                <Button size="large" block danger>
+                  {t("ALREADY_APPLIED")}
+                </Button>
+              ) : (
+                <Button
+                  size="large"
+                  icon={<SendOutlined />}
+                  onClick={handleApply}
+                  block
+                >
+                  {t("APPLY_TO_OFFER")}
+                </Button>
+              )
+            ) : (
+              <Button size="large" block danger>
+                {t("NO_POS_AVAILABLE")}
+              </Button>
+            )}
+          </>
         </Col>
       </Row>
 

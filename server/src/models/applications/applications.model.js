@@ -73,10 +73,107 @@ async function queryApplications(
   return { totalCount, data };
 }
 
+/**
+ * Query applications and append student and offer data
+ * @param {*} query     query
+ * @param {*} projection query projection
+ * @param {*} sortBy field to sort by
+ * @param {*} sortOrder sort order
+ * @param {*} skipCount number of documents to skip
+ * @param {*} pageSize number of documents to retrieve
+ * @returns object containing the total documents and the requested number of documents
+ */
+async function queryApplicationAppendStudentOfferData(
+  query,
+  projection = {},
+  sortBy,
+  sortOrder,
+  skipCount,
+  pageSize
+) {
+  const pipeline = [
+    {
+      $lookup: {
+        from: "students",
+        localField: "student",
+        foreignField: "_id",
+        as: "studentData",
+        pipeline: [
+          {
+            $project: {
+              internship: 1,
+            },
+          },
+        ],
+      },
+    },
+    {
+      $lookup: {
+        from: "offers",
+        localField: "offer",
+        foreignField: "_id",
+        as: "ofefrData",
+        pipeline: [
+          {
+            $project: {
+              remainingAvailablePos: 1,
+            },
+          },
+        ],
+      },
+    },
+    {
+      $match: query,
+    },
+    {
+      $count: "totalDocuments",
+    },
+  ];
+
+  const countResult = await Application.aggregate(pipeline).exec();
+  const totalCount = countResult[0] ? countResult[0].totalDocuments : 0;
+  const mainPipeline = [
+    ...pipeline.slice(0, -1),
+    ...(Object.keys(projection).length
+      ? [
+          {
+            $project: projection,
+          },
+        ]
+      : []),
+    {
+      $match: query,
+    },
+    ...(sortBy && sortOrder
+      ? [
+          {
+            $sort: {
+              [`${sortBy}`]: sortOrder === "asc" ? 1 : -1,
+            },
+          },
+        ]
+      : []),
+    {
+      $skip: Number(skipCount),
+    },
+    {
+      $limit: Number(pageSize),
+    },
+  ];
+
+  const data = await Application.aggregate(mainPipeline).exec();
+
+  return {
+    totalCount,
+    data,
+  };
+}
+
 module.exports = {
   createApplication,
   getOneApplication,
   queryApplications,
   getAllApplications,
   updateOneApplication,
+  queryApplicationAppendStudentOfferData,
 };

@@ -32,6 +32,7 @@ export interface IStudentData {
   birthDay?: Date;
   phone?: string;
   citizenship?: string;
+  internship?: string;
 }
 
 export interface ICompanyCardData {
@@ -136,6 +137,8 @@ export interface IApplicationData {
   status?: string;
   createdAt?: Date;
   updatedAt?: Date;
+  studentData?: IStudentData[];
+  offerData?: IOfferData[];
 }
 
 export interface IFetchOptions {

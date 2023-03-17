@@ -6,6 +6,7 @@ const {
   getOneApplication,
   queryApplications,
   updateOneApplication,
+  queryApplicationAppendStudentOfferData,
 } = require("../../models/applications/applications.model");
 const { getOneCompany } = require("../../models/companies/companies.model");
 const {
@@ -28,6 +29,7 @@ const {
 const {
   createInternship,
 } = require("../../models/internships/internships.model");
+const { default: mongoose } = require("mongoose");
 
 /**
  *
@@ -60,13 +62,28 @@ async function httpCreateApplication(req, res) {
   const offer = await getOneOffer(applicationData.offer, {
     title: 1,
     applications: 1,
+    remainingAvailablePos: 1,
   });
+
   const company = await getOneCompany(applicationData.company, { name: 1 });
   const student = await getOneStudent(studentId, {
     name: 1,
     email: 1,
     major: 1,
+    internship: 1,
   });
+
+  if (student.internship) {
+    const err = new Error("Student already has an internship");
+    err.statusCode = 403;
+    throw err;
+  }
+
+  if (offer.remainingAvailablePos === 0) {
+    const err = new Error("Offer has no more available positions lef");
+    err.statusCode = 400;
+    throw err;
+  }
 
   const application = await createApplication({
     ...applicationData,
@@ -120,16 +137,17 @@ async function httpGetAllApplications(req, res) {
     ],
   };
 
-  if (userRole === "student") query = { ...query, student: userId };
+  if (userRole === "student")
+    query = { ...query, student: new mongoose.Types.ObjectId(userId) };
   if (userRole === "company") {
-    query = { ...query, company: userId };
-    if (offer) query = { ...query, offer };
+    query = { ...query, company: new mongoose.Types.ObjectId(userId) };
+    if (offer) query = { ...query, offer: new mongoose.Types.ObjectId(offer) };
   }
 
   if (major) query = { ...query, studentMajor: { $in: major.split(",") } };
   if (status) query = { ...query, status: { $in: status.split(",") } };
 
-  const resp = await queryApplications(
+  const resp = await queryApplicationAppendStudentOfferData(
     query,
     projection,
     sortBy,
@@ -137,6 +155,8 @@ async function httpGetAllApplications(req, res) {
     skipCount,
     pageSize
   );
+
+  console.log(resp);
 
   // if (!resp.totalCount) return res.status(204).send();
 
@@ -230,6 +250,29 @@ async function httpPatchApplication(req, res) {
   // Validation
   if (!validateApplicationStatusUpdate(application, req))
     return res.status(412).send({});
+
+  const student = await getOneStudent(application.student, { internship: 1 });
+  const offer = await getOneOffer(application.offer, {
+    remainingAvailablePos: 1,
+  });
+
+  // cannot accept a student that already has an internship
+  // cannot accept an offer if the student has an internship
+  if (student.internship) {
+    const err = new Error("Student already has an internship!");
+    err.statusCode = 400;
+    throw err;
+  }
+
+  // cannot accept an application to an offer thet has no more positions left
+  if (
+    offer.remainingAvailablePos === 0 &&
+    (newData.status == "studentAccepted" || newData.status == "companyAccepted")
+  ) {
+    const err = new Error("Offer has no available positions left!");
+    err.statusCode = 400;
+    throw err;
+  }
 
   await updateOneApplication(applicationId, newData);
 

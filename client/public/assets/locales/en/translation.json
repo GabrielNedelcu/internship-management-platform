@@ -258,5 +258,8 @@
   "REJECT": "Reject",
   "DOWNLOAD_CV_ZIP": "Download CVs as zip",
   "APPLICATION_STATUS_UPDATED": "The application status has been successfully changed!",
-  "APPLICATION_STATUS_UPDAT_ERR": "An error occured. The application status could not be modified!"
+  "APPLICATION_STATUS_UPDAT_ERR": "An error occured. The application status could not be modified!",
+  "ALREADY_APPLIED": "You have already applied ...",
+  "HAS_INTERNSHIP": "Has Internship",
+  "NO_POS_AVAILABLE": "No Positions Available"
 }
