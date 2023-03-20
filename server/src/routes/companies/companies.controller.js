@@ -97,6 +97,8 @@ async function httpGetAllCompanies(req, res) {
   const userRole = req.userRole;
   const validated = req.query.validated || true;
   const companyName = req.query.company || "";
+  const searchFor = req.query.search;
+  const fieldOfWork = req.query.fieldOfWork;
 
   const { sortOrder, sortBy } = getSort(req.query);
   const { pageSize, skipCount } = getPagination(req.query);
@@ -109,8 +111,21 @@ async function httpGetAllCompanies(req, res) {
   }
 
   const regex = new RegExp(companyName, "i");
+  const searchRegex = new RegExp(searchFor, "i");
+
+  let query = searchFor
+    ? {
+        $or: [
+          { name: { $regex: searchRegex } },
+          { email: { $regex: searchRegex } },
+        ],
+      }
+    : { name: { $regex: regex } };
+
+  if (fieldOfWork) query = { ...query, fieldOfWork };
+
   const companies = await queryCompanies(
-    { validated, name: { $regex: regex } },
+    { ...query, validated },
     projection,
     sortBy,
     sortOrder,

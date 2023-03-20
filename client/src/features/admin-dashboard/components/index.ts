@@ -10,3 +10,4 @@ export { default as OfferGeneralInfo } from "./offers/OfferGeneralInfo";
 export { default as TeacherInfo } from "./teachers/TeacherInfo";
 export { default as InternshipsList } from "./InternshipsList";
 export { default as AssignProfessorModal } from "./AssignProfessorModal";
+export { default as CompaniesList } from "./CompaniesList";

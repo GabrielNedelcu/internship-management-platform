@@ -9,8 +9,8 @@ import {
   AdminMessagesPage,
   AdminDocumentsPage,
   AdminCompanyOffersPage,
-  AdminCompaniesPage,
-  AdminSignUpRequestsPage,
+  Companies,
+  EnrollmentRequests,
   AdminCompanyProfile,
   AdminOfferProfile,
   AdminTeacherProfile,
@@ -94,7 +94,7 @@ const AdminRoutes = () => {
             element={
               <Layout
                 sider={<AdminNavBar selectedKey={"4"} />}
-                content={<AdminCompaniesPage />}
+                content={<Companies />}
               />
             }
           />
@@ -103,7 +103,7 @@ const AdminRoutes = () => {
             element={
               <Layout
                 sider={<AdminNavBar selectedKey={"5"} />}
-                content={<AdminSignUpRequestsPage />}
+                content={<EnrollmentRequests />}
               />
             }
           />

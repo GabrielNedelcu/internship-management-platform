@@ -213,3 +213,17 @@ export const parseTableFiltersObject = (
 
   return filters;
 };
+
+/**
+ * Returns a list oftable filter entries representing possible company fields of work
+ *
+ * @returns array of IComboEntry
+ */
+export const getFieldsOfWork = (): IComboEntry[] => {
+  return [
+    { text: "Telecom", value: "telecom" },
+    { text: "Software Developement", value: "softwareDev" },
+    { text: "Electronics", value: "electronics" },
+    { text: "Other", value: "other" },
+  ];
+};
