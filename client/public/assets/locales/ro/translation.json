@@ -261,5 +261,22 @@
   "APPLICATION_STATUS_UPDAT_ERR": "Am intampinat o eroare. Statusul aplicatiei nu a putut fi modificat!",
   "ALREADY_APPLIED": "Ai aplicat deja ...",
   "HAS_INTERNSHIP": "Are Stagiu",
-  "NO_POS_AVAILABLE": "Nicio Pozitie Disponibila"
+  "NO_POS_AVAILABLE": "Nicio Pozitie Disponibila",
+  "INTERNSHIPS": "Stagii",
+  "INTERNSHIPS_MSG": "Aceasta este lista tuturor stagiilor pana in acest moment ...",
+  "SEARCH_COMPANY_OFFER_STUDENT": "Cauta dupa numele studentului, numele companiei sau titlul ofertei ...",
+  "CANNOT_RETRIEVE_INTERNSHIPS": "Am intampinat o eroare. Nu putem sa prelua stagiile de pe server ...",
+  "STUDENT_GROUP": "Grupa Studentului",
+  "PROFESSOR_NAME": "Numele Profesorului",
+  "FETCHING_INTERNSHIPS": "Preluam Stagiile ...",
+  "NOT_ASSIGNED": "Nealocat",
+  "ASSIGN_PROFESSOR": "Aloca profesor",
+  "ASSIGN_CHANGE_PROFESSOR": "Aloca/Schimba profesor",
+  "ASSIGN": "Aloca",
+  "SELECT_PROFESSOR": "Selecteaza profesorul ...",
+  "OR": "Sau",
+  "AUTO_ASSIGN": "Aloca Automat",
+  "PROFESSOR_ASIGNED": "Profesor alocat!",
+  "PROFESSOR_ASIGNED_MSG": "Ai alocat cu succes un profesor acestui stagiu ...",
+  "PROFESSOR_ASIGNED_ERR": "Am intampinat o eroare. Nu putem aloca un profesor acestui stagiu ..."
 }

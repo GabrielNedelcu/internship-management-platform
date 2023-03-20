@@ -69,10 +69,143 @@ async function queryInternships(
   return { totalCount, data };
 }
 
+async function queryInternshipsAppendReferencedData(
+  query,
+  projection = {},
+  studentProjection = {},
+  companyProjection = {},
+  offerProjection = {},
+  professorProjection = {},
+  sortBy,
+  sortOrder,
+  skipCount,
+  pageSize
+) {
+  const pipeline = [
+    {
+      $lookup: {
+        from: "students",
+        localField: "student",
+        foreignField: "_id",
+        as: "studentData",
+        ...(Object.keys(studentProjection).length && {
+          pipeline: [
+            {
+              $project: studentProjection,
+            },
+          ],
+        }),
+      },
+    },
+    {
+      $unwind: "$studentData",
+    },
+    {
+      $lookup: {
+        from: "offers",
+        localField: "offer",
+        foreignField: "_id",
+        as: "offerData",
+        ...(Object.keys(offerProjection).length && {
+          pipeline: [
+            {
+              $project: offerProjection,
+            },
+          ],
+        }),
+      },
+    },
+    {
+      $unwind: "$offerData",
+    },
+    {
+      $lookup: {
+        from: "companies",
+        localField: "company",
+        foreignField: "_id",
+        as: "companyData",
+        ...(Object.keys(professorProjection).length && {
+          pipeline: [
+            {
+              $project: professorProjection,
+            },
+          ],
+        }),
+      },
+    },
+    {
+      $unwind: "$companyData",
+    },
+    {
+      $lookup: {
+        from: "professors",
+        localField: "professor",
+        foreignField: "_id",
+        as: "professorData",
+        ...(Object.keys(companyProjection).length && {
+          pipeline: [
+            {
+              $project: companyProjection,
+            },
+          ],
+        }),
+      },
+    },
+    // {
+    //   $unwind: "$professorData",
+    // },
+    {
+      $match: query,
+    },
+    {
+      $count: "totalDocuments",
+    },
+  ];
+
+  const countResult = await Internship.aggregate(pipeline).exec();
+  const totalCount = countResult[0] ? countResult[0].totalDocuments : 0;
+  const mainPipeline = [
+    ...pipeline.slice(0, -1),
+    ...(Object.keys(projection).length
+      ? [
+          {
+            $project: projection,
+          },
+        ]
+      : []),
+    {
+      $match: query,
+    },
+    ...(sortBy && sortOrder
+      ? [
+          {
+            $sort: {
+              [`${sortBy}`]: sortOrder === "asc" ? 1 : -1,
+            },
+          },
+        ]
+      : []),
+    {
+      $skip: Number(skipCount),
+    },
+    {
+      $limit: Number(pageSize),
+    },
+  ];
+
+  const data = await Internship.aggregate(mainPipeline).exec();
+
+  return {
+    totalCount,
+    data,
+  };
+}
+
 module.exports = {
   createInternship,
   getOneInternship,
   getAllInternships,
   updateOneInternship,
   queryInternships,
+  queryInternshipsAppendReferencedData,
 };

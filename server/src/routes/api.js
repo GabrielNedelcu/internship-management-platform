@@ -10,6 +10,7 @@ const companiesRouter = require("./companies/companies.router");
 const professorsRouter = require("./professors/professors.router");
 const applicationsRouter = require("./applications/applications.router");
 const templatesRouter = require("./templates/templates.router");
+const internshipsRouter = require("./internships/internships.router");
 
 const api = express.Router();
 
@@ -21,5 +22,6 @@ api.use("/students", auth, studentsRouter);
 api.use("/professors", auth, professorsRouter);
 api.use("/applications", auth, applicationsRouter);
 api.use("/templates", auth, templatesRouter);
+api.use("/internships", auth, internshipsRouter);
 
 module.exports = api;

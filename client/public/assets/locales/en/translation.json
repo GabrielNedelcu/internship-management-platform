@@ -261,5 +261,22 @@
   "APPLICATION_STATUS_UPDAT_ERR": "An error occured. The application status could not be modified!",
   "ALREADY_APPLIED": "You have already applied ...",
   "HAS_INTERNSHIP": "Has Internship",
-  "NO_POS_AVAILABLE": "No Positions Available"
+  "NO_POS_AVAILABLE": "No Positions Available",
+  "INTERNSHIPS": "Internships",
+  "INTERNSHIPS_MSG": "Here is the list of all the internships at the moment ...",
+  "SEARCH_COMPANY_OFFER_STUDENT": "Search for student name, company name or offer title ...",
+  "CANNOT_RETRIEVE_INTERNSHIPS": "An error occured. Cannot retrieve the internships from the server ...",
+  "STUDENT_GROUP": "Student Group",
+  "PROFESSOR_NAME": "Professor Name",
+  "FETCHING_INTERNSHIPS": "Fetching Internships ...",
+  "NOT_ASSIGNED": "Not Assigned",
+  "ASSIGN_PROFESSOR": "Assign Professor",
+  "ASSIGN_CHANGE_PROFESSOR": "Assign/Change Professor",
+  "ASSIGN": "Assign",
+  "SELECT_PROFESSOR": "Select professor ...",
+  "OR": "Or",
+  "AUTO_ASSIGN": "Auto Assign",
+  "PROFESSOR_ASIGNED": "Professor assigned!",
+  "PROFESSOR_ASIGNED_MSG": "You have successfully assigned a professor to the internship ...",
+  "PROFESSOR_ASIGNED_ERR": "An error occured. Cannot assigne a professor to the internship ..."
 }

@@ -9,6 +9,12 @@ const {
   deleteOneAccount,
   updateOneAccount,
 } = require("../../models/accounts/accounts.model");
+const {
+  getSort,
+  getPagination,
+  getProjection,
+  getProjectionFromString,
+} = require("../../utils/query.utils");
 
 const { generatePassword } = require("../../utils/auth.utils");
 const { uploadFilesFromRequest } = require("../../utils/files.utils");
@@ -146,16 +152,32 @@ async function httpCreateMultipleProfessors(req, res) {
  * @apiSuccess array with the requested data or 204 if no professor was found
  */
 async function httpGetAllProfessors(req, res) {
-  const userRole = req.userRole;
+  const departament = req.query.departament;
+  const searchFor = req.query.search;
+  const available = req.query.available;
 
-  let professors;
-  if (userRole === "admin") professors = await getAllProfessors();
-  else {
-  }
+  const { sortOrder, sortBy } = getSort(req.query);
+  const { pageSize, skipCount } = getPagination(req.query);
+  const projection = getProjection(req.query);
 
-  if (!professors.length) return res.status(204).send();
+  const regex = new RegExp(searchFor, "i");
+  const resp = await getAllProfessors(
+    {
+      email: { $regex: regex },
+      name: { $regex: regex },
+      ...(available && { numAvailablePositions: { $gt: 0 } }),
+      ...(departament && { departament: departament }),
+    },
+    projection,
+    sortBy,
+    sortOrder,
+    skipCount,
+    pageSize
+  );
 
-  return res.status(200).json(professors);
+  if (!resp.totalCount) return res.status(204).send();
+
+  return res.status(200).json(resp);
 }
 
 /**

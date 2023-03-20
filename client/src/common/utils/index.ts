@@ -84,7 +84,7 @@ export const getApplicationStatusTag = (serverStatus: string) => {
 export const addParameterToQuery = (
   url: string,
   paramName: string,
-  paramValue: string | number
+  paramValue: string | number | boolean
 ) => {
   let newUrl = url;
 

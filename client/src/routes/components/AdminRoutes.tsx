@@ -17,6 +17,7 @@ import {
 } from "../../features";
 import ProtectedRoutes from "../ProtectedRoutes";
 import { USER_ROLES } from "common/constants";
+import { Internships } from "features/admin-dashboard";
 
 const AdminRoutes = () => {
   return (
@@ -65,7 +66,7 @@ const AdminRoutes = () => {
             path="messages"
             element={
               <Layout
-                sider={<AdminNavBar selectedKey={"9"} />}
+                sider={<AdminNavBar selectedKey={"10"} />}
                 content={<AdminMessagesPage />}
               />
             }
@@ -74,7 +75,7 @@ const AdminRoutes = () => {
             path="documents"
             element={
               <Layout
-                sider={<AdminNavBar selectedKey={"8"} />}
+                sider={<AdminNavBar selectedKey={"9"} />}
                 content={<AdminDocumentsPage />}
               />
             }
@@ -130,6 +131,15 @@ const AdminRoutes = () => {
               <Layout
                 sider={<AdminNavBar selectedKey={"-1"} />}
                 content={<AdminTeacherProfile />}
+              />
+            }
+          />
+          <Route
+            path="internships"
+            element={
+              <Layout
+                sider={<AdminNavBar selectedKey={"-1"} />}
+                content={<Internships />}
               />
             }
           />

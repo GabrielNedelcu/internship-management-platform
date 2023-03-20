@@ -10,3 +10,4 @@ export { default as AdminSignUpRequestsPage } from "./pages/AdminSignUpRequestsP
 export { default as AdminCompanyProfile } from "./pages/AdminCompanyProfile";
 export { default as AdminOfferProfile } from "./pages/AdminOfferProfile";
 export { default as AdminTeacherProfile } from "./pages/AdminTeacherProfile";
+export { default as Internships } from "./pages/Internships";

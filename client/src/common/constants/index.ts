@@ -17,6 +17,8 @@ export enum URL_ROUTES {
   OFFERS = "/offers",
   APPLICATIONS = "/applications",
   TEMPLATES = "/templates",
+  INTERNSHIPS = "/internships",
+  PROFESSORS = "/professors",
 }
 
 export enum USER_ROLES {

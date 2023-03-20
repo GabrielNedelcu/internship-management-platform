@@ -156,8 +156,6 @@ async function httpGetAllApplications(req, res) {
     pageSize
   );
 
-  console.log(resp);
-
   // if (!resp.totalCount) return res.status(204).send();
 
   return res.status(200).json(resp);

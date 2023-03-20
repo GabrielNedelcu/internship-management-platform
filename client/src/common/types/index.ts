@@ -170,6 +170,11 @@ export interface IComboEntry {
   value: string;
 }
 
+export interface ISelectOption {
+  label: string;
+  value: string;
+}
+
 export interface ILayoutProps {
   sider: React.ReactElement;
   content?: React.ReactElement;
@@ -184,4 +189,36 @@ export interface ITabProps {
 export interface IApplicationStatusUpdateData {
   applicationId: string;
   newStatus: APPLICATION_STATUS;
+}
+
+export interface IProfessorData {
+  _id: string;
+  email?: string;
+  name?: string;
+  title?: string;
+  privatePhone?: string;
+  publicPhone?: string;
+  departament?: string;
+  numPositions?: number;
+  numAvailablePositions?: number;
+  admin?: boolean;
+}
+
+export interface IJournalEntryData {
+  startDate?: Date;
+  endDate?: Date;
+  description?: string;
+}
+
+export interface IInternshipData {
+  _id?: string;
+  student?: string;
+  professor?: string;
+  company?: string;
+  offer?: string;
+  studentData?: IStudentData;
+  companyData?: ICompanyData;
+  offerData?: IOfferData;
+  professorData?: IProfessorData;
+  journal?: IJournalEntryData[];
 }

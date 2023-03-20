@@ -112,7 +112,7 @@ async function queryApplicationAppendStudentOfferData(
         from: "offers",
         localField: "offer",
         foreignField: "_id",
-        as: "ofefrData",
+        as: "offerData",
         pipeline: [
           {
             $project: {

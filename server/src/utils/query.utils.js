@@ -68,8 +68,32 @@ const getSort = (query) => {
   return { sortOrder, sortBy };
 };
 
+/**
+ * Parse the string and retrieve the projection
+ * Each property is separated by ","
+ *
+ * QUERY EXAMPLE: projection=_id,name,...etc.
+ *
+ * @param {string} query request query string
+ * @returns object contiaing the fields for the projection
+ */
+const getProjectionFromString = (projectionFields) => {
+  if (!projectionFields) return {};
+
+  const projectionFieldsFormatted = projectionFields.replace(/ /g, "");
+  const projectionFieldsArray = projectionFieldsFormatted.split(",");
+
+  const projection = {};
+  projectionFieldsArray.forEach((key) => {
+    projection[key] = 1;
+  });
+
+  return projection;
+};
+
 module.exports = {
   getPagination,
   getProjection,
   getSort,
+  getProjectionFromString,
 };

@@ -30,8 +30,28 @@ async function getOneProfessor(professorId, projection = {}) {
  *
  * @returns {Array}             - the retrieved professors
  */
-async function getAllProfessors() {
-  return await Professor.find({});
+async function getAllProfessors(
+  query,
+  projection,
+  sortBy,
+  sortOrder,
+  skipCount,
+  pageSize
+) {
+  const totalCount = await Professor.countDocuments(query);
+
+  let data = {};
+  if (Math.abs(skipCount) == 0 && pageSize == -1)
+    data = await Professor.find(query, projection).sort({
+      [`${sortBy}`]: sortOrder,
+    });
+  else
+    data = await Professor.find(query, projection)
+      .sort({ [`${sortBy}`]: sortOrder })
+      .skip(skipCount)
+      .limit(pageSize);
+
+  return { totalCount, data };
 }
 
 /**
