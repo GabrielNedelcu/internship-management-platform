@@ -3,11 +3,8 @@ import { Layout, AdminNavBar } from "layout";
 
 import {
   AdminOverviewPage,
-  AdminStatsPage,
   AdminStudentsPage,
   Professors,
-  AdminMessagesPage,
-  AdminDocumentsPage,
   AdminCompanyOffersPage,
   Companies,
   EnrollmentRequests,
@@ -36,15 +33,6 @@ const AdminRoutes = () => {
             }
           />
           <Route
-            path="stats"
-            element={
-              <Layout
-                sider={<AdminNavBar selectedKey={"7"} />}
-                content={<AdminStatsPage />}
-              />
-            }
-          />
-          <Route
             path="students"
             element={
               <Layout
@@ -59,24 +47,6 @@ const AdminRoutes = () => {
               <Layout
                 sider={<AdminNavBar selectedKey={"3"} />}
                 content={<Professors />}
-              />
-            }
-          />
-          <Route
-            path="messages"
-            element={
-              <Layout
-                sider={<AdminNavBar selectedKey={"10"} />}
-                content={<AdminMessagesPage />}
-              />
-            }
-          />
-          <Route
-            path="documents"
-            element={
-              <Layout
-                sider={<AdminNavBar selectedKey={"9"} />}
-                content={<AdminDocumentsPage />}
               />
             }
           />

@@ -1,31 +1,17 @@
-import { getNavBarMenuItem, NavBar } from "common";
+import { useTranslation } from "react-i18next";
+
 import {
-  FileOutlined,
   UserAddOutlined,
   LineChartOutlined,
-  SettingOutlined,
   TeamOutlined,
   UserOutlined,
   ProfileOutlined,
-  MailOutlined,
   ReconciliationOutlined,
 } from "@ant-design/icons";
-import { INavBarProps } from "common/types";
 
-const menuItems = [
-  getNavBarMenuItem("Overview", "1", <SettingOutlined />),
-  getNavBarMenuItem("Accounts", "sub1", <TeamOutlined />, [
-    getNavBarMenuItem("Students", "2", <UserOutlined />),
-    getNavBarMenuItem("Teachers", "3", <UserOutlined />),
-    getNavBarMenuItem("Companies", "4", <UserOutlined />),
-  ]),
-  getNavBarMenuItem("Sign-Up Requests", "5", <UserAddOutlined />),
-  getNavBarMenuItem("Company Offers", "6", <ProfileOutlined />),
-  getNavBarMenuItem("Internships", "7", <ReconciliationOutlined />),
-  getNavBarMenuItem("Statistics", "8", <LineChartOutlined />),
-  getNavBarMenuItem("Documents", "9", <FileOutlined />),
-  getNavBarMenuItem("Messages", "10", <MailOutlined />),
-];
+import { getNavBarMenuItem, NavBar } from "common";
+
+import { INavBarProps } from "common/types";
 
 const keyToRedirectPath = new Map<string, string>([
   ["1", "/dashboard/admin"],
@@ -35,12 +21,23 @@ const keyToRedirectPath = new Map<string, string>([
   ["5", "/dashboard/admin/requests"],
   ["6", "/dashboard/admin/offers"],
   ["7", "/dashboard/admin/internships"],
-  ["8", "/dashboard/admin/stats"],
-  ["9", "/dashboard/admin/documents"],
-  ["10", "/dashboard/admin/messages"],
 ]);
 
 const AdminNavBar = ({ selectedKey }: INavBarProps) => {
+  const { t } = useTranslation();
+
+  const menuItems = [
+    getNavBarMenuItem(t("OVERVIEW"), "1", <LineChartOutlined />),
+    getNavBarMenuItem(t("ACCOUNTS"), "sub1", <TeamOutlined />, [
+      getNavBarMenuItem(t("STUDENTS"), "2", <UserOutlined />),
+      getNavBarMenuItem(t("PROFESSORS"), "3", <UserOutlined />),
+      getNavBarMenuItem(t("COMPANIES"), "4", <UserOutlined />),
+    ]),
+    getNavBarMenuItem(t("SIGN_UP_REQUESTS"), "5", <UserAddOutlined />),
+    getNavBarMenuItem(t("OFFERS"), "6", <ProfileOutlined />),
+    getNavBarMenuItem(t("INTERNSHIPS"), "7", <ReconciliationOutlined />),
+  ];
+
   return (
     <NavBar
       items={menuItems}

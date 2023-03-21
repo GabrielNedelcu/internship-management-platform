@@ -278,5 +278,9 @@
   "AUTO_ASSIGN": "Aloca Automat",
   "PROFESSOR_ASIGNED": "Profesor alocat!",
   "PROFESSOR_ASIGNED_MSG": "Ai alocat cu succes un profesor acestui stagiu ...",
-  "PROFESSOR_ASIGNED_ERR": "Am intampinat o eroare. Nu putem aloca un profesor acestui stagiu ..."
+  "PROFESSOR_ASIGNED_ERR": "Am intampinat o eroare. Nu putem aloca un profesor acestui stagiu ...",
+  "ACCOUNTS": "Conturi",
+  "STUDENTS": "Studenti",
+  "PROFESSORS": "Profesori",
+  "COMPANIES": "Companii"
 }

@@ -278,5 +278,9 @@
   "AUTO_ASSIGN": "Auto Assign",
   "PROFESSOR_ASIGNED": "Professor assigned!",
   "PROFESSOR_ASIGNED_MSG": "You have successfully assigned a professor to the internship ...",
-  "PROFESSOR_ASIGNED_ERR": "An error occured. Cannot assigne a professor to the internship ..."
+  "PROFESSOR_ASIGNED_ERR": "An error occured. Cannot assigne a professor to the internship ...",
+  "ACCOUNTS": "Accounts",
+  "STUDENTS": "Students",
+  "PROFESSORS": "Professors",
+  "COMPANIES": "Companies"
 }
