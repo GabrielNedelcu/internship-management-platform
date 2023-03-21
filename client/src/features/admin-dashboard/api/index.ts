@@ -184,3 +184,31 @@ export const getProfessor = async (professorId: string) => {
 
   return res.data;
 };
+
+/**
+ * Fetch a company's data
+ *
+ * @param companyId id of the company to fetch data
+ * @returns server response
+ */
+export const getCompany = async (companyId: string) => {
+  const res = await axiosClient.get(`${URL_ROUTES.COMPANIES}/${companyId}`);
+
+  return res.data;
+};
+
+/**
+ * Download the contract of a company
+ * @param companyId id of the company
+ * @returns server response
+ */
+export const getCompanyContract = async (companyId: string) => {
+  const res = await axiosClient.get(
+    `${URL_ROUTES.COMPANIES}/${companyId}/contract`,
+    {
+      responseType: "blob",
+    }
+  );
+
+  return res.data;
+};

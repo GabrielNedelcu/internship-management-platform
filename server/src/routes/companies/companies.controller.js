@@ -8,7 +8,10 @@ const {
   updateOneCompany,
 } = require("../../models/companies/companies.model");
 const { createOffer } = require("../../models/offers/offers.model");
-const { uploadFilesFromRequest } = require("../../utils/files.utils");
+const {
+  uploadFilesFromRequest,
+  downloadUploadedFile,
+} = require("../../utils/files.utils");
 const {
   getSort,
   getPagination,
@@ -205,9 +208,30 @@ async function httpGetOneCompany(req, res) {
   return res.status(200).json(company);
 }
 
+/**
+ * @api {GET} /company/:companyId/contract
+ * @apiDescription Get the contract of a company
+ *
+ * @apiSuccess 204
+ */
+async function httpGetCompanyContract(req, res) {
+  const companyId = req.params.companyId;
+
+  const companyData = await getOneCompany(companyId, { annex: 1 });
+
+  if (!companyData) {
+    const err = new Error("Company not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  return downloadUploadedFile(res, "company_contracts", companyData.annex);
+}
+
 module.exports = {
   httpCreateCompany,
   httpGetAllCompanies,
   httpPatchCompany,
   httpGetOneCompany,
+  httpGetCompanyContract,
 };

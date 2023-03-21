@@ -18,7 +18,7 @@ const useProfessorProfile = (professorId: string) => {
 
   const { data: professorData, refetch: refetchProfessorData } =
     useQuery<IProfessorData>(
-      ["getTeacher", professorId],
+      ["getProfessor", professorId],
       () => {
         setIsLoading(true);
         return getProfessor(professorId || "");

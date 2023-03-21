@@ -1,6 +1,11 @@
-import { Col, Descriptions, Row, Typography } from "antd";
-import { Card, LoadingPage } from "common";
+import download from "downloadjs";
 import { useTranslation } from "react-i18next";
+import { Col, Descriptions, Row, Typography } from "antd";
+
+import { Card, LoadingPage } from "common";
+import { getCompanyContract } from "../api";
+import { CompanyProfile } from "features/student";
+
 import useProfile from "../hooks/useProfile";
 
 const Profile = () => {
@@ -28,11 +33,26 @@ const Profile = () => {
                   <Descriptions.Item label={t("EMAIL")}>
                     {companyProfileData.email}
                   </Descriptions.Item>
-                  <Descriptions.Item label={t("PHONE_NUMBER")}>
+                  <Descriptions.Item label={t("PHONE_NUMBER")} span={0.5}>
                     +40{companyProfileData.contactNumber}
                   </Descriptions.Item>
                   <Descriptions.Item label={t("ADDRESS")}>
                     {companyProfileData.address}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Contract">
+                    <Typography.Link
+                      onClick={async () => {
+                        const fileData = await getCompanyContract(
+                          companyProfileData._id || ""
+                        );
+                        download(
+                          fileData,
+                          `${companyProfileData.name}_Signed_Contract.pdf`
+                        );
+                      }}
+                    >
+                      {t("DOWNLOAD_CONTRACT")}
+                    </Typography.Link>
                   </Descriptions.Item>
                 </Descriptions>
               </>

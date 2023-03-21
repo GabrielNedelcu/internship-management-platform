@@ -172,6 +172,19 @@ const ProfessorProfileForm = ({ ...props }: IProfessorProfileFormProps) => {
           />
         </Form.Item>
 
+        {props.initialData && (
+          <Form.Item name="numAvailablePositions">
+            <InputNumber
+              size="large"
+              min={1}
+              max={100000}
+              defaultValue={1}
+              addonBefore={t("AVAILABLE_POSITIONS")}
+              disabled
+            />
+          </Form.Item>
+        )}
+
         <Form.Item>
           <Button type="primary" htmlType="submit" block>
             {props.finishPrompt}

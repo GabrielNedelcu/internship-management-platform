@@ -9,6 +9,7 @@ const {
   httpCreateCompany,
   httpGetOneCompany,
   httpGetAllCompanies,
+  httpGetCompanyContract,
 } = require("./companies.controller");
 const {
   validatePatchCompany,
@@ -44,6 +45,13 @@ companiesRouter.get(
   auth,
   authz(["admin", "student", "company"]),
   asyncHandler(httpGetOneCompany)
+);
+
+companiesRouter.get(
+  "/:companyId/contract",
+  auth,
+  authz(["admin", "company"]),
+  asyncHandler(httpGetCompanyContract)
 );
 
 module.exports = companiesRouter;

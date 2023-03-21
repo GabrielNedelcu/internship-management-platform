@@ -150,3 +150,19 @@ export const updateApplicationStatus = async (
 
   return res.data;
 };
+
+/**
+ * Download the contract of a company
+ * @param companyId id of the company
+ * @returns server response
+ */
+export const getCompanyContract = async (companyId: string) => {
+  const res = await axiosClient.get(
+    `${URL_ROUTES.COMPANIES}/${companyId}/contract`,
+    {
+      responseType: "blob",
+    }
+  );
+
+  return res.data;
+};
