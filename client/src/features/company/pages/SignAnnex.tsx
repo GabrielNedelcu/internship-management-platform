@@ -1,6 +1,5 @@
 import { Button, Col, Row, Typography, Form, Upload, UploadProps } from "antd";
 import { useTranslation } from "react-i18next";
-import download from "downloadjs";
 
 import { UploadOutlined } from "@ant-design/icons";
 

@@ -156,6 +156,8 @@ async function httpGetAllProfessors(req, res) {
   const searchFor = req.query.search;
   const available = req.query.available;
 
+  console.log(req.query);
+
   const { sortOrder, sortBy } = getSort(req.query);
   const { pageSize, skipCount } = getPagination(req.query);
   const projection = getProjection(req.query);
@@ -163,8 +165,7 @@ async function httpGetAllProfessors(req, res) {
   const regex = new RegExp(searchFor, "i");
   const resp = await getAllProfessors(
     {
-      email: { $regex: regex },
-      name: { $regex: regex },
+      $or: [{ email: { $regex: regex } }, { name: { $regex: regex } }],
       ...(available && { numAvailablePositions: { $gt: 0 } }),
       ...(departament && { departament: departament }),
     },

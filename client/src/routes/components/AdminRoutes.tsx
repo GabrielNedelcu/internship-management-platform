@@ -5,7 +5,7 @@ import {
   AdminOverviewPage,
   AdminStatsPage,
   AdminStudentsPage,
-  AdminTeachersPage,
+  Professors,
   AdminMessagesPage,
   AdminDocumentsPage,
   AdminCompanyOffersPage,
@@ -13,7 +13,7 @@ import {
   EnrollmentRequests,
   AdminCompanyProfile,
   AdminOfferProfile,
-  AdminTeacherProfile,
+  ProfessorProfile,
 } from "../../features";
 import ProtectedRoutes from "../ProtectedRoutes";
 import { USER_ROLES } from "common/constants";
@@ -58,7 +58,7 @@ const AdminRoutes = () => {
             element={
               <Layout
                 sider={<AdminNavBar selectedKey={"3"} />}
-                content={<AdminTeachersPage />}
+                content={<Professors />}
               />
             }
           />
@@ -130,7 +130,7 @@ const AdminRoutes = () => {
             element={
               <Layout
                 sider={<AdminNavBar selectedKey={"-1"} />}
-                content={<AdminTeacherProfile />}
+                content={<ProfessorProfile />}
               />
             }
           />

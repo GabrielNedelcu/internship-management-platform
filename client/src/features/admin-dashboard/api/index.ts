@@ -112,3 +112,75 @@ export const patchCompany = async (
   );
   return res.data;
 };
+
+/**
+ * Create a new professor
+ * @param professorData the professor's data
+ * @returns server response
+ */
+export const createProfessor = async (professorData: IProfessorData) => {
+  const res = await axiosClient.post(`${URL_ROUTES.PROFESSORS}`, professorData);
+
+  return res.data;
+};
+
+/**
+ * Upload the excel file containing the professors to the server
+ *
+ * @param file - file to upload
+ * @param onSucces - callback for the antd file uploader
+ * @param onError - callback for the antd file uploader
+ * @returns query response
+ */
+export const uploadProfessorsFile = async (
+  file: any,
+  onSucces: () => void,
+  onError: () => void
+) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  const res = await axiosClient.post(
+    `${URL_ROUTES.PROFESSORS}/multiple`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
+  if (res.data.data.length !== 0) onSucces();
+  else onError();
+
+  return res.data;
+};
+
+/**
+ * Update professor data
+ *
+ * @param professorId professor to update
+ * @param data new data to update with
+ * @returns server response
+ */
+export const updateProfessor = async (
+  professorId: string,
+  data: IProfessorData
+) => {
+  const res = await axiosClient.patch(
+    `${URL_ROUTES.PROFESSORS}/${professorId}`,
+    data
+  );
+
+  return res.data;
+};
+
+/**
+ * Retrieve a professor's data
+ * @param professorId
+ * @returns server response
+ */
+export const getProfessor = async (professorId: string) => {
+  const res = await axiosClient.get(`${URL_ROUTES.PROFESSORS}/${professorId}`);
+
+  return res.data;
+};

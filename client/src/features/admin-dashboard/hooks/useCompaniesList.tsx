@@ -49,6 +49,7 @@ const useCompaniesList = (fetchValidatedOnly: boolean) => {
         return getAllCompanies(
           fetchOptions.searchValue,
           {
+            fields: "name,email,fieldOfWork,numOffers,numPositions,createdAt",
             pagination: fetchOptions.paginationParams,
             sort: fetchOptions.sortOrder,
             filters: fetchOptions.filters,

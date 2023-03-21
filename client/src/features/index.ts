@@ -4,7 +4,7 @@ export {
   AdminOverviewPage,
   AdminStatsPage,
   AdminStudentsPage,
-  AdminTeachersPage,
+  Professors,
   AdminMessagesPage,
   AdminDocumentsPage,
   AdminCompanyOffersPage,
@@ -12,7 +12,7 @@ export {
   EnrollmentRequests,
   AdminCompanyProfile,
   AdminOfferProfile,
-  AdminTeacherProfile,
+  ProfessorProfile,
 } from "./admin-dashboard";
 
 export {

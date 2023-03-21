@@ -1,13 +1,13 @@
 import { Typography } from "antd";
+import { useTranslation } from "react-i18next";
+
 import { PlusCircleOutlined, SearchOutlined } from "@ant-design/icons";
 
 import { Tabs } from "common";
-
-import { AdminAddTeachers, AdminBrowseTeachers } from "../components";
 import { ITabProps } from "common/types";
-import { useTranslation } from "react-i18next";
+import { AddProfessor, ProfessorsList } from "../components";
 
-const AdminTeachersPage = () => {
+const Professors = () => {
   const { t } = useTranslation();
 
   const tabs: ITabProps[] = [
@@ -19,7 +19,7 @@ const AdminTeachersPage = () => {
         </span>
       ),
       key: "1",
-      children: <AdminAddTeachers />,
+      children: <AddProfessor />,
     },
     {
       label: (
@@ -29,7 +29,7 @@ const AdminTeachersPage = () => {
         </span>
       ),
       key: "2",
-      children: <AdminBrowseTeachers />,
+      children: <ProfessorsList />,
     },
   ];
 
@@ -45,4 +45,4 @@ const AdminTeachersPage = () => {
   );
 };
 
-export default AdminTeachersPage;
+export default Professors;
