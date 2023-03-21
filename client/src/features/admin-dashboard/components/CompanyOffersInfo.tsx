@@ -1,6 +1,6 @@
 import { Input, Row, Col, Button, Table, Spin } from "antd";
 import { useTranslation } from "react-i18next";
-import useOffersTable from "../../hooks/useOffersTable";
+import useOffersTable from "../hooks/useOffersTable";
 const { Search } = Input;
 
 interface ICompanyGeneralInfoData {
@@ -38,7 +38,7 @@ const CompanyOffersInfo = ({ companyId }: ICompanyGeneralInfoData) => {
         </Col>
         <Col style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button size="large" type="primary" onClick={handleClearSearch}>
-            Clear Search
+            {t("CLEAR_SEARCH")}
           </Button>
         </Col>
         <Col>

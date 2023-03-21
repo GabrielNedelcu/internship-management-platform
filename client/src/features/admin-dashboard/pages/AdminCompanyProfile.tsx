@@ -21,7 +21,7 @@ import {
 import { Tabs } from "common";
 
 import {
-  ConpanyGeneralInfo,
+  CompanyOverview,
   CompanyEmployeesInfo,
   CompanyInternshipInfo,
   CompanyOffersInfo,
@@ -106,14 +106,7 @@ const AdminCompanyProfile = () => {
         </span>
       ),
       key: "1",
-      children: (
-        <ConpanyGeneralInfo
-          address={data.address ?? "asdasdasd"}
-          fieldOfWork={data.fieldOfWork}
-          contactNumber={data.contactNumber}
-          description={data.description}
-        />
-      ),
+      children: <CompanyOverview companyData={data} />,
     },
     {
       label: (
@@ -123,9 +116,7 @@ const AdminCompanyProfile = () => {
         </span>
       ),
       key: "2",
-      children: (
-        <CompanyEmployeesInfo legalRep={data.legalRep} handler={data.handler} />
-      ),
+      children: <CompanyEmployeesInfo companyData={data} />,
     },
     {
       label: (
@@ -135,15 +126,7 @@ const AdminCompanyProfile = () => {
         </span>
       ),
       key: "3",
-      children: (
-        <CompanyInternshipInfo
-          internshipMainAddress={data.internshipMainAddress}
-          internshipOtherAddresses={data.internshipOtherAddresses}
-          internshipOtherAdvantages={data.internshipOtherAdvantages}
-          internshipCompensation={data.internshipCompensation}
-          internshipContract={data.internshipContract}
-        />
-      ),
+      children: <CompanyInternshipInfo companyData={data} />,
     },
     {
       label: (

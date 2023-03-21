@@ -11,7 +11,7 @@ import {
   LikeOutlined,
 } from "@ant-design/icons";
 
-import { OfferGeneralInfo } from "../components";
+import { OfferOverview } from "../components";
 
 import { Tabs } from "common";
 import EmployeeInfo from "../components/EmployeeInfo";
@@ -63,16 +63,7 @@ const AdminOfferProfile = () => {
         </span>
       ),
       key: "1",
-      children: (
-        <OfferGeneralInfo
-          departament={data.departament}
-          availablePos={data.availablePos}
-          remainingAvailablePos={data.remainingAvailablePos}
-          description={data.description}
-          requirements={data.requirements}
-          mentions={data.requirements}
-        />
-      ),
+      children: <OfferOverview offerData={data} />,
     },
     {
       label: (

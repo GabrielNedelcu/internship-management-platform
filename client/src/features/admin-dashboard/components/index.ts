@@ -1,11 +1,11 @@
 export { default as AdminAddStudents } from "./students/AdminAddStudents";
 export { default as AdminBrowseStudents } from "./students/AdminBrowseStudents";
 export { default as AddProfessor } from "./AddProfessor";
-export { default as ConpanyGeneralInfo } from "./companies/ConpanyGeneralInfo";
-export { default as CompanyEmployeesInfo } from "./companies/CompanyEmployeesInfo";
-export { default as CompanyInternshipInfo } from "./companies/CompanyInternshipInfo";
-export { default as CompanyOffersInfo } from "./companies/CompanyOffersInfo";
-export { default as OfferGeneralInfo } from "./offers/OfferGeneralInfo";
+export { default as CompanyOverview } from "./CompanyOverview";
+export { default as CompanyEmployeesInfo } from "./CompanyEmployeesInfo";
+export { default as CompanyInternshipInfo } from "./CompanyInternshipInfo";
+export { default as CompanyOffersInfo } from "./CompanyOffersInfo";
+export { default as OfferOverview } from "./OfferOverview";
 export { default as InternshipsList } from "./InternshipsList";
 export { default as AssignProfessorModal } from "./AssignProfessorModal";
 export { default as CompaniesList } from "./CompaniesList";
