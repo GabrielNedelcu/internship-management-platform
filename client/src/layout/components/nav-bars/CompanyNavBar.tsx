@@ -1,22 +1,15 @@
-import { getNavBarMenuItem, NavBar } from "common";
+import { useTranslation } from "react-i18next";
+
 import {
   LineChartOutlined,
   SettingOutlined,
   ProfileOutlined,
   SendOutlined,
   ControlOutlined,
-  FileOutlined,
 } from "@ant-design/icons";
-import { INavBarProps } from "common/types";
 
-const menuItems = [
-  getNavBarMenuItem("Overview", "1", <LineChartOutlined />),
-  getNavBarMenuItem("Profile", "2", <ControlOutlined />),
-  getNavBarMenuItem("Offers", "3", <ProfileOutlined />),
-  getNavBarMenuItem("Applications", "4", <SendOutlined />),
-  getNavBarMenuItem("Internships", "5", <SettingOutlined />),
-  getNavBarMenuItem("Documents", "6", <FileOutlined />),
-];
+import { INavBarProps } from "common/types";
+import { getNavBarMenuItem, NavBar } from "common";
 
 const keyToRedirectPath = new Map<string, string>([
   ["1", "/company/overview"],
@@ -24,10 +17,19 @@ const keyToRedirectPath = new Map<string, string>([
   ["3", "/company/offers"],
   ["4", "/company/applications"],
   ["5", "/company/internships"],
-  ["6", "/company/documents"],
 ]);
 
 const CompanyNavBar = ({ selectedKey }: INavBarProps) => {
+  const { t } = useTranslation();
+
+  const menuItems = [
+    getNavBarMenuItem(t("OVERVIEW"), "1", <LineChartOutlined />),
+    getNavBarMenuItem(t("PROFILE"), "2", <ControlOutlined />),
+    getNavBarMenuItem(t("OFFERS"), "3", <ProfileOutlined />),
+    getNavBarMenuItem(t("APPLICATIONS"), "4", <SendOutlined />),
+    getNavBarMenuItem(t("INTERNSHIPS"), "5", <SettingOutlined />),
+  ];
+
   return (
     <NavBar
       items={menuItems}
