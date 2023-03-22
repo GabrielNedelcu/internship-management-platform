@@ -302,5 +302,7 @@
   "FETCHING_INTERNSHIP_ERR": "Am intampinat o eroare. Nu putem prelua datele stagiului de pe server ...",
   "SAVE_CHANGES": "Salveaza modificarile",
   "JOURNAL_UPDATED": "Ai actualizat cu succes jurnalul stagiului tau!",
-  "JOURNAL_UPDATED_ERR": "Am intampinat o eroare. Nu putem actualiza datele jurnalului stagiului tau ..."
+  "JOURNAL_UPDATED_ERR": "Am intampinat o eroare. Nu putem actualiza datele jurnalului stagiului tau ...",
+  "NO_INTERNSHIP": "Niciun Stagiu!",
+  "NO_INTERNSHIP_MSG": "Pana in momentul actual, nu ai un stagiu de practica! Intoarce-te la aceasta pagina dupa ce vei accepta oferta unei companii ..."
 }

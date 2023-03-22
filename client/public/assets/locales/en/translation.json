@@ -302,5 +302,7 @@
   "FETCHING_INTERNSHIP_ERR": "An error occured. Cannot retrieve the internship data from the server ...",
   "SAVE_CHANGES": "Save Changes",
   "JOURNAL_UPDATED": "You have successfully updated your internship journey!",
-  "JOURNAL_UPDATED_ERR": "An error occured. Cannot update your internship journey ..."
+  "JOURNAL_UPDATED_ERR": "An error occured. Cannot update your internship journey ...",
+  "NO_INTERNSHIP": "No internship!",
+  "NO_INTERNSHIP_MSG": "You don't have an internship yet! Come back to the page after you have accepted an offer ..."
 }

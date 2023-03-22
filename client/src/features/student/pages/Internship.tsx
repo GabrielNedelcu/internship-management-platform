@@ -1,4 +1,4 @@
-import { Typography } from "antd";
+import { Result, Typography } from "antd";
 import { useTranslation } from "react-i18next";
 
 import { BookOutlined, ContainerOutlined } from "@ant-design/icons";
@@ -17,7 +17,13 @@ const Internship = () => {
   if (!studentProfileData) return <LoadingPage message="" />;
 
   if (!studentProfileData.internship)
-    return <LoadingPage message="No internship" />;
+    return (
+      <Result
+        status="404"
+        title={t("NO_INTERNSHIP")}
+        subTitle={t("NO_INTERNSHIP_MSG")}
+      />
+    );
 
   const tabs: ITabProps[] = [
     {
