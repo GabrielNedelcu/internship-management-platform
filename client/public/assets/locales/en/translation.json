@@ -283,5 +283,12 @@
   "STUDENTS": "Students",
   "PROFESSORS": "Professors",
   "COMPANIES": "Companies",
-  "PROFILE": "Profile"
+  "PROFILE": "Profile",
+  "INTERNSHIP": "Internship",
+  "YOUR_INTERNSHIP": "Your internship",
+  "YOUR_INTERNSHIP_MSG": "Review your internship information ...",
+  "INTERNSHIP_JOURNAL": "Internship Journal",
+  "FETCHING_INTERNSHIP": "Fetching internship ....",
+  "ACCEPTED_ON": "Accepted on",
+  "ASSIGNED_PROFESSOR": "Assigned Professor"
 }

@@ -11,6 +11,7 @@ import {
   CompanyProfile,
   Applications,
   Profile,
+  Internship,
 } from "features/student";
 import { USER_ROLES } from "common/constants";
 
@@ -82,6 +83,15 @@ const AdminRoutes = () => {
               <Layout
                 sider={<StudentNavBar selectedKey={"2"} />}
                 content={<Profile />}
+              />
+            }
+          />
+          <Route
+            path="/internship"
+            element={
+              <Layout
+                sider={<StudentNavBar selectedKey={"6"} />}
+                content={<Internship />}
               />
             }
           />

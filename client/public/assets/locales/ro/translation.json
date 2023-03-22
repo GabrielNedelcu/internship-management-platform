@@ -283,5 +283,12 @@
   "STUDENTS": "Studenti",
   "PROFESSORS": "Profesori",
   "COMPANIES": "Companii",
-  "PROFILE": "Profil"
+  "PROFILE": "Profil",
+  "INTERNSHIP": "Stagiu",
+  "YOUR_INTERNSHIP": "Stagiul tau",
+  "YOUR_INTERNSHIP_MSG": "Revizuieste informatiile stagiului tau de practica ...",
+  "INTERNSHIP_JOURNAL": "Jurnal de stagiu",
+  "FETCHING_INTERNSHIP": "Preluam stagiul ....",
+  "ACCEPTED_ON": "Acceptat la",
+  "ASSIGNED_PROFESSOR": "Profesor Alocat"
 }

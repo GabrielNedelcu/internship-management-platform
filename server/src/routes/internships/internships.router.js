@@ -7,6 +7,7 @@ const {
 } = require("../../middleware/validation.middleware");
 
 const {
+  httpGetInternship,
   httpGetInternships,
   httpPatchInternship,
 } = require("./internships.controller");
@@ -19,6 +20,11 @@ internshipsRouter.patch(
   authz(["admin"]),
   validateInternshipPatch,
   asyncHandler(httpPatchInternship)
+);
+internshipsRouter.get(
+  "/:internshipId",
+  authz(["admin", "company", "student"]),
+  asyncHandler(httpGetInternship)
 );
 
 module.exports = internshipsRouter;

@@ -14,6 +14,8 @@ const {
   getProjectionFromString,
 } = require("../../utils/query.utils");
 
+const { default: mongoose } = require("mongoose");
+
 /**
  * @api {GET} /internships/
  * @apiDescription Get all the internships
@@ -103,4 +105,47 @@ async function httpPatchInternship(req, res) {
   return res.status(204).json();
 }
 
-module.exports = { httpGetInternships, httpPatchInternship };
+/**
+ *
+ * @api {PATCH} /internships/:internshipId
+ * @apiDescription Update internship data
+ *
+ * @apiParam    {String}    applicationId   Internship's unique ObjectId
+ * @apiSuccess  {Object}                    The data of the Internship
+ */
+async function httpGetInternship(req, res) {
+  const internshipId = req.params.internshipId;
+  const projection = getProjection(req.query);
+  const studentProjection = getProjectionFromString(req.query.studentFields);
+  const companyProjection = getProjectionFromString(req.query.companyFields);
+  const offerProjection = getProjectionFromString(req.query.offerFields);
+  const professorProjection = getProjectionFromString(
+    req.query.professorFields
+  );
+
+  const { sortOrder, sortBy } = getSort(req.query);
+  const { pageSize, skipCount } = getPagination(req.query);
+
+  const resp = await queryInternshipsAppendReferencedData(
+    { _id: new mongoose.Types.ObjectId(internshipId) },
+    projection,
+    studentProjection,
+    companyProjection,
+    offerProjection,
+    professorProjection,
+    sortBy,
+    sortOrder,
+    skipCount,
+    pageSize
+  );
+
+  if (resp.totalCount > 1) {
+    const err = new Error("Student has more than one internship");
+    err.statusCode = 500;
+    throw err;
+  }
+
+  return res.status(200).json(resp.data[0]);
+}
+
+module.exports = { httpGetInternships, httpPatchInternship, httpGetInternship };

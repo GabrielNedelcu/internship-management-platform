@@ -6,3 +6,4 @@ export { default as OfferProfile } from "./pages/OfferProfile";
 export { default as CompanyProfile } from "./pages/CompanyProfile";
 export { default as Applications } from "./pages/Applications";
 export { default as Profile } from "./pages/Profile";
+export { default as Internship } from "./pages/Internship";

@@ -30,7 +30,7 @@ const StudentNavBar = ({ selectedKey }: INavBarProps) => {
     getNavBarMenuItem(t("COMPANIES"), "3", <UserOutlined />),
     getNavBarMenuItem(t("OFFERS"), "4", <ProfileOutlined />),
     getNavBarMenuItem(t("APPLICATIONS"), "5", <SendOutlined />),
-    getNavBarMenuItem(t("INTERNSHIPS"), "6", <SettingOutlined />),
+    getNavBarMenuItem(t("INTERNSHIP"), "6", <SettingOutlined />),
   ];
   return (
     <NavBar
