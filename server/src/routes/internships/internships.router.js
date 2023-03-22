@@ -17,7 +17,7 @@ const internshipsRouter = express.Router();
 internshipsRouter.get("/", authz(["admin"]), asyncHandler(httpGetInternships));
 internshipsRouter.patch(
   "/:internshipId",
-  authz(["admin"]),
+  authz(["admin", "student"]),
   validateInternshipPatch,
   asyncHandler(httpPatchInternship)
 );

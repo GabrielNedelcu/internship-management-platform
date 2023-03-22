@@ -5,7 +5,7 @@ import { BookOutlined, ContainerOutlined } from "@ant-design/icons";
 
 import { ITabProps } from "common/types";
 import { LoadingPage, Tabs } from "common";
-import { InternshipOverview } from "../components";
+import { InternshipJournal, InternshipOverview } from "../components";
 
 import useProfile from "../hooks/useProfile";
 
@@ -40,7 +40,9 @@ const Internship = () => {
         </span>
       ),
       key: "2",
-      children: "",
+      children: (
+        <InternshipJournal internshipId={studentProfileData.internship} />
+      ),
     },
   ];
 

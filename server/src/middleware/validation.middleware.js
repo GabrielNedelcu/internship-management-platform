@@ -355,7 +355,11 @@ async function validateApplicationPatch(req, res, next) {
  */
 async function validateInternshipPatch(req, res, next) {
   const validationRule = {
-    professor: "string|required|professor_exists",
+    professor: "string|professor_exists",
+    journal: "array",
+    "journal.*.startDate": "required|date",
+    "journal.*.endDate": "required|date",
+    "journal.*.description": "required|string",
   };
 
   // verify user sends only accepted fields

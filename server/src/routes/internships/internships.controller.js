@@ -68,8 +68,15 @@ async function httpGetInternships(req, res) {
  * @apiSuccess  {Object}                    The data of the Internship
  */
 async function httpPatchInternship(req, res) {
+  const userRole = req.userRole;
   const internshipId = req.params.internshipId;
   const newData = req.body;
+
+  if (userRole === "student" && newData.hasOwnProperty("professor")) {
+    const err = new Error("Unathorized!");
+    err.statusCode = 403;
+    throw err;
+  }
 
   const internship = await getOneInternship(internshipId);
   if (!internship) {

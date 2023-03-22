@@ -290,5 +290,17 @@
   "INTERNSHIP_JOURNAL": "Jurnal de stagiu",
   "FETCHING_INTERNSHIP": "Preluam stagiul ....",
   "ACCEPTED_ON": "Acceptat la",
-  "ASSIGNED_PROFESSOR": "Profesor Alocat"
+  "ASSIGNED_PROFESSOR": "Profesor Alocat",
+  "START_DATE": "Data Inceput",
+  "END_DATE": "Data Sfarsit",
+  "SELECT_START_DATE": "Selectati data de inceput",
+  "SELECT_END_DATE": "Selectati data de sfarsit",
+  "DESCRIPTION": "Descriere",
+  "PROVIDE_DESCRIPTION": "Introduceti o descriere",
+  "ENTRY": "Intrare",
+  "ADD_ENTRY": "Adauga Intrare",
+  "FETCHING_INTERNSHIP_ERR": "Am intampinat o eroare. Nu putem prelua datele stagiului de pe server ...",
+  "SAVE_CHANGES": "Salveaza modificarile",
+  "JOURNAL_UPDATED": "Ai actualizat cu succes jurnalul stagiului tau!",
+  "JOURNAL_UPDATED_ERR": "Am intampinat o eroare. Nu putem actualiza datele jurnalului stagiului tau ..."
 }

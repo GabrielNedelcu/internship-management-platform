@@ -1,7 +1,11 @@
 import axiosClient from "app/axiosClient";
 import { URL_ROUTES } from "common/constants";
 import { addParameterToQuery, buildQuery } from "common/utils";
-import { IQueryParameters, IStudentData } from "../../../common/types";
+import {
+  IInternshipData,
+  IQueryParameters,
+  IStudentData,
+} from "../../../common/types";
 
 /**
  * Update the logged in student data
@@ -176,5 +180,24 @@ export const getInternship = async (
     url = addParameterToQuery(url, "professorFields", professorProjection);
 
   const res = await axiosClient.get(url);
+  return res.data;
+};
+
+/**
+ * Update internship data
+ *
+ * @param internshipId internship to update
+ * @param data new data to update with
+ * @returns server response
+ */
+export const patchInternship = async (
+  internshipId: string,
+  data: IInternshipData
+) => {
+  const res = await axiosClient.patch(
+    `${URL_ROUTES.INTERNSHIPS}/${internshipId}`,
+    data
+  );
+
   return res.data;
 };

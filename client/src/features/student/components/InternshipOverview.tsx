@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Col, Descriptions, Row, Typography } from "antd";
+import { Col, Descriptions, notification, Row, Typography } from "antd";
 import { Card, LoadingPage } from "common";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
@@ -22,8 +22,12 @@ const InternshipOverview = ({ internshipId }: IInternshipOverviewProps) => {
       );
     },
     {
-      onSuccess: (data) => {
-        console.log(data);
+      onError: (data) => {
+        notification.error({
+          message: "Ooops ...",
+          description: t("CANNOT_RETRIEVE_COMPANY_DATA"),
+          duration: 10,
+        });
       },
     }
   );

@@ -290,5 +290,17 @@
   "INTERNSHIP_JOURNAL": "Internship Journal",
   "FETCHING_INTERNSHIP": "Fetching internship ....",
   "ACCEPTED_ON": "Accepted on",
-  "ASSIGNED_PROFESSOR": "Assigned Professor"
+  "ASSIGNED_PROFESSOR": "Assigned Professor",
+  "START_DATE": "Start Date",
+  "END_DATE": "End Date",
+  "SELECT_START_DATE": "Select start date",
+  "SELECT_END_DATE": "Select end date",
+  "DESCRIPTION": "Description",
+  "PROVIDE_DESCRIPTION": "Please provide a description",
+  "ENTRY": "Entry",
+  "ADD_ENTRY": "Add Entry",
+  "FETCHING_INTERNSHIP_ERR": "An error occured. Cannot retrieve the internship data from the server ...",
+  "SAVE_CHANGES": "Save Changes",
+  "JOURNAL_UPDATED": "You have successfully updated your internship journey!",
+  "JOURNAL_UPDATED_ERR": "An error occured. Cannot update your internship journey ..."
 }
