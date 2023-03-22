@@ -1,7 +1,7 @@
 export { default as AdminOverviewPage } from "./pages/AdminOverviewPage";
 export { default as AdminStudentsPage } from "./pages/AdminStudentsPage";
 export { default as Professors } from "./pages/Professors";
-export { default as AdminCompanyOffersPage } from "./pages/AdminCompanyOffersPage";
+export { default as Offers } from "./pages/Offers";
 export { default as Companies } from "./pages/Companies";
 export { default as EnrollmentRequests } from "./pages/EnrollmentRequests";
 export { default as AdminCompanyProfile } from "./pages/AdminCompanyProfile";

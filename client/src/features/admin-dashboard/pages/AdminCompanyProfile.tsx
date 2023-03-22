@@ -16,7 +16,7 @@ import {
   CompanyOverview,
   CompanyEmployeesInfo,
   CompanyInternshipInfo,
-  CompanyOffersInfo,
+  OffersList,
 } from "../components";
 
 import useCompanyProfile from "../hooks/useCompanyProfile";
@@ -73,7 +73,7 @@ const AdminCompanyProfile = () => {
         </span>
       ),
       key: "4",
-      children: <CompanyOffersInfo companyId={companyData._id || "0"} />,
+      children: <OffersList companyId={companyData._id || "0"} />,
     },
   ];
 

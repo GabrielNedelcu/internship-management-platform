@@ -212,3 +212,20 @@ export const getCompanyContract = async (companyId: string) => {
 
   return res.data;
 };
+
+/**
+ * Retrieve all the offers from the server
+ * @param queryParams query parameters
+ * @returns server response
+ */
+export const getOffers = async (
+  searchValue: string,
+  queryParams: IQueryParameters,
+  companyId?: string
+) => {
+  const paramURL = buildQuery(`${URL_ROUTES.OFFERS}`, queryParams);
+  let url = addParameterToQuery(paramURL, "search", searchValue);
+  if (companyId) url = addParameterToQuery(url, "company", companyId);
+  const res = await axiosClient.get(url);
+  return res.data;
+};

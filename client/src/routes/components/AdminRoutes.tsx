@@ -5,7 +5,6 @@ import {
   AdminOverviewPage,
   AdminStudentsPage,
   Professors,
-  AdminCompanyOffersPage,
   Companies,
   EnrollmentRequests,
   AdminCompanyProfile,
@@ -14,7 +13,7 @@ import {
 } from "../../features";
 import ProtectedRoutes from "../ProtectedRoutes";
 import { USER_ROLES } from "common/constants";
-import { Internships } from "features/admin-dashboard";
+import { Internships, Offers } from "features/admin-dashboard";
 
 const AdminRoutes = () => {
   return (
@@ -55,7 +54,7 @@ const AdminRoutes = () => {
             element={
               <Layout
                 sider={<AdminNavBar selectedKey={"6"} />}
-                content={<AdminCompanyOffersPage />}
+                content={<Offers />}
               />
             }
           />

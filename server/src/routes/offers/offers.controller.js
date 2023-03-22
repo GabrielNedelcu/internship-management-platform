@@ -46,43 +46,16 @@ async function httpGetAllOffers(req, res) {
   const { pageSize, skipCount } = getPagination(req.query);
   const projection = getProjection(req.query);
 
-  let offers;
-  if (userRole === "admin")
-    offers = await queryOffers(companyID && { companyID }, {
-      _id: 1,
-      companyID: 1,
-      companyName: 1,
-      title: 1,
-      departament: 1,
-      availablePos: 1,
-      remainingAvailablePos: 1,
-      applications: 1,
-    });
-  else {
-    if (companyID) {
-      if (userRole === "company" && userId !== companyID) {
-        const err = new Error("You are not permitted to access this resource!");
-        err.statusCode = 404;
-        throw err;
-      }
-
-      const regex = new RegExp(searchFor, "i");
-      const resp = await getCompanyOffers(
-        { companyID, title: { $regex: regex } },
-        projection,
-        sortBy,
-        sortOrder,
-        skipCount,
-        pageSize
-      );
-
-      if (!resp.totalCount) return res.status(204).send();
-
-      return res.status(200).json(resp);
+  if (companyID) {
+    if (userRole === "company" && userId !== companyID) {
+      const err = new Error("You are not permitted to access this resource!");
+      err.statusCode = 404;
+      throw err;
     }
 
-    const resp = await getValidatedOffers(
-      searchFor,
+    const regex = new RegExp(searchFor, "i");
+    const resp = await getCompanyOffers(
+      { companyID, title: { $regex: regex } },
       projection,
       sortBy,
       sortOrder,
@@ -95,15 +68,18 @@ async function httpGetAllOffers(req, res) {
     return res.status(200).json(resp);
   }
 
-  const validatedOffers = [];
-  for await (const offer of offers) {
-    const company = await getOneCompany(offer.companyID, { validated: 1 });
-    if (company.validated) validatedOffers.push(offer);
-  }
+  const resp = await getValidatedOffers(
+    searchFor,
+    projection,
+    sortBy,
+    sortOrder,
+    skipCount,
+    pageSize
+  );
 
-  if (!validatedOffers.length) return res.status(204).send();
+  if (!resp.totalCount) return res.status(204).send();
 
-  return res.status(200).json(validatedOffers);
+  return res.status(200).json(resp);
 }
 
 /**

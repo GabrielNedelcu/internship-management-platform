@@ -4,7 +4,6 @@ export {
   AdminOverviewPage,
   AdminStudentsPage,
   Professors,
-  AdminCompanyOffersPage,
   Companies,
   EnrollmentRequests,
   AdminCompanyProfile,
