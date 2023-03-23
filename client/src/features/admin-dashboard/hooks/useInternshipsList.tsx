@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { TableProps, notification, Space, Tooltip, Button, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table/interface";
+import { TableProps, notification, Space, Tooltip, Button, Tag } from "antd";
 
 import { PlusOutlined } from "@ant-design/icons";
 
@@ -113,6 +113,7 @@ const useInternshipsList = () => {
   const onAfterProfessorAssign = () => {
     refetchInternshipsList();
     refetchProfessorsList();
+    setOpenAssignProfModal(false);
   };
 
   const columns: ColumnsType<IInternshipData> = [
@@ -173,10 +174,9 @@ const useInternshipsList = () => {
       ellipsis: true,
       sorter: true,
       render: (record: IProfessorData[]) => {
-        console.log(record);
         return (
           <>
-            {record[0].name ? (
+            {record[0]?.name ? (
               <a href={`teacher/${record[0]._id}`}>{record[0].name}</a>
             ) : (
               <Tag color={"red"}>{t("NOT_ASSIGNED")}</Tag>

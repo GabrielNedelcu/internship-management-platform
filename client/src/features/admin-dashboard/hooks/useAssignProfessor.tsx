@@ -2,7 +2,6 @@ import { useState } from "react";
 import { notification } from "antd";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@tanstack/react-query";
-import { wait } from "@testing-library/user-event/dist/utils";
 
 import { patchInternship } from "../api";
 
@@ -31,7 +30,7 @@ const useAssignProfessor = (
           duration: 10,
         });
         afterAssignCb();
-        wait(3000).then(() => onCloseModal());
+        onCloseModal();
       },
       onError: () => {
         setIsLoading(false);
@@ -41,7 +40,6 @@ const useAssignProfessor = (
           duration: 10,
         });
         onCloseModal();
-        wait(3000).then(() => onCloseModal());
       },
     }
   );
