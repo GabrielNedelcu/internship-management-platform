@@ -15,6 +15,12 @@ const journalEntry = new mongoose.Schema({
   },
 });
 
+const documentSchema = new mongoose.Schema({
+  filename: { type: String, required: [true, "Filename is required"] },
+  validated: { type: Boolean, default: false },
+  validationMessage: { type: String, default: null },
+});
+
 const internshipsSchema = new mongoose.Schema(
   {
     student: {
@@ -37,6 +43,24 @@ const internshipsSchema = new mongoose.Schema(
     journal: {
       type: [journalEntry],
       default: null,
+    },
+    documents: {
+      tripartit: {
+        type: documentSchema,
+        default: null,
+      },
+      annex2: {
+        type: documentSchema,
+        default: null,
+      },
+      annex3: {
+        type: documentSchema,
+        default: null,
+      },
+      annex7: {
+        type: documentSchema,
+        default: null,
+      },
     },
   },
   { timestamps: true }

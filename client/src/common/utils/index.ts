@@ -1,4 +1,10 @@
-import { IComboEntry, IFilter, IQueryParameters } from "common/types";
+import {
+  IComboEntry,
+  IDocumentData,
+  IFilter,
+  IQueryParameters,
+  ITagProps,
+} from "common/types";
 import type { SorterResult, FilterValue } from "antd/es/table/interface";
 
 /**
@@ -226,4 +232,21 @@ export const getFieldsOfWork = (): IComboEntry[] => {
     { text: "Electronics", value: "electronics" },
     { text: "Other", value: "other" },
   ];
+};
+
+/**
+ * Returns the props for the docuemt status tag
+ *
+ * @returns ITagData
+ */
+export const getDocumentStatus = (documentData?: IDocumentData): ITagProps => {
+  if (!documentData) return { message: "NOT_UPLOADED", color: "blue" };
+  else {
+    if (documentData.validated) return { message: "VALIDATED", color: "green" };
+    else {
+      if (documentData.validationMessage)
+        return { message: "INVALIDATED", color: "magenta" };
+      else return { message: "PENDING_VALIDATION", color: "orange" };
+    }
+  }
 };

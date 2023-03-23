@@ -221,4 +221,23 @@ export interface IInternshipData {
   offerData?: IOfferData;
   professorData?: IProfessorData;
   journal?: IJournalEntryData[];
+  documents?: IInternshipDocumentsData;
+}
+
+export interface ITagProps {
+  message: string;
+  color: string;
+}
+
+export interface IInternshipDocumentsData {
+  tripartit: IDocumentData;
+  annex2: IDocumentData;
+  annex3: IDocumentData;
+  annex7: IDocumentData;
+}
+
+export interface IDocumentData {
+  filename: string;
+  validated: boolean;
+  validationMessage?: string;
 }

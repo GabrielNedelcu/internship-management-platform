@@ -1,11 +1,19 @@
 import { Result, Typography } from "antd";
 import { useTranslation } from "react-i18next";
 
-import { BookOutlined, ContainerOutlined } from "@ant-design/icons";
+import {
+  BookOutlined,
+  ContainerOutlined,
+  FileOutlined,
+} from "@ant-design/icons";
 
 import { ITabProps } from "common/types";
 import { LoadingPage, Tabs } from "common";
-import { InternshipJournal, InternshipOverview } from "../components";
+import {
+  InternshipDocuments,
+  InternshipJournal,
+  InternshipOverview,
+} from "../components";
 
 import useProfile from "../hooks/useProfile";
 
@@ -48,6 +56,18 @@ const Internship = () => {
       key: "2",
       children: (
         <InternshipJournal internshipId={studentProfileData.internship} />
+      ),
+    },
+    {
+      label: (
+        <span>
+          <FileOutlined />
+          {t("DOCUMENTS")}
+        </span>
+      ),
+      key: "3",
+      children: (
+        <InternshipDocuments internshipId={studentProfileData.internship} />
       ),
     },
   ];

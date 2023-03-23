@@ -1,3 +1,5 @@
+const { default: mongoose } = require("mongoose");
+
 const {
   queryInternshipsAppendReferencedData,
   getOneInternship,
@@ -13,8 +15,11 @@ const {
   getProjection,
   getProjectionFromString,
 } = require("../../utils/query.utils");
-
-const { default: mongoose } = require("mongoose");
+const {
+  uploadFilesFromRequest,
+  deleteUploadedFile,
+  downloadUploadedFile,
+} = require("../../utils/files.utils");
 
 /**
  * @api {GET} /internships/
@@ -70,7 +75,7 @@ async function httpGetInternships(req, res) {
 async function httpPatchInternship(req, res) {
   const userRole = req.userRole;
   const internshipId = req.params.internshipId;
-  const newData = req.body;
+  let newData = req.body;
 
   if (userRole === "student" && newData.hasOwnProperty("professor")) {
     const err = new Error("Unathorized!");
@@ -105,6 +110,96 @@ async function httpPatchInternship(req, res) {
     await updateOneProfessor(newProfessor._id, {
       numAvailablePositions: --newProfessor.numAvailablePositions,
     });
+  }
+
+  if (req.files) {
+    const fileKey = Object.keys(req.files)[0];
+    if (fileKey.includes("annex7")) {
+      if (internship.documents.annex7) {
+        await deleteUploadedFile(
+          "annex_7",
+          internship.documents.annex7.filename
+        );
+      }
+
+      const fileName = `${internship.student}.pdf`;
+      await uploadFilesFromRequest(req, "annex_7", fileName);
+      newData = {
+        ...newData,
+        documents: {
+          ...internship.documents,
+          annex7: {
+            filename: fileName,
+            validated: false,
+            validationMessage: "",
+          },
+        },
+      };
+    } else if (fileKey.includes("tripartit")) {
+      if (internship.documents.tripartit) {
+        await deleteUploadedFile(
+          "tripartit",
+          internship.documents.tripartit.filename
+        );
+      }
+
+      const fileName = `${internship.student}.pdf`;
+      await uploadFilesFromRequest(req, "tripartit", fileName);
+      newData = {
+        ...newData,
+        documents: {
+          ...internship.documents,
+          tripartit: {
+            filename: fileName,
+            validated: false,
+            validationMessage: "",
+          },
+        },
+      };
+    } else if (fileKey.includes("annex2")) {
+      if (internship.documents.annex2) {
+        await deleteUploadedFile(
+          "annex2",
+          internship.documents.annex2.filename
+        );
+      }
+
+      const fileName = `${internship.student}.pdf`;
+      await uploadFilesFromRequest(req, "annex2", fileName);
+      newData = {
+        ...newData,
+        documents: {
+          ...internship.documents,
+          annex2: {
+            ...internship.documents,
+            filename: fileName,
+            validated: false,
+            validationMessage: "",
+          },
+        },
+      };
+    } else if (fileKey.includes("annex3")) {
+      if (internship.documents.annex3) {
+        await deleteUploadedFile(
+          "annex3",
+          internship.documents.annex3.filename
+        );
+      }
+
+      const fileName = `${internship.student}.pdf`;
+      await uploadFilesFromRequest(req, "annex3", fileName);
+      newData = {
+        ...newData,
+        documents: {
+          ...internship.documents,
+          annex3: {
+            filename: fileName,
+            validated: false,
+            validationMessage: "",
+          },
+        },
+      };
+    }
   }
 
   await updateOneInternship(internshipId, newData);
@@ -155,4 +250,56 @@ async function httpGetInternship(req, res) {
   return res.status(200).json(resp.data[0]);
 }
 
-module.exports = { httpGetInternships, httpPatchInternship, httpGetInternship };
+/**
+ * @api {GET} /internships/:internshipId/documents
+ * @apiDescription Get one document from the internship
+ *
+ * @apiSuccess 204
+ */
+async function httpDownloadDocument(req, res) {
+  const internshipId = req.params.internshipId;
+  const doctype = req.query.doc;
+
+  const internship = await getOneInternship(internshipId);
+  if (!internship) {
+    const err = new Error("Internship not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  switch (doctype) {
+    case "tripartit":
+      return downloadUploadedFile(
+        res,
+        "tripartit",
+        internship.documents.tripartit.filename
+      );
+    case "annex2":
+      return downloadUploadedFile(
+        res,
+        "annex_2",
+        internship.documents.annex2.filename
+      );
+    case "annex3":
+      return downloadUploadedFile(
+        res,
+        "annex_3",
+        internship.documents.annex3.filename
+      );
+    case "annex7":
+      return downloadUploadedFile(
+        res,
+        "annex_7",
+        internship.documents.annex7.filename
+      );
+  }
+
+  return res.status(404).send({});
+}
+
+module.exports = {
+  httpGetInternships,
+  httpPatchInternship,
+  httpGetInternship,
+  httpDownloadDocument,
+};

@@ -6,3 +6,5 @@ export { default as CompanyInfo } from "./CompanyInfo";
 export { default as ProfileForm } from "./ProfileForm";
 export { default as InternshipOverview } from "./InternshipOverview";
 export { default as InternshipJournal } from "./InternshipJournal";
+export { default as InternshipDocuments } from "./InternshipDocuments";
+export { default as InternshipDocumentCard } from "./InternshipDocumentCard";

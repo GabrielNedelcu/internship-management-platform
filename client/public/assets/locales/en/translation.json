@@ -304,5 +304,17 @@
   "JOURNAL_UPDATED": "You have successfully updated your internship journey!",
   "JOURNAL_UPDATED_ERR": "An error occured. Cannot update your internship journey ...",
   "NO_INTERNSHIP": "No internship!",
-  "NO_INTERNSHIP_MSG": "You don't have an internship yet! Come back to the page after you have accepted an offer ..."
+  "NO_INTERNSHIP_MSG": "You don't have an internship yet! Come back to the page after you have accepted an offer ...",
+  "DOCUMENTS": "Documents",
+  "TRIPARTIT_CONVENTION": "Tripartit Convention",
+  "DOWNLOAD_TEMPLATE": "Download template",
+  "UPLOAD_FILE": "Upload File",
+  "CHOOSE": "Choose",
+  "ANNEX": "Annex",
+  "VALIDATED": "Validated",
+  "PENDING_VALIDATION": "Pending Validation",
+  "INVALIDATED": "Invalidated",
+  "NOT_UPLOADED": "Not Uploaded",
+  "DOCUMENT_VALIDATED": "The document has been validated! You can no longer modify it",
+  "DOWNLOAD_FILE": "Download file"
 }

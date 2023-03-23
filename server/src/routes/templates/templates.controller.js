@@ -1,17 +1,27 @@
 const { downloadTemplate } = require("../../utils/files.utils");
 
-/**
- * @api {GET} /students/
- * @apiDescription Get all the students, depending on the user role
- * For ADMIN, no restrictions are applied; For COMPANY gets all the students
- * that have applied to offers of the company
- *
- * @apiSuccess array with the requested data or 204 if no student was found
- */
 async function httpGetAnnex1(req, res) {
   return downloadTemplate(res, "annex_1.docx");
 }
 
+async function httpGetTripartit(req, res) {
+  return downloadTemplate(res, "tripartit_convention.docx");
+}
+
+async function httpGetAnnex7(req, res) {
+  return downloadTemplate(res, "annex_7.docx");
+}
+async function httpGetAnnex2(req, res) {
+  return downloadTemplate(res, "annex_2.docx");
+}
+async function httpGetAnnex3(req, res) {
+  return downloadTemplate(res, "annex_3.docx");
+}
+
 module.exports = {
   httpGetAnnex1,
+  httpGetTripartit,
+  httpGetAnnex7,
+  httpGetAnnex2,
+  httpGetAnnex3,
 };

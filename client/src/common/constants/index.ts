@@ -36,3 +36,18 @@ export enum APPLICATION_STATUS {
   STUDENT_DECLINED = "studentDeclined",
   PROFESSOR_ASSIGNED = "professorAssgined",
 }
+
+export enum TEMPLATES {
+  ANNEX1 = "annex_1",
+  TRIPARTIT = "tripartit",
+  ANNEX7 = "annex_7",
+  ANNEX2 = "annex_2",
+  ANNEX3 = "annex_3",
+}
+
+export enum INTERNSHIP_DOCS {
+  TRIPARTIT = "tripartit",
+  ANNEX7 = "annex7",
+  ANNEX2 = "annex2",
+  ANNEX3 = "annex3",
+}

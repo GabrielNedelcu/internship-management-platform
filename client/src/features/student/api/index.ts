@@ -201,3 +201,60 @@ export const patchInternship = async (
 
   return res.data;
 };
+
+/**
+ * Update internship documents
+ *
+ * @param internshipId internship to update
+ * @param data new data to update with
+ * @returns server response
+ */
+export const updateInternshipDocs = async (
+  internshipId: string,
+  data: IInternshipData
+) => {
+  const res = await axiosClient.patch(
+    `${URL_ROUTES.INTERNSHIPS}/${internshipId}`,
+    data,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
+  return res.data;
+};
+
+/**
+ * Download a template from the server
+ * @param templateEndpoint endpoint where the template is found
+ * @returns server response
+ */
+export const downloadTemplate = async (templateEndpoint: string) => {
+  const res = await axiosClient.get(
+    `${URL_ROUTES.TEMPLATES}/${templateEndpoint}`,
+    {
+      responseType: "blob",
+    }
+  );
+  return res.data;
+};
+
+/**
+ * Download a template from the server
+ * @param templateEndpoint endpoint where the template is found
+ * @returns server response
+ */
+export const downloadInternshipDocument = async (
+  internshipId: string,
+  documentType: string
+) => {
+  const res = await axiosClient.get(
+    `${URL_ROUTES.INTERNSHIPS}/${internshipId}/documents?doc=${documentType}`,
+    {
+      responseType: "blob",
+    }
+  );
+  return res.data;
+};

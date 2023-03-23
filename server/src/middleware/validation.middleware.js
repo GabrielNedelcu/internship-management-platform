@@ -360,6 +360,9 @@ async function validateInternshipPatch(req, res, next) {
     "journal.*.startDate": "required|date",
     "journal.*.endDate": "required|date",
     "journal.*.description": "required|string",
+    "documents.*.filename": "string",
+    "documents.*.validated": "boolean",
+    "documents.*.validationMessage": "string",
   };
 
   // verify user sends only accepted fields

@@ -4,7 +4,7 @@ interface ICardCompProps {
   actions?: React.ReactNode[] | undefined;
   avatar?: React.ReactNode | undefined;
   title: React.ReactNode | string;
-  description?: string;
+  description?: React.ReactNode | string;
   content: React.ReactNode;
   style?: React.CSSProperties;
 }

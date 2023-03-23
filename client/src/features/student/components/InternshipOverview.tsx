@@ -18,7 +18,7 @@ const InternshipOverview = ({ internshipId }: IInternshipOverviewProps) => {
       console.log(internshipId);
       return getInternship(
         internshipId,
-        "company,offer,professorData,companyData,offerData,createdAt"
+        "company,offer,professor,professorData,companyData,offerData,createdAt"
       );
     },
     {
@@ -114,20 +114,24 @@ const InternshipOverview = ({ internshipId }: IInternshipOverviewProps) => {
             content={
               <>
                 <br />
-                <Descriptions layout="horizontal">
-                  <Descriptions.Item label={t("NAME")} span={1}>
-                    {internshipData.professorData[0].name}
-                  </Descriptions.Item>
-                  <Descriptions.Item label={t("EMAIL")} span={1}>
-                    {internshipData.professorData[0].email}
-                  </Descriptions.Item>
-                  <Descriptions.Item label={t("PHONE_NUMBER")} span={1}>
-                    +40{internshipData.professorData[0].publicPhone}
-                  </Descriptions.Item>
-                  <Descriptions.Item label={t("DEPARTAMENT")} span={1}>
-                    {internshipData.professorData[0].departament}
-                  </Descriptions.Item>
-                </Descriptions>
+                {internshipData.professor ? (
+                  <Descriptions layout="horizontal">
+                    <Descriptions.Item label={t("NAME")} span={1}>
+                      {internshipData.professorData[0].name}
+                    </Descriptions.Item>
+                    <Descriptions.Item label={t("EMAIL")} span={1}>
+                      {internshipData.professorData[0].email}
+                    </Descriptions.Item>
+                    <Descriptions.Item label={t("PHONE_NUMBER")} span={1}>
+                      +40{internshipData.professorData[0].publicPhone}
+                    </Descriptions.Item>
+                    <Descriptions.Item label={t("DEPARTAMENT")} span={1}>
+                      {internshipData.professorData[0].departament}
+                    </Descriptions.Item>
+                  </Descriptions>
+                ) : (
+                  t("NOT_ASSIGNED")
+                )}
               </>
             }
           />

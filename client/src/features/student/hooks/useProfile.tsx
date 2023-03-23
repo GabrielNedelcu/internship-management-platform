@@ -10,28 +10,29 @@ const useProfile = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const { data: studentProfileData } = useQuery<IStudentData>(
-    ["getSelfStudent"],
-    () => {
-      setLoading(true);
-      return getSelfStudent({});
-    },
-    {
-      onSuccess: () => {
-        setLoading(false);
+  const { data: studentProfileData, refetch: refetchStudentData } =
+    useQuery<IStudentData>(
+      ["getSelfStudentProfile"],
+      () => {
+        setLoading(true);
+        return getSelfStudent({});
       },
-      onError: () => {
-        setLoading(false);
-        notification.error({
-          message: "Ooops ...",
-          description: t("CANNOT_RETRIEVE_PROFILE_DATA"),
-          duration: 10,
-        });
-      },
-    }
-  );
+      {
+        onSuccess: () => {
+          setLoading(false);
+        },
+        onError: () => {
+          setLoading(false);
+          notification.error({
+            message: "Ooops ...",
+            description: t("CANNOT_RETRIEVE_PROFILE_DATA"),
+            duration: 10,
+          });
+        },
+      }
+    );
 
-  return { studentProfileData, loading };
+  return { refetchStudentData, studentProfileData, loading };
 };
 
 export default useProfile;

@@ -8,7 +8,7 @@ import useProfile from "../hooks/useProfile";
 const Profile = () => {
   const { t } = useTranslation();
 
-  const { studentProfileData, loading } = useProfile();
+  const { refetchStudentData, studentProfileData, loading } = useProfile();
 
   if (!studentProfileData || loading)
     return <LoadingPage message={t("FETCHING_PROFILE_DATA")} />;
@@ -26,6 +26,9 @@ const Profile = () => {
             profileData={studentProfileData}
             finishPrompt={t("UPDATE_PROFILE")}
             displayLabels={true}
+            onSuccess={() => {
+              refetchStudentData();
+            }}
           />
         </Col>
         <Col span={12}>

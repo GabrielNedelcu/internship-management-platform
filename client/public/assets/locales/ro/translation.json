@@ -304,5 +304,17 @@
   "JOURNAL_UPDATED": "Ai actualizat cu succes jurnalul stagiului tau!",
   "JOURNAL_UPDATED_ERR": "Am intampinat o eroare. Nu putem actualiza datele jurnalului stagiului tau ...",
   "NO_INTERNSHIP": "Niciun Stagiu!",
-  "NO_INTERNSHIP_MSG": "Pana in momentul actual, nu ai un stagiu de practica! Intoarce-te la aceasta pagina dupa ce vei accepta oferta unei companii ..."
+  "NO_INTERNSHIP_MSG": "Pana in momentul actual, nu ai un stagiu de practica! Intoarce-te la aceasta pagina dupa ce vei accepta oferta unei companii ...",
+  "DOCUMENTS": "Documente",
+  "TRIPARTIT_CONVENTION": "Conventie Tripartita",
+  "DOWNLOAD_TEMPLATE": "Descarca sablon",
+  "UPLOAD_FILE": "Incarca fisier",
+  "CHOOSE": "Alege",
+  "ANNEX": "Anexa",
+  "VALIDATED": "Validat",
+  "PENDING_VALIDATION": "Se valideaza",
+  "INVALIDATED": "Invalidat",
+  "NOT_UPLOADED": "Nu e incarcat",
+  "DOCUMENT_VALIDATED": "Documentul a fost validat! Nu il mai puteti modifica ...",
+  "DOWNLOAD_FILE": "Descarca fisier"
 }
