@@ -1,5 +1,4 @@
 const { default: mongoose } = require("mongoose");
-
 const {
   queryInternshipsAppendReferencedData,
   getOneInternship,
@@ -28,6 +27,8 @@ const {
  * @apiSuccess array with the requested data or 204 if no student was found
  */
 async function httpGetInternships(req, res) {
+  const userRole = req.userRole;
+
   const searchFor = req.query.search;
   const { sortOrder, sortBy } = getSort(req.query);
   const { pageSize, skipCount } = getPagination(req.query);
@@ -39,15 +40,29 @@ async function httpGetInternships(req, res) {
     req.query.professorFields
   );
 
+  const professorId = req.query.professor;
+  const companyId = req.query.company;
+  const offerId = req.query.offer;
+
   const regex = new RegExp(searchFor, "i");
 
-  const query = {
+  let query = {
     $or: [
       { "studentData.name": { $regex: regex } },
       { "offerData.title": { $regex: regex } },
       { "companyData.name": { $regex: regex } },
     ],
   };
+
+  if (userRole === "admin") {
+    if (professorId)
+      query = { ...query, professor: new mongoose.Types.ObjectId(professorId) };
+    if (companyId)
+      query = { ...query, company: new mongoose.Types.ObjectId(companyId) };
+    if (offerId)
+      query = { ...query, offer: new mongoose.Types.ObjectId(offerId) };
+  }
+
   const resp = await queryInternshipsAppendReferencedData(
     query,
     projection,

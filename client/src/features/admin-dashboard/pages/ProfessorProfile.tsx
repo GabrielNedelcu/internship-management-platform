@@ -10,6 +10,7 @@ import { ITabProps } from "common/types";
 
 import { ProfessorData } from "../components";
 import useProfessorProfile from "../hooks/useProfessorProfile";
+import StudentsTable from "../components/StudentsTable";
 
 const ProfessorProfile = () => {
   const { t } = useTranslation();
@@ -42,7 +43,7 @@ const ProfessorProfile = () => {
         </span>
       ),
       key: "2",
-      children: "",
+      children: <StudentsTable professorId={professorId} />,
     },
   ];
 

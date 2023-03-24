@@ -166,6 +166,9 @@ async function queryInternshipsAppendReferencedData(
   const totalCount = countResult[0] ? countResult[0].totalDocuments : 0;
   const mainPipeline = [
     ...pipeline.slice(0, -1),
+    {
+      $match: query,
+    },
     ...(Object.keys(projection).length
       ? [
           {
@@ -173,9 +176,6 @@ async function queryInternshipsAppendReferencedData(
           },
         ]
       : []),
-    {
-      $match: query,
-    },
     ...(sortBy && sortOrder
       ? [
           {

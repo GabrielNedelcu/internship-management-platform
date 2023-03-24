@@ -323,3 +323,24 @@ export const uploadStudentsFile = async (
 
   return res.data;
 };
+
+/**
+ * Retrieve the students from querying the internships
+ * @param queryParams query parameters
+ * @returns server response
+ */
+export const getStudentsFromInternships = async (
+  searchValue: string,
+  queryParams: IQueryParameters,
+  professor?: string,
+  company?: string,
+  offer?: string
+) => {
+  const paramURL = buildQuery(`${URL_ROUTES.INTERNSHIPS}`, queryParams);
+  let url = addParameterToQuery(paramURL, "search", searchValue);
+  if (professor) url = addParameterToQuery(paramURL, "professor", professor);
+  if (company) url = addParameterToQuery(paramURL, "company", company);
+  if (offer) url = addParameterToQuery(paramURL, "offer", offer);
+  const res = await axiosClient.get(url);
+  return res.data;
+};
