@@ -1,75 +1,58 @@
 import { useState } from "react";
 import { notification } from "antd";
+import { useTranslation } from "react-i18next";
 import { useMutation } from "@tanstack/react-query";
 
-import { checkAccountEmail } from "common";
-import { createStudent, uploadStudentsFile } from "../api/studentAPI";
-import { useTranslation } from "react-i18next";
+import { IStudentData } from "common/types";
+import { createStudent, updateStudent, uploadStudentsFile } from "../api";
 
-const useStudentCreation = () => {
+interface IUpdateStudentProps {
+  profId: string;
+  newData: IStudentData;
+}
+
+const useStudentCreateUpdate = () => {
   const { t } = useTranslation();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [group, setGroup] = useState("");
-  const [cnp, setCNP] = useState("");
-  const [passport, setPassport] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [notCreatedAccounts, setNotCreatedAccounts] = useState("");
   const [detectedAccounts, setDetectedAccounts] = useState(0);
   const [createdAccounts, setCreatedAccounts] = useState(0);
 
-  const resetFields = () => {
-    setName("");
-    setEmail("");
-    setGroup("");
-    setCNP("");
-    setPassport("");
-  };
-
   const { mutate: mutateCreateStudent } = useMutation(
     ["createStudent"],
-    () => {
-      setLoading(true);
+    (studentData: IStudentData) => {
+      setIsLoading(true);
 
-      return createStudent({ name, email, group, cnp, passport });
+      return createStudent(studentData);
     },
     {
-      onSuccess: (res) => {
-        setLoading(false);
+      onSuccess: () => {
+        setIsLoading(false);
 
         notification.success({
           message: t("ACCOUNT_CREATED"),
           description: t("ACCOUNT_CREATED_MSG"),
           duration: 10,
         });
-
-        resetFields();
       },
       onError: () => {
-        setLoading(false);
+        setIsLoading(false);
 
         notification.error({
           message: "Ooops ...",
           description: t("ACCOUNT_CREATION_ERROR"),
           duration: 10,
         });
-
-        resetFields();
       },
     }
   );
 
-  const { mutate: mutateCheckUniqueEmail, status: emailCheckResult } =
-    useMutation(["checkUniqueEmail", email], (email: string) =>
-      checkAccountEmail(email)
-    );
-
-  const { mutate: mutateUplaodStudents } = useMutation(
+  const { mutate: mutateUploadStudents } = useMutation(
     ["uploadStudentsFile"],
     (options: any) => {
-      setLoading(true);
+      setIsLoading(true);
 
       const { onSuccess, onError, file } = options;
 
@@ -77,7 +60,7 @@ const useStudentCreation = () => {
     },
     {
       onSuccess: (res: any) => {
-        setLoading(false);
+        setIsLoading(false);
 
         setNotCreatedAccounts(res.fails.join("   ;   "));
         setDetectedAccounts(res.detected);
@@ -85,39 +68,55 @@ const useStudentCreation = () => {
         setOpenModal(true);
       },
       onError: () => {
-        setLoading(false);
+        setIsLoading(false);
 
         notification.error({
           message: "Ooops ...",
           description: t("FILE_UPLOAD_ERROR"),
           duration: 10,
         });
+      },
+    }
+  );
 
-        resetFields();
+  const { mutate: mutateUpdateStudent } = useMutation(
+    ["updateStudent"],
+    (updateProps: IUpdateStudentProps) => {
+      setIsLoading(true);
+      return updateStudent(updateProps.profId, updateProps.newData);
+    },
+    {
+      onSuccess: () => {
+        setIsLoading(false);
+        notification.success({
+          message: t("ACCOUNT_UPDATED"),
+          description: t("UPDATE_ACCOUNT_SUCCESS_MSG"),
+          duration: 10,
+        });
+      },
+      onError: () => {
+        setIsLoading(false);
+
+        notification.error({
+          message: "Ooops ...",
+          description: t("UPDATE_ACCOUNT_ERR_MSG"),
+          duration: 10,
+        });
       },
     }
   );
 
   return {
-    cnp,
-    setCNP,
-    loading,
-    passport,
-    setName,
-    setEmail,
-    setGroup,
+    isLoading,
     openModal,
-    setLoading,
-    setPassport,
-    setOpenModal,
     createdAccounts,
-    emailCheckResult,
     detectedAccounts,
     notCreatedAccounts,
+    setOpenModal,
     mutateCreateStudent,
-    mutateUplaodStudents,
-    mutateCheckUniqueEmail,
+    mutateUploadStudents,
+    mutateUpdateStudent,
   };
 };
 
-export default useStudentCreation;
+export default useStudentCreateUpdate;

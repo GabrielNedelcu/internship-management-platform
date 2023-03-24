@@ -156,8 +156,6 @@ async function httpGetAllProfessors(req, res) {
   const searchFor = req.query.search;
   const available = req.query.available;
 
-  console.log(req.query);
-
   const { sortOrder, sortBy } = getSort(req.query);
   const { pageSize, skipCount } = getPagination(req.query);
   const projection = getProjection(req.query);

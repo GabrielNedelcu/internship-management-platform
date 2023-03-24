@@ -6,6 +6,7 @@ import {
   IInternshipData,
   IProfessorData,
   IQueryParameters,
+  IStudentData,
 } from "../../../common/types";
 
 /**
@@ -245,5 +246,80 @@ export const downloadInternshipDocument = async (
       responseType: "blob",
     }
   );
+  return res.data;
+};
+
+/**
+ * Retrieve all the professors from the server
+ * @param queryParams query parameters
+ * @returns server response
+ */
+export const getStudents = async (
+  searchValue: string,
+  queryParams: IQueryParameters
+) => {
+  const paramURL = buildQuery(`${URL_ROUTES.STUDENTS}`, queryParams);
+  let url = addParameterToQuery(paramURL, "search", searchValue);
+
+  const res = await axiosClient.get(url);
+  return res.data;
+};
+
+/**
+ * Call create student endpoint
+ *
+ * @param data student data
+ * @returns server reponse
+ */
+export const createStudent = async (data: IStudentData) => {
+  const res = await axiosClient.post(`${URL_ROUTES.STUDENTS}`, data);
+
+  return res.data;
+};
+
+/**
+ * Update student data
+ *
+ * @param studentId student to update
+ * @param data new data to update with
+ * @returns server response
+ */
+export const updateStudent = async (studentId: string, data: IStudentData) => {
+  const res = await axiosClient.patch(
+    `${URL_ROUTES.STUDENTS}/${studentId}`,
+    data
+  );
+
+  return res.data;
+};
+
+/**
+ * Upload the excel file containing the professors to the server
+ *
+ * @param file - file to upload
+ * @param onSucces - callback for the antd file uploader
+ * @param onError - callback for the antd file uploader
+ * @returns query response
+ */
+export const uploadStudentsFile = async (
+  file: any,
+  onSucces: () => void,
+  onError: () => void
+) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  const res = await axiosClient.post(
+    `${URL_ROUTES.STUDENTS}/multiple`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
+  if (res.data.data.length !== 0) onSucces();
+  else onError();
+
   return res.data;
 };

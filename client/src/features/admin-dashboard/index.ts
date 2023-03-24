@@ -1,5 +1,5 @@
 export { default as AdminOverviewPage } from "./pages/AdminOverviewPage";
-export { default as AdminStudentsPage } from "./pages/AdminStudentsPage";
+export { default as Students } from "./pages/Students";
 export { default as Professors } from "./pages/Professors";
 export { default as Offers } from "./pages/Offers";
 export { default as Companies } from "./pages/Companies";

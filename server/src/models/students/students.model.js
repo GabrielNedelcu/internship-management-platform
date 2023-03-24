@@ -29,19 +29,22 @@ async function getOneStudent(studentId, projection = {}) {
  *
  * @returns {Array}             - the retrieved students
  */
-async function getAllStudents() {
-  return await Student.find(
-    {},
-    {
-      _id: 1,
-      email: 1,
-      name: 1,
-      group: 1,
-      major: 1,
-      cnp: 1,
-      passport: 1,
-    }
-  );
+async function getAllStudents(
+  query,
+  projection,
+  sortBy,
+  sortOrder,
+  skipCount,
+  pageSize
+) {
+  const totalCount = await Student.countDocuments(query);
+
+  const data = await Student.find(query, projection)
+    .sort({ [`${sortBy}`]: sortOrder })
+    .skip(skipCount)
+    .limit(pageSize);
+
+  return { totalCount, data };
 }
 
 /**

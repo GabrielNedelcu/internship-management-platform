@@ -1,5 +1,5 @@
-export { default as AdminAddStudents } from "./students/AdminAddStudents";
-export { default as AdminBrowseStudents } from "./students/AdminBrowseStudents";
+export { default as AddStudent } from "./AddStudent";
+export { default as StudentsList } from "./StudentsList";
 export { default as AddProfessor } from "./AddProfessor";
 export { default as CompanyOverview } from "./CompanyOverview";
 export { default as CompanyEmployeesInfo } from "./CompanyEmployeesInfo";

@@ -13,10 +13,6 @@ export interface IEditableStudentData {
 }
 
 export interface IStudentData {
-  stats?: {
-    applications: number;
-    acceptances: number;
-  };
   _id?: string;
   email?: string;
   name?: string;

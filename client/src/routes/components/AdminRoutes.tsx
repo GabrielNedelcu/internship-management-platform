@@ -3,7 +3,6 @@ import { Layout, AdminNavBar } from "layout";
 
 import {
   AdminOverviewPage,
-  AdminStudentsPage,
   Professors,
   Companies,
   EnrollmentRequests,
@@ -13,7 +12,7 @@ import {
 } from "../../features";
 import ProtectedRoutes from "../ProtectedRoutes";
 import { USER_ROLES } from "common/constants";
-import { Internships, Offers } from "features/admin-dashboard";
+import { Internships, Offers, Students } from "features/admin-dashboard";
 
 const AdminRoutes = () => {
   return (
@@ -36,7 +35,7 @@ const AdminRoutes = () => {
             element={
               <Layout
                 sider={<AdminNavBar selectedKey={"2"} />}
-                content={<AdminStudentsPage />}
+                content={<Students />}
               />
             }
           />

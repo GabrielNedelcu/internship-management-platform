@@ -21,7 +21,11 @@ const { parseExcel, studentSchema } = require("../../utils/excel.utils");
 
 const logger = require("../../config/logger.config");
 
-const { getProjection } = require("../../utils/query.utils");
+const {
+  getSort,
+  getPagination,
+  getProjection,
+} = require("../../utils/query.utils");
 
 /**
  *
@@ -150,18 +154,29 @@ async function httpCreateMultipleStudents(req, res) {
  * @apiSuccess array with the requested data or 204 if no student was found
  */
 async function httpGetAllStudents(req, res) {
-  const userId = req.account;
-  const userRole = req.userRole;
+  const major = req.query.major;
+  const searchFor = req.query.search;
 
-  let students;
-  console.log(userRole);
-  if (userRole === "admin") students = await getAllStudents();
-  else {
-  }
+  const { sortOrder, sortBy } = getSort(req.query);
+  const { pageSize, skipCount } = getPagination(req.query);
+  const projection = getProjection(req.query);
 
-  if (!students.length) return res.status(204).send();
+  const regex = new RegExp(searchFor, "i");
+  const resp = await getAllStudents(
+    {
+      $or: [{ email: { $regex: regex } }, { name: { $regex: regex } }],
+      ...(major && { major: major }),
+    },
+    projection,
+    sortBy,
+    sortOrder,
+    skipCount,
+    pageSize
+  );
 
-  return res.status(200).json(students);
+  if (!resp.totalCount) return res.status(204).send();
+
+  return res.status(200).json(resp);
 }
 
 /**

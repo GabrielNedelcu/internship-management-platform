@@ -3,11 +3,11 @@ import { PlusCircleOutlined, SearchOutlined } from "@ant-design/icons";
 
 import { Tabs } from "common";
 
-import { AdminAddStudents, AdminBrowseStudents } from "../components";
+import { AddStudent, StudentsList } from "../components";
 import { ITabProps } from "common/types";
 import { useTranslation } from "react-i18next";
 
-const AdminStudentsPage = () => {
+const Students = () => {
   const { t } = useTranslation();
 
   const tabs: ITabProps[] = [
@@ -19,7 +19,7 @@ const AdminStudentsPage = () => {
         </span>
       ),
       key: "1",
-      children: <AdminAddStudents />,
+      children: <AddStudent />,
     },
     {
       label: (
@@ -29,7 +29,7 @@ const AdminStudentsPage = () => {
         </span>
       ),
       key: "2",
-      children: <AdminBrowseStudents />,
+      children: <StudentsList />,
     },
   ];
 
@@ -45,4 +45,4 @@ const AdminStudentsPage = () => {
   );
 };
 
-export default AdminStudentsPage;
+export default Students;

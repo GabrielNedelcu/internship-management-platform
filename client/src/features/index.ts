@@ -2,7 +2,6 @@ export { SignInPage, SignUpPage } from "./auth";
 
 export {
   AdminOverviewPage,
-  AdminStudentsPage,
   Professors,
   Companies,
   EnrollmentRequests,
