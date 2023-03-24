@@ -316,5 +316,7 @@
   "INVALIDATED": "Invalidat",
   "NOT_UPLOADED": "Nu e incarcat",
   "DOCUMENT_VALIDATED": "Documentul a fost validat! Nu il mai puteti modifica ...",
-  "DOWNLOAD_FILE": "Descarca fisier"
+  "DOWNLOAD_FILE": "Descarca fisier",
+  "VALIDATE": "Valideaza",
+  "DECLINE": "Refuza"
 }

@@ -229,3 +229,21 @@ export const getOffers = async (
   const res = await axiosClient.get(url);
   return res.data;
 };
+
+/**
+ * Download a template from the server
+ * @param templateEndpoint endpoint where the template is found
+ * @returns server response
+ */
+export const downloadInternshipDocument = async (
+  internshipId: string,
+  documentType: string
+) => {
+  const res = await axiosClient.get(
+    `${URL_ROUTES.INTERNSHIPS}/${internshipId}/documents?doc=${documentType}`,
+    {
+      responseType: "blob",
+    }
+  );
+  return res.data;
+};

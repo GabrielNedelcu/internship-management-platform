@@ -159,13 +159,13 @@ async function httpPatchInternship(req, res) {
     } else if (fileKey.includes("annex2")) {
       if (internship.documents.annex2) {
         await deleteUploadedFile(
-          "annex2",
+          "annex_2",
           internship.documents.annex2.filename
         );
       }
 
       const fileName = `${internship.student}.pdf`;
-      await uploadFilesFromRequest(req, "annex2", fileName);
+      await uploadFilesFromRequest(req, "annex_2", fileName);
       newData = {
         ...newData,
         documents: {
@@ -181,13 +181,13 @@ async function httpPatchInternship(req, res) {
     } else if (fileKey.includes("annex3")) {
       if (internship.documents.annex3) {
         await deleteUploadedFile(
-          "annex3",
+          "annex_3",
           internship.documents.annex3.filename
         );
       }
 
       const fileName = `${internship.student}.pdf`;
-      await uploadFilesFromRequest(req, "annex3", fileName);
+      await uploadFilesFromRequest(req, "annex_3", fileName);
       newData = {
         ...newData,
         documents: {

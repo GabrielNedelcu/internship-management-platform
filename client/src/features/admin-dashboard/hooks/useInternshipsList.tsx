@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import type { ColumnsType } from "antd/es/table/interface";
 import { TableProps, notification, Space, Tooltip, Button, Tag } from "antd";
 
@@ -183,6 +183,21 @@ const useInternshipsList = () => {
             )}
           </>
         );
+      },
+    },
+    {
+      title: t("DOCUMENTS"),
+      key: "documents",
+      ellipsis: true,
+      render: (record: IInternshipData) => {
+        if (
+          record.documents?.annex7?.validated === false ||
+          record.documents?.tripartit?.validated === false ||
+          record.documents?.annex2?.validated === false ||
+          record.documents?.annex3?.validated === false
+        )
+          return <Tag color={"red"}>{t("PENDING_VALIDATION")}</Tag>;
+        else return <Tag color={"green"}>{t("VALIDATED")}</Tag>;
       },
     },
     {
