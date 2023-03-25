@@ -93,15 +93,21 @@ const useOffersList = (companyId?: string) => {
       ellipsis: true,
       sorter: true,
     },
-    {
-      title: t("COMPANY"),
-      key: "companyName",
-      ellipsis: true,
-      sorter: true,
-      render: (record: IOfferData) => {
-        return <a href={`company/${record.companyID}`}>{record.companyName}</a>;
-      },
-    },
+    ...(!companyId
+      ? [
+          {
+            title: t("COMPANY"),
+            key: "companyName",
+            ellipsis: true,
+            sorter: true,
+            render: (record: IOfferData) => {
+              return (
+                <a href={`company/${record.companyID}`}>{record.companyName}</a>
+              );
+            },
+          },
+        ]
+      : []),
     {
       title: t("DEPARTAMENT"),
       dataIndex: "departament",

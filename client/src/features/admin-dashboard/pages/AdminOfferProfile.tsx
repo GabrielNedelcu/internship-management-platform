@@ -17,6 +17,7 @@ import { Tabs } from "common";
 import EmployeeInfo from "../components/EmployeeInfo";
 import { ITabProps } from "common/types";
 import { useTranslation } from "react-i18next";
+import StudentsTable from "../components/StudentsTable";
 
 const AdminOfferProfile = () => {
   const { t } = useTranslation();
@@ -93,7 +94,7 @@ const AdminOfferProfile = () => {
         </span>
       ),
       key: "4",
-      children: "Accepted Students",
+      children: <StudentsTable offerId={offerId} />,
     },
   ];
 
