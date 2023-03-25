@@ -320,5 +320,8 @@
   "VALIDATE": "Valideaza",
   "DECLINE": "Refuza",
   "FETCHING_STUDENT_DATA": "Preluam datele studentului ...",
-  "CANNOT_RETRIEVE_STUDENT_DATA": "Am intampinat o eroare. Nu putem recupera datele studentului de pe server ..."
+  "CANNOT_RETRIEVE_STUDENT_DATA": "Am intampinat o eroare. Nu putem recupera datele studentului de pe server ...",
+  "CANNOT_RETRIEVE_INTERNSHIP_DATA": "Am intampinat o eroare. Nu putem recupera datele stagiului de pe server ...",
+  "PROFESSOR": "Profesor",
+  "WRITE_MESSAGE": "Scrie un mesaj ..."
 }

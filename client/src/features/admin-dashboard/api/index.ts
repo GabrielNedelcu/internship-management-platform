@@ -367,3 +367,47 @@ export const getStudentCV = async (studentId: string) => {
   });
   return res.data;
 };
+
+/**
+ * Get an internship by id
+ * @param internshipId id of the application
+ * @returns server response
+ */
+export const getInternship = async (
+  internshipId: string,
+  projection?: string,
+  studentProjection?: string,
+  companyProjection?: string,
+  offerProjection?: string,
+  professorProjection?: string
+) => {
+  let url = `${URL_ROUTES.INTERNSHIPS}/${internshipId}`;
+  if (projection) url = buildQuery(url, { fields: projection });
+  if (studentProjection)
+    url = addParameterToQuery(url, "studentFields", studentProjection);
+  if (companyProjection)
+    url = addParameterToQuery(url, "companyFields", companyProjection);
+  if (offerProjection)
+    url = addParameterToQuery(url, "offerFields", offerProjection);
+  if (professorProjection)
+    url = addParameterToQuery(url, "professorFields", professorProjection);
+
+  const res = await axiosClient.get(url);
+
+  return res.data;
+};
+
+/**
+ * Download a template from the server
+ * @param templateEndpoint endpoint where the template is found
+ * @returns server response
+ */
+export const downloadTemplate = async (templateEndpoint: string) => {
+  const res = await axiosClient.get(
+    `${URL_ROUTES.TEMPLATES}/${templateEndpoint}`,
+    {
+      responseType: "blob",
+    }
+  );
+  return res.data;
+};

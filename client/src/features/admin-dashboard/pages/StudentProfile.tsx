@@ -1,14 +1,18 @@
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { Typography, Spin, Row, Col } from "antd";
+import { Typography, Spin, Row, Col, Result } from "antd";
 
-import { ContainerOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  ContainerOutlined,
+  ReconciliationOutlined,
+  BookOutlined,
+} from "@ant-design/icons";
 
 import { LoadingPage, Tabs } from "common";
 import { ITabProps } from "common/types";
 
-import { StudentData } from "../components";
+import { StudentData, StudentInternship } from "../components";
 import useStudentProfile from "../hooks/useStudentProfile";
 
 const StudentProfile = () => {
@@ -42,11 +46,25 @@ const StudentProfile = () => {
     {
       label: (
         <span>
-          <UserOutlined />
-          {t("SUPERVISED_STUDENTS")}
+          <ReconciliationOutlined />
+          {t("INTERNSHIP")}
         </span>
       ),
       key: "2",
+      children: studentData.internship ? (
+        <StudentInternship internshipId={studentData.internship} />
+      ) : (
+        <Result status="404" title={t("NO_INTERNSHIP")} />
+      ),
+    },
+    {
+      label: (
+        <span>
+          <BookOutlined />
+          {t("INTERNSHIP_JOURNAL")}
+        </span>
+      ),
+      key: "3",
       children: "",
     },
   ];

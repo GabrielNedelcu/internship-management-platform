@@ -365,15 +365,17 @@ async function validateInternshipPatch(req, res, next) {
     "documents.*.validationMessage": "string",
   };
 
-  // verify user sends only accepted fields
-  const reqFields = Object.keys(req.body);
-  for (key of reqFields) {
-    if (!Object.keys(validationRule).includes(key)) {
-      return res.status(412).send({
-        message: "Validation failed",
-      });
-    }
-  }
+  // console.log(req.body);
+
+  // // verify user sends only accepted fields
+  // const reqFields = Object.keys(req.body);
+  // for (key of reqFields) {
+  //   if (!Object.keys(validationRule).includes(key)) {
+  //     return res.status(412).send({
+  //       message: "Validation failed",
+  //     });
+  //   }
+  // }
 
   await validator(req.body, validationRule, {}, (err, success) => {
     if (success) {

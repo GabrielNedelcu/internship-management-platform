@@ -12,3 +12,5 @@ export { default as ProfessorsList } from "./ProfessorsList";
 export { default as ProfessorData } from "./ProfessorData";
 export { default as OffersList } from "./OffersList";
 export { default as StudentData } from "./StudentData";
+export { default as StudentInternship } from "./StudentInternship";
+export { default as InternshipDocumentCard } from "./InternshipDocumentCard";
