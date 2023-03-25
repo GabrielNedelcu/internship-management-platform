@@ -14,3 +14,4 @@ export { default as OffersList } from "./OffersList";
 export { default as StudentData } from "./StudentData";
 export { default as StudentInternship } from "./StudentInternship";
 export { default as InternshipDocumentCard } from "./InternshipDocumentCard";
+export { default as InternshipJournal } from "./InternshipJournal";

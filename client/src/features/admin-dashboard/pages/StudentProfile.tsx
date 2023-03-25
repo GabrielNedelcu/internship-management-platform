@@ -12,7 +12,11 @@ import {
 import { LoadingPage, Tabs } from "common";
 import { ITabProps } from "common/types";
 
-import { StudentData, StudentInternship } from "../components";
+import {
+  InternshipJournal,
+  StudentData,
+  StudentInternship,
+} from "../components";
 import useStudentProfile from "../hooks/useStudentProfile";
 
 const StudentProfile = () => {
@@ -65,7 +69,11 @@ const StudentProfile = () => {
         </span>
       ),
       key: "3",
-      children: "",
+      children: studentData.internship ? (
+        <InternshipJournal internshipId={studentData.internship} />
+      ) : (
+        <Result status="404" title={t("NO_INTERNSHIP")} />
+      ),
     },
   ];
 

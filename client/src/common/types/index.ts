@@ -201,6 +201,7 @@ export interface IProfessorData {
 }
 
 export interface IJournalEntryData {
+  _id?: string;
   startDate?: Date;
   endDate?: Date;
   description?: string;

@@ -2,11 +2,11 @@ import { useTranslation } from "react-i18next";
 
 import {
   LineChartOutlined,
-  SettingOutlined,
   UserOutlined,
   ProfileOutlined,
   SendOutlined,
   ControlOutlined,
+  ReconciliationOutlined,
 } from "@ant-design/icons";
 
 import { getNavBarMenuItem, NavBar } from "common";
@@ -30,7 +30,7 @@ const StudentNavBar = ({ selectedKey }: INavBarProps) => {
     getNavBarMenuItem(t("COMPANIES"), "3", <UserOutlined />),
     getNavBarMenuItem(t("OFFERS"), "4", <ProfileOutlined />),
     getNavBarMenuItem(t("APPLICATIONS"), "5", <SendOutlined />),
-    getNavBarMenuItem(t("INTERNSHIP"), "6", <SettingOutlined />),
+    getNavBarMenuItem(t("INTERNSHIP"), "6", <ReconciliationOutlined />),
   ];
   return (
     <NavBar
