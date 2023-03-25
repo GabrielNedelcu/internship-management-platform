@@ -8,6 +8,7 @@ const {
 const {
   createAccount,
   deleteOneAccount,
+  updateOneAccount,
 } = require("../../models/accounts/accounts.model");
 
 const { generatePassword } = require("../../utils/auth.utils");
@@ -246,11 +247,82 @@ async function httpGetStudentCV(req, res) {
   return downloadUploadedFile(res, "cv", studentData.cv);
 }
 
+/**
+ *
+ * @api {GET} /student/:studentId
+ * @apiDescription Get one student
+ *
+ * @apiParam    {String}    studentId       id of the student to be fetched
+ */
+async function httpGetOneStudent(req, res) {
+  const userRole = req.userRole;
+  const studentId = req.params.studentId;
+
+  if (studentId === "self") {
+    if (userRole !== "student") {
+      const err = new Error("Unathorized");
+      err.statusCode = 403;
+      throw err;
+    }
+
+    return httpGetSelfStudent(req, res);
+  }
+
+  const student = await getOneStudent(studentId, {});
+
+  if (!student) {
+    const err = new Error("Student not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  return res.status(200).json(student);
+}
+
+/**
+ *
+ * @api {PATCH} /students/:studentId
+ * @apiDescription Update student data
+ *
+ * @apiParam    {String}    studentId       id of the student to be updated
+ */
+async function httpPatchOneStudent(req, res) {
+  const userRole = req.userRole;
+  const studentId = req.params.studentId;
+  const newData = req.body;
+
+  if (studentId === "self") {
+    if (userRole !== "student") {
+      const err = new Error("Unathorized");
+      err.statusCode = 403;
+      throw err;
+    }
+
+    return httpPatchSelfStudent(req, res);
+  }
+
+  if (userRole !== "admin") {
+    const err = new Error("Unathorized");
+    err.statusCode = 403;
+    throw err;
+  }
+
+  await updateOneStudent(studentId, newData);
+
+  // if email is changed, also change the account's email
+  if (newData["email"])
+    await updateOneAccount(studentId, { email: newData.email });
+
+  return res.status(204).send();
+}
+
 module.exports = {
   httpGetStudentCV,
   httpCreateStudent,
+  httpGetOneStudent,
   httpGetAllStudents,
   httpGetSelfStudent,
+  httpPatchOneStudent,
   httpPatchSelfStudent,
   httpCreateMultipleStudents,
 };

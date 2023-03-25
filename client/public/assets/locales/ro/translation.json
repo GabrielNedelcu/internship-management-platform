@@ -318,5 +318,7 @@
   "DOCUMENT_VALIDATED": "Documentul a fost validat! Nu il mai puteti modifica ...",
   "DOWNLOAD_FILE": "Descarca fisier",
   "VALIDATE": "Valideaza",
-  "DECLINE": "Refuza"
+  "DECLINE": "Refuza",
+  "FETCHING_STUDENT_DATA": "Preluam datele studentului ...",
+  "CANNOT_RETRIEVE_STUDENT_DATA": "Am intampinat o eroare. Nu putem recupera datele studentului de pe server ..."
 }

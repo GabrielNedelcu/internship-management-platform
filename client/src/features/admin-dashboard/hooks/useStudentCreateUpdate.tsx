@@ -7,11 +7,11 @@ import { IStudentData } from "common/types";
 import { createStudent, updateStudent, uploadStudentsFile } from "../api";
 
 interface IUpdateStudentProps {
-  profId: string;
+  studentId: string;
   newData: IStudentData;
 }
 
-const useStudentCreateUpdate = () => {
+const useStudentCreateUpdate = (onAfterUpdate?: () => void) => {
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -80,14 +80,17 @@ const useStudentCreateUpdate = () => {
   );
 
   const { mutate: mutateUpdateStudent } = useMutation(
-    ["updateStudent"],
+    ["updateStudentProfile"],
     (updateProps: IUpdateStudentProps) => {
       setIsLoading(true);
-      return updateStudent(updateProps.profId, updateProps.newData);
+      return updateStudent(updateProps.studentId, updateProps.newData);
     },
     {
       onSuccess: () => {
         setIsLoading(false);
+
+        onAfterUpdate?.();
+
         notification.success({
           message: t("ACCOUNT_UPDATED"),
           description: t("UPDATE_ACCOUNT_SUCCESS_MSG"),

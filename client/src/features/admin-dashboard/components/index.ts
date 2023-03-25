@@ -11,3 +11,4 @@ export { default as CompaniesList } from "./CompaniesList";
 export { default as ProfessorsList } from "./ProfessorsList";
 export { default as ProfessorData } from "./ProfessorData";
 export { default as OffersList } from "./OffersList";
+export { default as StudentData } from "./StudentData";

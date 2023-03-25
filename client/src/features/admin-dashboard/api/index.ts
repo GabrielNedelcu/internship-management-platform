@@ -344,3 +344,26 @@ export const getStudentsFromInternships = async (
   const res = await axiosClient.get(url);
   return res.data;
 };
+
+/**
+ * Retrieve a student's data
+ * @param studentId
+ * @returns server response
+ */
+export const getStudent = async (studentId: string) => {
+  const res = await axiosClient.get(`${URL_ROUTES.STUDENTS}/${studentId}`);
+
+  return res.data;
+};
+
+/**
+ * Download the cv of a student
+ * @param studentId id of the student
+ * @returns server response
+ */
+export const getStudentCV = async (studentId: string) => {
+  const res = await axiosClient.get(`${URL_ROUTES.STUDENTS}/${studentId}/cv`, {
+    responseType: "blob",
+  });
+  return res.data;
+};

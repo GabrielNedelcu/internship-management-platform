@@ -124,7 +124,7 @@ const useInternshipsList = () => {
       ellipsis: true,
       sorter: true,
       render: (record: IStudentData) => {
-        return <>{record.name}</>;
+        return <a href={`student/${record._id}`}>{record.name}</a>;
       },
     },
     {

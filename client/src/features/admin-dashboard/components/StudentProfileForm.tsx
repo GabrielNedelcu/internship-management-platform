@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Form, Input, Button } from "antd";
 
@@ -16,8 +16,8 @@ const StudentProfileForm = ({ ...props }: IStudentProfileFormProps) => {
   const { t } = useTranslation();
   const { validateEmail } = useCheckUniqueEmail();
   const [newEmail, setNewEmail] = useState(props.initialData?.email);
-  const [cnp, setCnp] = useState("");
-  const [passport, setPassport] = useState("");
+  const [cnp, setCnp] = useState(props.initialData?.cnp || "");
+  const [passport, setPassport] = useState(props.initialData?.passport || "");
   const [form] = Form.useForm();
 
   return (
@@ -30,7 +30,7 @@ const StudentProfileForm = ({ ...props }: IStudentProfileFormProps) => {
         labelCol={{ span: 4 }}
         onFinish={(values) => {
           props.onFinish(values);
-          form.resetFields();
+          // form.resetFields();
         }}
       >
         <Form.Item

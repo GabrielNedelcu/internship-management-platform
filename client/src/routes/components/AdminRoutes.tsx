@@ -12,7 +12,12 @@ import {
 } from "../../features";
 import ProtectedRoutes from "../ProtectedRoutes";
 import { USER_ROLES } from "common/constants";
-import { Internships, Offers, Students } from "features/admin-dashboard";
+import {
+  Internships,
+  Offers,
+  StudentProfile,
+  Students,
+} from "features/admin-dashboard";
 
 const AdminRoutes = () => {
   return (
@@ -99,6 +104,15 @@ const AdminRoutes = () => {
               <Layout
                 sider={<AdminNavBar selectedKey={"-1"} />}
                 content={<ProfessorProfile />}
+              />
+            }
+          />
+          <Route
+            path="student/:studentId"
+            element={
+              <Layout
+                sider={<AdminNavBar selectedKey={"-1"} />}
+                content={<StudentProfile />}
               />
             }
           />

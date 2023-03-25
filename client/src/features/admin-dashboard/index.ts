@@ -8,3 +8,4 @@ export { default as AdminCompanyProfile } from "./pages/AdminCompanyProfile";
 export { default as AdminOfferProfile } from "./pages/AdminOfferProfile";
 export { default as ProfessorProfile } from "./pages/ProfessorProfile";
 export { default as Internships } from "./pages/Internships";
+export { default as StudentProfile } from "./pages/StudentProfile";
