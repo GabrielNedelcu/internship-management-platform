@@ -219,6 +219,7 @@ export interface IInternshipData {
   professorData?: IProfessorData;
   journal?: IJournalEntryData[];
   documents?: IInternshipDocumentsData;
+  createdAt?: Date;
 }
 
 export interface ITagProps {

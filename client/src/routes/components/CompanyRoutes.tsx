@@ -9,6 +9,8 @@ import {
   Applications,
   OfferProfile,
   SignAnnex,
+  Internships,
+  InternshipProfile,
 } from "features/company";
 import { USER_ROLES } from "common/constants";
 
@@ -56,11 +58,29 @@ const CompanyRoutes = () => {
             }
           />
           <Route
+            path="/internships"
+            element={
+              <Layout
+                sider={<CompanyNavBar selectedKey={"5"} />}
+                content={<Internships />}
+              />
+            }
+          />
+          <Route
             path="/offer/:offerID"
             element={
               <Layout
                 sider={<CompanyNavBar selectedKey={"-1"} />}
                 content={<OfferProfile />}
+              />
+            }
+          />
+          <Route
+            path="/internship/:internshipId"
+            element={
+              <Layout
+                sider={<CompanyNavBar selectedKey={"-1"} />}
+                content={<InternshipProfile />}
               />
             }
           />

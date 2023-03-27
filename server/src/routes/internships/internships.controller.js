@@ -27,6 +27,7 @@ const {
  * @apiSuccess array with the requested data or 204 if no student was found
  */
 async function httpGetInternships(req, res) {
+  const userId = req.userId;
   const userRole = req.userRole;
 
   const searchFor = req.query.search;
@@ -59,6 +60,12 @@ async function httpGetInternships(req, res) {
       query = { ...query, professor: new mongoose.Types.ObjectId(professorId) };
     if (companyId)
       query = { ...query, company: new mongoose.Types.ObjectId(companyId) };
+    if (offerId)
+      query = { ...query, offer: new mongoose.Types.ObjectId(offerId) };
+  }
+
+  if (userRole === "company") {
+    query = { ...query, company: new mongoose.Types.ObjectId(userId) };
     if (offerId)
       query = { ...query, offer: new mongoose.Types.ObjectId(offerId) };
   }

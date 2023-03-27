@@ -16,7 +16,11 @@ const {
 
 const internshipsRouter = express.Router();
 
-internshipsRouter.get("/", authz(["admin"]), asyncHandler(httpGetInternships));
+internshipsRouter.get(
+  "/",
+  authz(["admin", "company"]),
+  asyncHandler(httpGetInternships)
+);
 
 internshipsRouter.patch(
   "/:internshipId",

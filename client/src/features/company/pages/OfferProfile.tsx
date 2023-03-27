@@ -3,10 +3,15 @@ import { LoadingPage, Tabs } from "common";
 import { useParams } from "react-router-dom";
 import useOfferProfile from "../hooks/useOfferProfile";
 import OfferOverview from "../components/OfferOverview";
-import { FileSearchOutlined, SendOutlined } from "@ant-design/icons";
+import {
+  FileSearchOutlined,
+  LikeOutlined,
+  SendOutlined,
+} from "@ant-design/icons";
 import ApplicationsList from "../components/ApplicationsList";
 import { ITabProps } from "common/types";
 import { useTranslation } from "react-i18next";
+import InternshipsList from "../components/InternshipsList";
 
 const OfferProfile = () => {
   const { t } = useTranslation();
@@ -38,6 +43,16 @@ const OfferProfile = () => {
       ),
       key: "2",
       children: <ApplicationsList offerId={offerId} />,
+    },
+    {
+      label: (
+        <span>
+          <LikeOutlined />
+          {t("ACCEPTED_STUDENTS")}
+        </span>
+      ),
+      key: "3",
+      children: <InternshipsList offerId={offerId} />,
     },
   ];
 

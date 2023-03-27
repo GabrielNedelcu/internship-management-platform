@@ -154,10 +154,16 @@ const useApplicationsList = (offerId?: string) => {
       ? [
           {
             title: t("JOB_TITLE"),
-            dataIndex: "offerTitle",
             key: "offerTitle",
             ellipsis: true,
             sorter: true,
+            render: (record: IApplicationData) => {
+              return (
+                <>
+                  <a href={`offer/${record.offer}`}>{record.offerTitle}</a>
+                </>
+              );
+            },
           },
         ]
       : []),

@@ -323,5 +323,8 @@
   "CANNOT_RETRIEVE_STUDENT_DATA": "Am intampinat o eroare. Nu putem recupera datele studentului de pe server ...",
   "CANNOT_RETRIEVE_INTERNSHIP_DATA": "Am intampinat o eroare. Nu putem recupera datele stagiului de pe server ...",
   "PROFESSOR": "Profesor",
-  "WRITE_MESSAGE": "Scrie un mesaj ..."
+  "WRITE_MESSAGE": "Scrie un mesaj ...",
+  "INTERNSHIP_PROFILE": "Profilul stagiului",
+  "INTERNSHIP_PROFILE_MSG": "Revizuieste detaliile unui stagiu de practica ...",
+  "CREATED": "Creat"
 }

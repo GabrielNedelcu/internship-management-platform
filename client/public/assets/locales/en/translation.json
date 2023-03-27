@@ -323,5 +323,8 @@
   "CANNOT_RETRIEVE_STUDENT_DATA": "An error occured. Cannot retrieve the student's data from the server ...",
   "CANNOT_RETRIEVE_INTERNSHIP_DATA": "An error occured. Cannot retrieve the internship's data from the server ...",
   "PROFESSOR": "Professor",
-  "WRITE_MESSAGE": "Write a message ..."
+  "WRITE_MESSAGE": "Write a message ...",
+  "INTERNSHIP_PROFILE": "Internship profile",
+  "INTERNSHIP_PROFILE_MSG": "Review the details of an internship ...",
+  "CREATED": "Created"
 }
