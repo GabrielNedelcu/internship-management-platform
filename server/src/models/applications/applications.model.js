@@ -169,7 +169,17 @@ async function queryApplicationAppendStudentOfferData(
   };
 }
 
+/**
+ * Count the number of results for a query
+ * @param {*} query     query
+ * @returns the count of the documents for the specific query
+ */
+async function countApplications(query) {
+  return await Application.countDocuments(query);
+}
+
 module.exports = {
+  countApplications,
   createApplication,
   getOneApplication,
   queryApplications,

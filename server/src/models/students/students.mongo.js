@@ -73,16 +73,6 @@ const studentsSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-    stats: {
-      applications: {
-        type: Number,
-        default: 0,
-      },
-      acceptances: {
-        type: Number,
-        default: 0,
-      },
-    },
     internship: {
       type: mongoose.Schema.Types.ObjectId,
       default: null,

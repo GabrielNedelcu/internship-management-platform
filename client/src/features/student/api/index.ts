@@ -33,6 +33,16 @@ export const getSelfStudent = async (queryParams: IQueryParameters) => {
 };
 
 /**
+ * Get the stats for the logged in student
+ * @returns server response
+ */
+export const getSelfStudentStats = async () => {
+  const url = buildQuery(`${URL_ROUTES.STUDENTS}/self/stats`);
+  const res = await axiosClient.get(url);
+  return res.data;
+};
+
+/**
  * Retrieve all the companies from the server
  * @param queryParams query parameters
  * @returns server response

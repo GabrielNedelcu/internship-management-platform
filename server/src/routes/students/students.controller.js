@@ -27,6 +27,9 @@ const {
   getPagination,
   getProjection,
 } = require("../../utils/query.utils");
+const {
+  countApplications,
+} = require("../../models/applications/applications.model");
 
 /**
  *
@@ -316,6 +319,65 @@ async function httpPatchOneStudent(req, res) {
   return res.status(204).send();
 }
 
+/**
+ *
+ * @api {GET} /student/:studentId/stats
+ * @apiDescription Get the statistics for one student
+ *
+ * @apiParam    {String}    studentId       id of the student
+ */
+async function httpGetOneStudentStats(req, res) {
+  let studentId = req.params.studentId;
+
+  const userRole = req.userRole;
+  const userId = req.userId;
+
+  // the student can access only it's own stats
+  if (userRole === "student" && studentId !== "self") {
+    const err = new Error("Unauthorized");
+    err.statusCode = 403;
+    throw err;
+  }
+
+  if (userRole === "admin" && studentId === "self") {
+    const err = new Error("Not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  if (studentId === "self") studentId = userId;
+
+  const student = await countApplications(studentId);
+  if (!student) {
+    const err = new Error("Student not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  const applications = await countApplications({ student: studentId });
+  const pendingReview = await countApplications({
+    student: studentId,
+    status: "inReview",
+  });
+  const accepted = await countApplications({
+    student: studentId,
+    $or: [
+      { status: "companyAccepted" },
+      { status: "studentAccepted" },
+      { status: "professorAssgined" },
+    ],
+  });
+
+  const declined = await countApplications({
+    student: studentId,
+    status: "companyDeclined",
+  });
+
+  return res
+    .status(200)
+    .json({ applications, pendingReview, accepted, declined });
+}
+
 module.exports = {
   httpGetStudentCV,
   httpCreateStudent,
@@ -324,5 +386,6 @@ module.exports = {
   httpGetSelfStudent,
   httpPatchOneStudent,
   httpPatchSelfStudent,
+  httpGetOneStudentStats,
   httpCreateMultipleStudents,
 };

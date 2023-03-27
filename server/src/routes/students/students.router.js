@@ -13,9 +13,8 @@ const {
   httpCreateStudent,
   httpGetOneStudent,
   httpGetAllStudents,
-  httpGetSelfStudent,
   httpPatchOneStudent,
-  httpPatchSelfStudent,
+  httpGetOneStudentStats,
   httpCreateMultipleStudents,
 } = require("./students.controller");
 
@@ -53,14 +52,6 @@ studentsRouter.get(
   asyncHandler(httpGetOneStudent)
 );
 
-// studentsRouter.patch(
-//   "/self",
-//   authz("student"),
-//   validateStudentSelfPatch,
-//   expressFileUpload(),
-//   asyncHandler(httpPatchSelfStudent)
-// );
-
 studentsRouter.patch(
   "/:studentId",
   authz(["admin", "student"]),
@@ -68,6 +59,10 @@ studentsRouter.patch(
   asyncHandler(httpPatchOneStudent)
 );
 
-// studentsRouter.get("/self", authz("student"), asyncHandler(httpGetSelfStudent));
+studentsRouter.get(
+  "/:studentId/stats",
+  authz(["admin", "student"]),
+  asyncHandler(httpGetOneStudentStats)
+);
 
 module.exports = studentsRouter;

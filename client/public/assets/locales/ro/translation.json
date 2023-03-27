@@ -320,11 +320,17 @@
   "VALIDATE": "Valideaza",
   "DECLINE": "Refuza",
   "FETCHING_STUDENT_DATA": "Preluam datele studentului ...",
-  "CANNOT_RETRIEVE_STUDENT_DATA": "Am intampinat o eroare. Nu putem recupera datele studentului de pe server ...",
-  "CANNOT_RETRIEVE_INTERNSHIP_DATA": "Am intampinat o eroare. Nu putem recupera datele stagiului de pe server ...",
+  "CANNOT_RETRIEVE_STUDENT_DATA": "Am intampinat o eroare. Nu putem prelua datele studentului de pe server ...",
+  "CANNOT_RETRIEVE_INTERNSHIP_DATA": "Am intampinat o eroare. Nu putem prelua datele stagiului de pe server ...",
   "PROFESSOR": "Profesor",
   "WRITE_MESSAGE": "Scrie un mesaj ...",
   "INTERNSHIP_PROFILE": "Profilul stagiului",
   "INTERNSHIP_PROFILE_MSG": "Revizuieste detaliile unui stagiu de practica ...",
-  "CREATED": "Creat"
+  "CREATED": "Creat",
+  "OVERVIEW_STATS": "Rezumatul procesului tau de recrutare ...",
+  "ACCEPTANCES": "Ai fost acceptat la",
+  "YOU_HAVE_APPLIED_TO": "Ai aplicat la",
+  "YOU_HAVE_BEEN_REJECTED_TO": "Ai fost respins la",
+  "PENDING_REVIEW_FOR": "In curs de revizuire",
+  "CANNOT_RETRIEVE_STUDENT_STATS": "Am intampinat o eroare. Nu putem prelua statisticile studentului de pe server ..."
 }

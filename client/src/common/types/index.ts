@@ -239,3 +239,10 @@ export interface IDocumentData {
   validated: boolean;
   validationMessage?: string;
 }
+
+export interface IStudentStatsData {
+  applications: number;
+  pendingReview: number;
+  accepted: number;
+  declined: number;
+}
