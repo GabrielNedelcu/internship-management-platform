@@ -332,5 +332,9 @@
   "YOU_HAVE_APPLIED_TO": "Ai aplicat la",
   "YOU_HAVE_BEEN_REJECTED_TO": "Ai fost respins la",
   "PENDING_REVIEW_FOR": "In curs de revizuire",
-  "CANNOT_RETRIEVE_STUDENT_STATS": "Am intampinat o eroare. Nu putem prelua statisticile studentului de pe server ..."
+  "CANNOT_RETRIEVE_STUDENT_STATS": "Am intampinat o eroare. Nu putem prelua statisticile studentului de pe server ...",
+  "LATEST_UPDATES": "Ultimele actualizari",
+  "LATEST_OFFERS": "Ultimele oferte",
+  "VIEW_MORE": "Vezi mai multe ...",
+  "MOST_AVAILABLE": "Cele mai multe pozitii deschise"
 }

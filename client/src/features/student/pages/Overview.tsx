@@ -1,6 +1,8 @@
-import { Typography } from "antd";
+import { Col, Row, Typography } from "antd";
 import StudentStats from "../components/StudentStats";
 import { useTranslation } from "react-i18next";
+import LatestUpdatesList from "../components/LatestUpdatesList";
+import MostAvailableOffers from "../components/MostAvailableOffers";
 
 const Overview = () => {
   const { t } = useTranslation();
@@ -13,6 +15,16 @@ const Overview = () => {
       </Typography.Title>
 
       <StudentStats />
+
+      <Row gutter={[16, 16]}>
+        <Col span={12}>
+          <LatestUpdatesList />
+        </Col>
+
+        <Col span={12}>
+          <MostAvailableOffers />
+        </Col>
+      </Row>
     </>
   );
 };

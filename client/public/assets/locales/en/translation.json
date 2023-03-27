@@ -332,5 +332,9 @@
   "YOU_HAVE_APPLIED_TO": "You have applied to",
   "YOU_HAVE_BEEN_REJECTED_TO": "You have been rejected to",
   "PENDING_REVIEW_FOR": "Pending review for",
-  "CANNOT_RETRIEVE_STUDENT_STATS": "An error occured. Cannot retrieve the student stats from the server ..."
+  "CANNOT_RETRIEVE_STUDENT_STATS": "An error occured. Cannot retrieve the student stats from the server ...",
+  "LATEST_UPDATES": "Latest updates",
+  "LATEST_OFFERS": "Latest offers",
+  "VIEW_MORE": "View More ...",
+  "MOST_AVAILABLE": "Most available positions"
 }
