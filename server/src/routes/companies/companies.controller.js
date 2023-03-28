@@ -6,6 +6,7 @@ const {
   getOneCompany,
   queryCompanies,
   updateOneCompany,
+  countCompanies,
 } = require("../../models/companies/companies.model");
 const { createOffer } = require("../../models/offers/offers.model");
 const {
@@ -185,6 +186,8 @@ async function httpGetOneCompany(req, res) {
   const userRole = req.userRole;
   const projection = getProjection(req.query);
 
+  if (companyId === "count") return httpGetCompaniesCount(req, res);
+
   if (userRole === "company" && companyId !== req.userId) {
     const err = new Error("You are not allowed to access this resource");
     err.statusCode = 403;
@@ -206,6 +209,27 @@ async function httpGetOneCompany(req, res) {
   }
 
   return res.status(200).json(company);
+}
+
+/**
+ *
+ * @api {GET} /companies/count
+ * @apiDescription Get the applications count
+ *
+ * @apiSuccess  {Object}     count of all documents
+ */
+async function httpGetCompaniesCount(req, res) {
+  const userRole = req.userRole;
+
+  if (userRole !== "admin") {
+    const err = new Error("Unathorized");
+    err.statusCode = 403;
+    throw err;
+  }
+
+  const count = await countCompanies();
+
+  return res.status(200).json({ count });
 }
 
 /**

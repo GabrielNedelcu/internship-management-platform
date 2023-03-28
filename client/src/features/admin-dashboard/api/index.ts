@@ -411,3 +411,22 @@ export const downloadTemplate = async (templateEndpoint: string) => {
   );
   return res.data;
 };
+
+/**
+ * Get the document count from a collection
+ * @param url collection controller url
+ * @returns server response
+ */
+export const getDocumentsCount = async (url: string) => {
+  const res = await axiosClient.get(`${url}/count`);
+  return res.data;
+};
+
+/**
+ * Get the stats for all the offers
+ * @returns server response
+ */
+export const getOffersStats = async () => {
+  const res = await axiosClient.get(`${URL_ROUTES.OFFERS}/stats`);
+  return res.data;
+};

@@ -1,4 +1,4 @@
-export { default as AdminOverviewPage } from "./pages/AdminOverviewPage";
+export { default as Overview } from "./pages/Overview";
 export { default as Students } from "./pages/Students";
 export { default as Professors } from "./pages/Professors";
 export { default as Offers } from "./pages/Offers";

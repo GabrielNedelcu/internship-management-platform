@@ -7,6 +7,7 @@ const {
   queryApplications,
   updateOneApplication,
   queryApplicationAppendStudentOfferData,
+  countApplications,
 } = require("../../models/applications/applications.model");
 const { getOneCompany } = require("../../models/companies/companies.model");
 const {
@@ -214,6 +215,8 @@ async function httpGetApplicationsCV(req, res) {
 async function httpGetApplication(req, res) {
   const applicationId = req.params.applicationId;
 
+  if (applicationId === "count") return httpGetApplicationsCount(req, res);
+
   const application = await getOneApplication(applicationId);
   if (!application) {
     const err = new Error("Application not found");
@@ -222,6 +225,27 @@ async function httpGetApplication(req, res) {
   }
 
   return res.status(200).json(application);
+}
+
+/**
+ *
+ * @api {GET} /applications/count
+ * @apiDescription Get the applications count
+ *
+ * @apiSuccess  {Object}     count of all documents
+ */
+async function httpGetApplicationsCount(req, res) {
+  const userRole = req.userRole;
+
+  if (userRole !== "admin") {
+    const err = new Error("Unathorized");
+    err.statusCode = 403;
+    throw err;
+  }
+
+  const count = await countApplications();
+
+  return res.status(200).json({ count });
 }
 
 /**

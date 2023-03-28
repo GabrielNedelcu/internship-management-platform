@@ -4,6 +4,7 @@ const {
   getOneStudent,
   queryStudents,
   updateOneStudent,
+  countStudents,
 } = require("../../models/students/students.model");
 const {
   createAccount,
@@ -261,6 +262,8 @@ async function httpGetOneStudent(req, res) {
   const userRole = req.userRole;
   const studentId = req.params.studentId;
 
+  if (studentId === "count") return httpGetStudentsCount(req, res);
+
   if (studentId === "self") {
     if (userRole !== "student") {
       const err = new Error("Unathorized");
@@ -280,6 +283,27 @@ async function httpGetOneStudent(req, res) {
   }
 
   return res.status(200).json(student);
+}
+
+/**
+ *
+ * @api {GET} /students/count
+ * @apiDescription Get the students count
+ *
+ * @apiSuccess  {Object}     count of all documents
+ */
+async function httpGetStudentsCount(req, res) {
+  const userRole = req.userRole;
+
+  if (userRole !== "admin") {
+    const err = new Error("Unathorized");
+    err.statusCode = 403;
+    throw err;
+  }
+
+  const count = await countStudents();
+
+  return res.status(200).json({ count });
 }
 
 /**

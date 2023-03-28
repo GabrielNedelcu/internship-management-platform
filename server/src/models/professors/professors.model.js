@@ -81,10 +81,20 @@ async function queryProfessors(query, options) {
   return await Professor.find(query, options);
 }
 
+/**
+ * Count the number of results for a query
+ * @param {*} query     query
+ * @returns the count of the documents for the specific query
+ */
+async function countProfessors(query) {
+  return await Professor.countDocuments(query);
+}
+
 module.exports = {
   createProfessor,
   getOneProfessor,
   getAllProfessors,
   updateOneProfessor,
   queryProfessors,
+  countProfessors,
 };

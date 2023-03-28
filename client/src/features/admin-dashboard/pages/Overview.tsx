@@ -1,6 +1,10 @@
-import { Typography, Row, Col, Statistic, Card, List, Button } from "antd";
+import { Typography, Row, Col, Card, List, Button } from "antd";
+import { useTranslation } from "react-i18next";
+import { Stats } from "../components";
 
-const AdminOverviewPage = () => {
+const Overview = () => {
+  const { t } = useTranslation();
+
   const data = [
     {
       title: "Company 1",
@@ -18,92 +22,14 @@ const AdminOverviewPage = () => {
 
   return (
     <>
-      <Typography.Title level={1}>Statistics Overview</Typography.Title>
+      <Typography.Title level={1}>{t("OVERVIEW")}</Typography.Title>
       <Typography.Title level={5} type={"secondary"}>
-        Here is this year's internship program in numbers ...
+        {t("ADMIN_OVERVIEW_MSG")}
       </Typography.Title>
+
       <Row gutter={[16, 16]}>
-        <Col span={8}>
-          <Card>
-            <Statistic
-              title="Total Number Of Registered Students"
-              value={870}
-              valueStyle={{ color: "rgb(15, 28, 112)" }}
-            />
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card>
-            <Statistic
-              title="Total Number Of Registered Professors"
-              value={75}
-              valueStyle={{ color: "rgb(15, 28, 112)" }}
-            />
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card>
-            <Statistic
-              title="Total Number Of Registered Companies"
-              value={40}
-              valueStyle={{ color: "rgb(15, 28, 112)" }}
-            />
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card>
-            <Statistic
-              title="Total Number Of Offers"
-              value={870}
-              valueStyle={{ color: "rgb(15, 28, 112)" }}
-            />
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card>
-            <Statistic
-              title="Total Number Of Positions Offered"
-              value={9.3}
-              valueStyle={{ color: "rgb(15, 28, 112)" }}
-            />
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card>
-            <Statistic
-              title="Total Number Of Available Positions Left"
-              value={9.3}
-              valueStyle={{ color: "rgb(15, 28, 112)" }}
-            />
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card>
-            <Statistic
-              title="Total Number Of Job Applications "
-              value={870}
-              valueStyle={{ color: "rgb(15, 28, 112)" }}
-            />
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card>
-            <Statistic
-              title="Total Number Of Students With Internships"
-              value={9.3}
-              valueStyle={{ color: "rgb(15, 28, 112)" }}
-            />
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card>
-            <Statistic
-              title="Total Number Of Students Without Internships"
-              value={9.3}
-              valueStyle={{ color: "rgb(15, 28, 112)" }}
-            />
-          </Card>
-        </Col>
+        <Stats />
+
         <Col span={8}>
           <Card title="Companies with the most positions offered">
             <List
@@ -184,4 +110,4 @@ const AdminOverviewPage = () => {
     </>
   );
 };
-export default AdminOverviewPage;
+export default Overview;

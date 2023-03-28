@@ -74,10 +74,20 @@ async function queryStudents(query, options) {
   return await Student.find(query, options);
 }
 
+/**
+ * Count the number of results for a query
+ * @param {*} query     query
+ * @returns the count of the documents for the specific query
+ */
+async function countStudents(query) {
+  return await Student.countDocuments(query);
+}
+
 module.exports = {
   createStudent,
   getOneStudent,
   queryStudents,
+  countStudents,
   getAllStudents,
   updateOneStudent,
 };

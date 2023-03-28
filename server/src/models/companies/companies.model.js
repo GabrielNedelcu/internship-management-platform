@@ -73,10 +73,36 @@ async function queryCompanies(
   return { totalCount, data };
 }
 
+/**
+ * Count the number of results for a query
+ * @param {*} query     query
+ * @returns the count of the documents for the specific query
+ */
+async function countCompanies(query) {
+  return await Company.countDocuments(query);
+}
+
+async function getOffersStats() {
+  return await Company.aggregate([
+    { $match: { validated: true } },
+    {
+      $group: {
+        _id: null,
+        totalNumOffers: { $sum: "$numOffers" },
+        totalNumPositions: { $sum: "$numPositions" },
+        validatedCompanyCount: { $sum: 1 },
+      },
+    },
+    { $project: { _id: 0 } },
+  ]);
+}
+
 module.exports = {
   createCompany,
   getOneCompany,
   getAllCompanies,
   updateOneCompany,
   queryCompanies,
+  countCompanies,
+  getOffersStats,
 };

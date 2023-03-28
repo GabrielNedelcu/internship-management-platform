@@ -3,6 +3,7 @@ const {
   queryInternshipsAppendReferencedData,
   getOneInternship,
   updateOneInternship,
+  countInternships,
 } = require("../../models/internships/internships.model");
 const {
   getOneProfessor,
@@ -239,6 +240,9 @@ async function httpPatchInternship(req, res) {
  */
 async function httpGetInternship(req, res) {
   const internshipId = req.params.internshipId;
+
+  if (internshipId === "count") return httpGetInternshipsCount(req, res);
+
   const projection = getProjection(req.query);
   const studentProjection = getProjectionFromString(req.query.studentFields);
   const companyProjection = getProjectionFromString(req.query.companyFields);
@@ -270,6 +274,27 @@ async function httpGetInternship(req, res) {
   }
 
   return res.status(200).json(resp.data[0]);
+}
+
+/**
+ *
+ * @api {GET} /internships/count
+ * @apiDescription Get the internships count
+ *
+ * @apiSuccess  {Object}     count of all documents
+ */
+async function httpGetInternshipsCount(req, res) {
+  const userRole = req.userRole;
+
+  if (userRole !== "admin") {
+    const err = new Error("Unathorized");
+    err.statusCode = 403;
+    throw err;
+  }
+
+  const count = await countInternships();
+
+  return res.status(200).json({ count });
 }
 
 /**

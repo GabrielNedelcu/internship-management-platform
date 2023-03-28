@@ -1,4 +1,7 @@
-const { getOneCompany } = require("../../models/companies/companies.model");
+const {
+  getOneCompany,
+  getOffersStats,
+} = require("../../models/companies/companies.model");
 
 const {
   createOffer,
@@ -6,6 +9,7 @@ const {
   getOneOffer,
   getCompanyOffers,
   getValidatedOffers,
+  countOffers,
 } = require("../../models/offers/offers.model");
 const {
   queryApplications,
@@ -91,6 +95,9 @@ async function httpGetAllOffers(req, res) {
  */
 async function httpGetOneOffer(req, res) {
   const offerId = req.params.offerId;
+
+  if (offerId === "stats") return httpGetOffersStats(req, res);
+
   const projection = getProjection(req.query);
   const userId = req.userId;
   const userRole = req.userRole;
@@ -115,6 +122,27 @@ async function httpGetOneOffer(req, res) {
   }
 
   return res.status(200).json(offer);
+}
+
+/**
+ *
+ * @api {GET} /offers/stats
+ * @apiDescription Get statistics about the offers
+ *
+ * @apiSuccess  {Object}     stats about the offers
+ */
+async function httpGetOffersStats(req, res) {
+  const userRole = req.userRole;
+
+  if (userRole !== "admin") {
+    const err = new Error("Unathorized");
+    err.statusCode = 403;
+    throw err;
+  }
+
+  const stats = await getOffersStats();
+
+  return res.status(200).json(stats[0]);
 }
 
 /**

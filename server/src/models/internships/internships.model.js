@@ -201,11 +201,21 @@ async function queryInternshipsAppendReferencedData(
   };
 }
 
+/**
+ * Count the number of results for a query
+ * @param {*} query     query
+ * @returns the count of the documents for the specific query
+ */
+async function countInternships(query) {
+  return await Internship.countDocuments(query);
+}
+
 module.exports = {
   createInternship,
   getOneInternship,
   getAllInternships,
   updateOneInternship,
   queryInternships,
+  countInternships,
   queryInternshipsAppendReferencedData,
 };

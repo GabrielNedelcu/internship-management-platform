@@ -3,6 +3,7 @@ const {
   getAllProfessors,
   getOneProfessor,
   updateOneProfessor,
+  countProfessors,
 } = require("../../models/professors/professors.model");
 const {
   createAccount,
@@ -188,6 +189,9 @@ async function httpGetAllProfessors(req, res) {
  */
 async function httpGetOneProfessor(req, res) {
   const professorId = req.params.professorId;
+
+  if (professorId === "count") return httpGetProfessorsCount(req, res);
+
   const userRole = req.userRole;
 
   let projection = {};
@@ -204,6 +208,27 @@ async function httpGetOneProfessor(req, res) {
   }
 
   return res.status(200).json(professor);
+}
+
+/**
+ *
+ * @api {GET} /professors/count
+ * @apiDescription Get the professors count
+ *
+ * @apiSuccess  {Object}     count of all documents
+ */
+async function httpGetProfessorsCount(req, res) {
+  const userRole = req.userRole;
+
+  if (userRole !== "admin") {
+    const err = new Error("Unathorized");
+    err.statusCode = 403;
+    throw err;
+  }
+
+  const count = await countProfessors();
+
+  return res.status(200).json({ count });
 }
 
 /**

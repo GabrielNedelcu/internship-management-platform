@@ -246,3 +246,13 @@ export interface IStudentStatsData {
   accepted: number;
   declined: number;
 }
+
+export interface ICountServerResponse {
+  count: number;
+}
+
+export interface IOffersStats {
+  totalNumOffers: number;
+  totalNumPositions: number;
+  validatedCompanyCount: number;
+}

@@ -177,6 +177,15 @@ async function getCompanyOffers(
   return { totalCount, data };
 }
 
+/**
+ * Count the number of results for a query
+ * @param {*} query     query
+ * @returns the count of the documents for the specific query
+ */
+async function countOffers(query) {
+  return await Offer.countDocuments(query);
+}
+
 module.exports = {
   createOffer,
   getOneOffer,
@@ -185,4 +194,5 @@ module.exports = {
   queryOffers,
   getValidatedOffers,
   getCompanyOffers,
+  countOffers,
 };

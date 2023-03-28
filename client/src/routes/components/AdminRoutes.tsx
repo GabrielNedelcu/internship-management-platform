@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom";
 import { Layout, AdminNavBar } from "layout";
 
 import {
-  AdminOverviewPage,
   Professors,
   Companies,
   EnrollmentRequests,
@@ -17,6 +16,7 @@ import {
   Offers,
   StudentProfile,
   Students,
+  Overview,
 } from "features/admin-dashboard";
 
 const AdminRoutes = () => {
@@ -31,7 +31,7 @@ const AdminRoutes = () => {
             element={
               <Layout
                 sider={<AdminNavBar selectedKey={"1"} />}
-                content={<AdminOverviewPage />}
+                content={<Overview />}
               />
             }
           />

@@ -336,5 +336,16 @@
   "LATEST_UPDATES": "Ultimele actualizari",
   "LATEST_OFFERS": "Ultimele oferte",
   "VIEW_MORE": "Vezi mai multe ...",
-  "MOST_AVAILABLE": "Cele mai multe pozitii deschise"
+  "MOST_AVAILABLE": "Cele mai multe pozitii deschise",
+  "ADMIN_OVERVIEW_MSG": "Programul de internship al acestui an in cifre ...",
+  "TOTAL_NUM_STUDENTS": "Numarul total de studenti",
+  "TOTAL_NUM_PROFFESORS": "Numarul total de profesori",
+  "TOTAL_NUM_COMPANIES": "Numarul total de companii",
+  "TOTAL_NUM_OFFERS": "Numarul total de oferte",
+  "TOTAL_NUM_POSITIONS_OFFERED": "Numarul total de pozitii oferite",
+  "TOTAL_NUM_AVAILABLE_POSITIONS": "Numarul total de pozitii disponibile",
+  "TOTAL_NUM_APPLICATIONS": "Numarul total de aplicatii",
+  "TOTAL_NUM_INTERNSHIPS": "Numarul studentilor cu stagiu asigurat",
+  "TOTAL_NUM_STUDENTS_WITHOUT_INTERNSHIPS": "Numarul studentilor fara stagiu",
+  "CANNOT_RETRIEVE_DATA": "Am intampinat o eroare. Nu putem prelua datele de pe server ..."
 }

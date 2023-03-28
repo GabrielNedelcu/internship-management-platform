@@ -336,5 +336,16 @@
   "LATEST_UPDATES": "Latest updates",
   "LATEST_OFFERS": "Latest offers",
   "VIEW_MORE": "View More ...",
-  "MOST_AVAILABLE": "Most available positions"
+  "MOST_AVAILABLE": "Most available positions",
+  "ADMIN_OVERVIEW_MSG": "This year's internship program in numbers ...",
+  "TOTAL_NUM_STUDENTS": "Total number of students",
+  "TOTAL_NUM_PROFFESORS": "Total number of professors",
+  "TOTAL_NUM_COMPANIES": "Total number of companies",
+  "TOTAL_NUM_OFFERS": "Total number of offers",
+  "TOTAL_NUM_POSITIONS_OFFERED": "Total number of positions offered",
+  "TOTAL_NUM_AVAILABLE_POSITIONS": "Total number of available positions left",
+  "TOTAL_NUM_APPLICATIONS": "Total number of job applications",
+  "TOTAL_NUM_INTERNSHIPS": "Total number of internships",
+  "TOTAL_NUM_STUDENTS_WITHOUT_INTERNSHIPS": "Total number of students without internships",
+  "CANNOT_RETRIEVE_DATA": "An error occured. Cannot retrieve the data from the server ..."
 }
