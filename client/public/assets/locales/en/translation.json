@@ -347,5 +347,9 @@
   "TOTAL_NUM_APPLICATIONS": "Total number of job applications",
   "TOTAL_NUM_INTERNSHIPS": "Total number of internships",
   "TOTAL_NUM_STUDENTS_WITHOUT_INTERNSHIPS": "Total number of students without internships",
-  "CANNOT_RETRIEVE_DATA": "An error occured. Cannot retrieve the data from the server ..."
+  "CANNOT_RETRIEVE_DATA": "An error occured. Cannot retrieve the data from the server ...",
+  "COMPANIES_MOST_POSITIONS": "Companies with the most positions offered",
+  "MOST_DESIRED_COMPANIES": "Most desired companies",
+  "MOST_DESIRED_OFFERS": "Most desired offers",
+  "MOST_DESIRED_FOW": "Most desired fields of work"
 }

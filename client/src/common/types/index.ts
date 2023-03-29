@@ -256,3 +256,19 @@ export interface IOffersStats {
   totalNumPositions: number;
   validatedCompanyCount: number;
 }
+
+export interface IFieldOfWorkApplications {
+  _id: string; // corresponding to the name of the field of work
+  applications: number;
+}
+
+export interface ICompanyApplications {
+  _id: string; // corresponding to the id of the company
+  companyName: string;
+  applications: number;
+}
+
+export interface IApplicationsStats {
+  mostDesiredFieldsOfWork: IFieldOfWorkApplications[];
+  mostDesiredCompanies: ICompanyApplications[];
+}

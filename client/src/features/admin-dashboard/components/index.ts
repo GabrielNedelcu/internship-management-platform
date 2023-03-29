@@ -16,3 +16,5 @@ export { default as StudentInternship } from "./StudentInternship";
 export { default as InternshipDocumentCard } from "./InternshipDocumentCard";
 export { default as InternshipJournal } from "./InternshipJournal";
 export { default as Stats } from "./Stats";
+export { default as MostPositionsList } from "./MostPositionsList";
+export { default as MostDesiredCompaniesFOW } from "./MostDesiredCompaniesFOW";

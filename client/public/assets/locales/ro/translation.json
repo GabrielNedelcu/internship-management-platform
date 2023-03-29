@@ -347,5 +347,9 @@
   "TOTAL_NUM_APPLICATIONS": "Numarul total de aplicatii",
   "TOTAL_NUM_INTERNSHIPS": "Numarul studentilor cu stagiu asigurat",
   "TOTAL_NUM_STUDENTS_WITHOUT_INTERNSHIPS": "Numarul studentilor fara stagiu",
-  "CANNOT_RETRIEVE_DATA": "Am intampinat o eroare. Nu putem prelua datele de pe server ..."
+  "CANNOT_RETRIEVE_DATA": "Am intampinat o eroare. Nu putem prelua datele de pe server ...",
+  "COMPANIES_MOST_POSITIONS": "Companiile cu cele mai multe pozitii oferite",
+  "MOST_DESIRED_COMPANIES": "Cele mai cautate companii",
+  "MOST_DESIRED_OFFERS": "Cele mai cautate oferte",
+  "MOST_DESIRED_FOW": "Cele mai cautate domenii de activitate"
 }

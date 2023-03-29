@@ -40,7 +40,9 @@ const StudentInternship = ({ internshipId }: IInternshipOverviewProps) => {
             content={
               <>
                 <br />
-                <Typography.Link href={`/company/${internshipData.company}`}>
+                <Typography.Link
+                  href={`/dashboard/admin/company/${internshipData.company}`}
+                >
                   {internshipData.companyData.name}
                 </Typography.Link>
               </>

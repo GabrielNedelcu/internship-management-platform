@@ -430,3 +430,12 @@ export const getOffersStats = async () => {
   const res = await axiosClient.get(`${URL_ROUTES.OFFERS}/stats`);
   return res.data;
 };
+
+/**
+ * Get the stats for corresponding to the applications
+ * @returns server response
+ */
+export const getApplicationsStats = async () => {
+  const res = await axiosClient.get(`${URL_ROUTES.APPLICATIONS}/stats`);
+  return res.data;
+};

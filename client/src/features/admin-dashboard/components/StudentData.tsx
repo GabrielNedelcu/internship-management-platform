@@ -74,7 +74,7 @@ const StudentData = ({ studentData, onAfterUpdate }: IStudentProfileData) => {
                           download(fileData, `${studentData.name}_CV.pdf`);
                         }}
                       >
-                        {t("DOWNLOAD_CONTRACT")}
+                        {t("DOWNLOAD_CV")}
                       </Typography.Link>
                     </Descriptions.Item>
                   </Descriptions>

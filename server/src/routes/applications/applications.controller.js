@@ -8,6 +8,8 @@ const {
   updateOneApplication,
   queryApplicationAppendStudentOfferData,
   countApplications,
+  getMostDesiredFieldsOfWork,
+  getMostDesiredCompanies,
 } = require("../../models/applications/applications.model");
 const { getOneCompany } = require("../../models/companies/companies.model");
 const {
@@ -217,6 +219,8 @@ async function httpGetApplication(req, res) {
 
   if (applicationId === "count") return httpGetApplicationsCount(req, res);
 
+  if (applicationId === "stats") return httpGetApplicationsStats(req, res);
+
   const application = await getOneApplication(applicationId);
   if (!application) {
     const err = new Error("Application not found");
@@ -225,6 +229,30 @@ async function httpGetApplication(req, res) {
   }
 
   return res.status(200).json(application);
+}
+
+/**
+ *
+ * @api {GET} /applications/stats
+ * @apiDescription Get the stats of the applications
+ *
+ * @apiSuccess  {Object}    The statistics of the Applications
+ */
+async function httpGetApplicationsStats(req, res) {
+  const userRole = req.userRole;
+
+  if (userRole !== "admin") {
+    const err = new Error("Unathorized");
+    err.statusCode = 403;
+    throw err;
+  }
+
+  const mostDesiredFieldsOfWork = await getMostDesiredFieldsOfWork();
+  const mostDesiredCompanies = await getMostDesiredCompanies();
+
+  return res
+    .status(200)
+    .json({ mostDesiredFieldsOfWork, mostDesiredCompanies });
 }
 
 /**

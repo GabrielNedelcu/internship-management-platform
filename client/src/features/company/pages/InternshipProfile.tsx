@@ -86,7 +86,7 @@ const InternshipProfile = () => {
                     {internshipData.studentData?.major}
                   </Descriptions.Item>
                   <Descriptions.Item label={t("PHONE_NUMBER")}>
-                    {internshipData.studentData?.phone}
+                    +40{internshipData.studentData?.phone}
                   </Descriptions.Item>
                   <Descriptions.Item label={t("EMAIL")}>
                     {internshipData.studentData?.email}

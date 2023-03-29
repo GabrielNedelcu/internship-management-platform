@@ -178,6 +178,51 @@ async function countApplications(query) {
   return await Application.countDocuments(query);
 }
 
+async function getMostDesiredFieldsOfWork() {
+  return await Application.aggregate([
+    // Join Applications and Company collections using the company field
+    {
+      $lookup: {
+        from: "companies",
+        localField: "company",
+        foreignField: "_id",
+        as: "company",
+      },
+    },
+    // Unwind the company array to make it easier to group by fieldOfWork
+    {
+      $unwind: "$company",
+    },
+    // Group by fieldOfWork and count the number of applications in each group
+    {
+      $group: {
+        _id: "$company.fieldOfWork",
+        applications: { $sum: 1 },
+      },
+    },
+    // Sort by the count in descending order
+    {
+      $sort: { applications: -1 },
+    },
+  ]);
+}
+
+async function getMostDesiredCompanies() {
+  return await Application.aggregate([
+    {
+      $group: {
+        _id: "$company",
+        companyName: { $first: "$companyName" },
+        applications: { $sum: 1 },
+      },
+    },
+    // Sort by count in descending order again
+    {
+      $sort: { applications: -1 },
+    },
+  ]);
+}
+
 module.exports = {
   countApplications,
   createApplication,
@@ -185,5 +230,7 @@ module.exports = {
   queryApplications,
   getAllApplications,
   updateOneApplication,
+  getMostDesiredCompanies,
+  getMostDesiredFieldsOfWork,
   queryApplicationAppendStudentOfferData,
 };

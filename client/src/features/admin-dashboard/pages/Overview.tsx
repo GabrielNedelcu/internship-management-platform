@@ -1,24 +1,14 @@
-import { Typography, Row, Col, Card, List, Button } from "antd";
+import { Typography, Row } from "antd";
 import { useTranslation } from "react-i18next";
-import { Stats } from "../components";
+import {
+  MostDesiredCompaniesFOW,
+  MostPositionsList,
+  Stats,
+} from "../components";
+import MostDesiredOffers from "../components/MostDesiredOffers";
 
 const Overview = () => {
   const { t } = useTranslation();
-
-  const data = [
-    {
-      title: "Company 1",
-      description: "52 positions offered",
-    },
-    {
-      title: "Company 2",
-      description: "52 positions offered",
-    },
-    {
-      title: "Company 3",
-      description: "52 positions offered",
-    },
-  ];
 
   return (
     <>
@@ -30,82 +20,11 @@ const Overview = () => {
       <Row gutter={[16, 16]}>
         <Stats />
 
-        <Col span={8}>
-          <Card title="Companies with the most positions offered">
-            <List
-              itemLayout="horizontal"
-              dataSource={data}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    title={<a href="https://ant.design">{item.title}</a>}
-                    description={item.description}
-                  />
-                </List.Item>
-              )}
-            />
-            <Button type="primary" block>
-              View Full List
-            </Button>
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card title="Most desired companies">
-            <List
-              itemLayout="horizontal"
-              dataSource={data}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    title={<a href="https://ant.design">{item.title}</a>}
-                    description={item.description}
-                  />
-                </List.Item>
-              )}
-            />
-            <Button type="primary" block>
-              View Full List
-            </Button>
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card title="Most desired offers">
-            <List
-              itemLayout="horizontal"
-              dataSource={data}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    title={<a href="https://ant.design">{item.title}</a>}
-                    description={item.description}
-                  />
-                </List.Item>
-              )}
-            />
-            <Button type="primary" block>
-              View Full List
-            </Button>
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card title="Most Desired Fields Of Work">
-            <List
-              itemLayout="horizontal"
-              dataSource={data}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    title={<a href="https://ant.design">{item.title}</a>}
-                    description={item.description}
-                  />
-                </List.Item>
-              )}
-            />
-            <Button type="primary" block>
-              View Full List
-            </Button>
-          </Card>
-        </Col>
+        <MostPositionsList />
+
+        <MostDesiredOffers />
+
+        <MostDesiredCompaniesFOW />
       </Row>
     </>
   );
