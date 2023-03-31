@@ -351,5 +351,10 @@
   "COMPANIES_MOST_POSITIONS": "Companies with the most positions offered",
   "MOST_DESIRED_COMPANIES": "Most desired companies",
   "MOST_DESIRED_OFFERS": "Most desired offers",
-  "MOST_DESIRED_FOW": "Most desired fields of work"
+  "MOST_DESIRED_FOW": "Most desired fields of work",
+  "POSITIONS_TAKEN": "Positions taken",
+  "APPLICATIONS_TO_REVIEW": "Applications to review",
+  "INCOMPLETE_OFFERS": "Incomplete offers",
+  "LATEST_APPLICATIONS": "Latest applications",
+  "LATEST_ACCEPTED_STUDENTS": "Latest accepted students"
 }

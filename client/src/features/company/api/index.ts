@@ -213,3 +213,15 @@ export const getInternship = async (
 
   return res.data;
 };
+
+/**
+ * Get the number of applications
+ * @param url collection controller url
+ * @returns server response
+ */
+export const getInReviewApplications = async (status?: string) => {
+  let url = `${URL_ROUTES.APPLICATIONS}/count`;
+  if (status) url = `${URL_ROUTES.APPLICATIONS}/count?status=${status}`;
+  const res = await axiosClient.get(url);
+  return res.data;
+};

@@ -351,5 +351,10 @@
   "COMPANIES_MOST_POSITIONS": "Companiile cu cele mai multe pozitii oferite",
   "MOST_DESIRED_COMPANIES": "Cele mai cautate companii",
   "MOST_DESIRED_OFFERS": "Cele mai cautate oferte",
-  "MOST_DESIRED_FOW": "Cele mai cautate domenii de activitate"
+  "MOST_DESIRED_FOW": "Cele mai cautate domenii de activitate",
+  "POSITIONS_TAKEN": "Pozitii ocupate",
+  "APPLICATIONS_TO_REVIEW": "Aplicatii de revizuit",
+  "INCOMPLETE_OFFERS": "Oferte incomplete",
+  "LATEST_APPLICATIONS": "Ultimele aplicatii",
+  "LATEST_ACCEPTED_STUDENTS": "Ultimii studenti acceptati"
 }
