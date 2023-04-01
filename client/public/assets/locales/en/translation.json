@@ -356,5 +356,10 @@
   "APPLICATIONS_TO_REVIEW": "Applications to review",
   "INCOMPLETE_OFFERS": "Incomplete offers",
   "LATEST_APPLICATIONS": "Latest applications",
-  "LATEST_ACCEPTED_STUDENTS": "Latest accepted students"
+  "LATEST_ACCEPTED_STUDENTS": "Latest accepted students",
+  "FIRST_YEAR_AVG": "1st year avg.",
+  "SECOND_YEAR_AVG": "2nd year avg.",
+  "THIRD_YEAR_AVG": "3rd year avg.",
+  "STUDENT_AVG": "Student avg.",
+  "AVG": "Avg."
 }

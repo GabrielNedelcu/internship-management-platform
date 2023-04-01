@@ -63,7 +63,13 @@ async function httpCreateStudent(req, res) {
     _id: account._id,
     ...studentData,
     major: getStudentMajor(studentData.group),
+    fullAvg:
+      (studentData.firstYearAvg +
+        studentData.secondYearAvg +
+        studentData.thirdYearAvg) /
+        3 || 0,
   });
+
   logger.info(`Created student with id ${account._id}`);
 
   return res.status(201).json({ ...student._doc });
@@ -316,7 +322,16 @@ async function httpGetStudentsCount(req, res) {
 async function httpPatchOneStudent(req, res) {
   const userRole = req.userRole;
   const studentId = req.params.studentId;
-  const newData = req.body;
+  let newData = req.body;
+
+  if (newData.firstYearAvg || newData.secondYearAvg || newData.thirdYearAvg) {
+    newData = {
+      ...newData,
+      fullAvg:
+        (newData.firstYearAvg + newData.secondYearAvg + newData.thirdYearAvg) /
+        3,
+    };
+  }
 
   if (studentId === "self") {
     if (userRole !== "student") {

@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import {
   IdcardOutlined,
   MailOutlined,
+  ReadOutlined,
   UserOutlined,
   UserSwitchOutlined,
 } from "@ant-design/icons";
@@ -46,6 +47,18 @@ const ProfileAdminForm = ({ profileData }: IProfileAdminForm) => {
 
         <Form.Item name="passport" label={t("PASSPORT")}>
           <Input suffix={<IdcardOutlined />} />
+        </Form.Item>
+
+        <Form.Item name="firstYearAvg" label={t("FIRST_YEAR_AVG")}>
+          <Input suffix={<ReadOutlined />} />
+        </Form.Item>
+
+        <Form.Item name="secondYearAvg" label={t("SECOND_YEAR_AVG")}>
+          <Input suffix={<ReadOutlined />} />
+        </Form.Item>
+
+        <Form.Item name="thirdYearAvg" label={t("THIRD_YEAR_AVG")}>
+          <Input suffix={<ReadOutlined />} />
         </Form.Item>
       </Form>
 

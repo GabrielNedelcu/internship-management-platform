@@ -168,6 +168,9 @@ async function validateStudentCreation(req, res, next) {
     group: "required|string",
     cnp: "required|string|size:13",
     passport: "string",
+    firstYearAvg: "numeric",
+    secondYearAvg: "numeric",
+    thirdYearAvg: "numeric",
   };
 
   // verify user sends only accepted fields
@@ -208,6 +211,9 @@ async function validateStudentSelfPatch(req, res, next) {
     birthDay: "date",
     phone: "string",
     citizenship: "string",
+    firstYearAvg: "numeric",
+    secondYearAvg: "numeric",
+    thirdYearAvg: "numeric",
   };
 
   // verify user sends only accepted fields

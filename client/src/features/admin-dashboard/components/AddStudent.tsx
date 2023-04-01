@@ -1,14 +1,4 @@
-import {
-  Row,
-  Col,
-  Typography,
-  Form,
-  Input,
-  Button,
-  UploadProps,
-  Upload,
-  Spin,
-} from "antd";
+import { Row, Col, Typography, UploadProps, Upload, Spin } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
@@ -38,7 +28,6 @@ const AddStudent = () => {
     setOpenModal,
     mutateCreateStudent,
     mutateUploadStudents,
-    mutateUpdateStudent,
   } = useStudentCreateUpdate();
 
   const newProps: UploadProps = {

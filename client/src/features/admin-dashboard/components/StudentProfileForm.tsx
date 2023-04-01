@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, InputNumber } from "antd";
 
 import { useCheckUniqueEmail } from "common";
 import { IStudentData } from "common/types";
@@ -134,6 +134,54 @@ const StudentProfileForm = ({ ...props }: IStudentProfileFormProps) => {
               setPassport(e.target.value);
               form.resetFields(["cnp"]);
             }}
+          />
+        </Form.Item>
+
+        <Form.Item
+          name="firstYearAvg"
+          {...(props.displayLabels && {
+            label: t("FIRST_YEAR_AVG"),
+          })}
+        >
+          <InputNumber
+            size="large"
+            min={0}
+            max={10}
+            // defaultValue={0}
+            placeholder={t("FIRST_YEAR_AVG").toString()}
+            style={{ width: "250px" }}
+          />
+        </Form.Item>
+
+        <Form.Item
+          name="secondYearAvg"
+          {...(props.displayLabels && {
+            label: t("SECOND_YEAR_AVG"),
+          })}
+        >
+          <InputNumber
+            size="large"
+            min={0}
+            max={10}
+            // defaultValue={0}
+            placeholder={t("SECOND_YEAR_AVG").toString()}
+            style={{ width: "250px" }}
+          />
+        </Form.Item>
+
+        <Form.Item
+          name="thirdYearAvg"
+          {...(props.displayLabels && {
+            label: t("THIRD_YEAR_AVG"),
+          })}
+        >
+          <InputNumber
+            size="large"
+            min={0}
+            max={10}
+            // defaultValue={0}
+            placeholder={t("THIRD_YEAR_AVG").toString()}
+            style={{ width: "250px" }}
           />
         </Form.Item>
 

@@ -29,6 +29,10 @@ export interface IStudentData {
   phone?: string;
   citizenship?: string;
   internship?: string;
+  firstYearAvg?: number;
+  secondYearAvg?: number;
+  thirdYearAvg?: number;
+  fullAvg?: number;
 }
 
 export interface ICompanyCardData {
@@ -133,8 +137,8 @@ export interface IApplicationData {
   status?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  studentData?: IStudentData[];
-  offerData?: IOfferData[];
+  studentData?: IStudentData;
+  offerData?: IOfferData;
 }
 
 export interface IFetchOptions {

@@ -102,10 +102,17 @@ async function queryApplicationAppendStudentOfferData(
           {
             $project: {
               internship: 1,
+              firstYearAvg: 1,
+              secondYearAvg: 1,
+              thirdYearAvg: 1,
+              fullAvg: 1,
             },
           },
         ],
       },
+    },
+    {
+      $unwind: "$studentData",
     },
     {
       $lookup: {
@@ -121,6 +128,9 @@ async function queryApplicationAppendStudentOfferData(
           },
         ],
       },
+    },
+    {
+      $unwind: "$offerData",
     },
     {
       $match: query,

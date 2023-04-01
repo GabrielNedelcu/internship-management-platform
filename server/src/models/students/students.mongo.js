@@ -78,6 +78,22 @@ const studentsSchema = new mongoose.Schema(
       default: null,
       unique: true,
     },
+    firstYearAvg: {
+      type: Number,
+      default: null,
+    },
+    secondYearAvg: {
+      type: Number,
+      default: null,
+    },
+    thirdYearAvg: {
+      type: Number,
+      default: null,
+    },
+    fullAvg: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

@@ -356,5 +356,10 @@
   "APPLICATIONS_TO_REVIEW": "Aplicatii de revizuit",
   "INCOMPLETE_OFFERS": "Oferte incomplete",
   "LATEST_APPLICATIONS": "Ultimele aplicatii",
-  "LATEST_ACCEPTED_STUDENTS": "Ultimii studenti acceptati"
+  "LATEST_ACCEPTED_STUDENTS": "Ultimii studenti acceptati",
+  "FIRST_YEAR_AVG": "Medie An 1",
+  "SECOND_YEAR_AVG": "Medie An 2",
+  "THIRD_YEAR_AVG": "Medie An 3",
+  "STUDENT_AVG": "Mediile Studentului ...",
+  "AVG": "Medie"
 }

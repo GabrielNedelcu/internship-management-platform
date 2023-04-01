@@ -157,8 +157,8 @@ const useApplicationsList = () => {
       key: "5",
       title: t("ACTIONS"),
       render: (record: IApplicationData) => {
-        if (!record.studentData?.at(0)?.internship)
-          if (record.offerData?.at(0)?.remainingAvailablePos !== 0)
+        if (!record.studentData?.internship)
+          if (record.offerData?.remainingAvailablePos !== 0)
             return (
               <>
                 <Space size="small">

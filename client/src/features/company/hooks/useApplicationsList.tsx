@@ -3,7 +3,15 @@ import download from "downloadjs";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { TableProps, notification, Space, Tooltip, Button, Tag } from "antd";
+import {
+  TableProps,
+  notification,
+  Space,
+  Tooltip,
+  Button,
+  Tag,
+  Popover,
+} from "antd";
 import type { ColumnsType } from "antd/es/table/interface";
 
 import {
@@ -136,19 +144,53 @@ const useApplicationsList = (offerId?: string) => {
       sorter: true,
     },
     {
-      title: t("STUDENT_EMAIL"),
+      title: t("EMAIL"),
       dataIndex: "studentEmail",
       key: "studentEmail",
       ellipsis: true,
       sorter: true,
     },
     {
-      title: t("STUDENT_MAJOR"),
+      title: t("MAJOR"),
       dataIndex: "studentMajor",
       key: "studentMajor",
       ellipsis: true,
       sorter: true,
+      width: "160px",
       filters: getMajors(),
+    },
+    {
+      title: t("AVG"),
+      key: "studentData.fullAvg",
+      ellipsis: true,
+      sorter: true,
+      width: "100px",
+      render: (record: IApplicationData) => {
+        return (
+          <>
+            <Popover
+              content={
+                <>
+                  <>{`${t(
+                    "FIRST_YEAR_AVG"
+                  )}: ${record.studentData?.firstYearAvg?.toString()}`}</>
+                  <br />
+                  <>{`${t(
+                    "SECOND_YEAR_AVG"
+                  )}: ${record.studentData?.secondYearAvg?.toString()}`}</>
+                  <br />
+                  <>{`${t(
+                    "THIRD_YEAR_AVG"
+                  )}: ${record.studentData?.thirdYearAvg?.toString()}`}</>
+                </>
+              }
+              title={t("STUDENT_AVG")}
+            >
+              {record.studentData?.fullAvg?.toString().slice(0, 4)}
+            </Popover>
+          </>
+        );
+      },
     },
     ...(!offerId
       ? [
@@ -198,8 +240,8 @@ const useApplicationsList = (offerId?: string) => {
       key: "5",
       title: t("ACTIONS"),
       render: (record: IApplicationData) => {
-        if (!record.studentData?.at(0)?.internship)
-          if (record.offerData?.at(0)?.remainingAvailablePos !== 0)
+        if (!record.studentData?.internship)
+          if (record.offerData?.remainingAvailablePos !== 0)
             return (
               <>
                 <Space size="small">
