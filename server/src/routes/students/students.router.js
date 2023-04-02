@@ -12,6 +12,7 @@ const {
   httpGetStudentCV,
   httpCreateStudent,
   httpGetOneStudent,
+  httpDeleteStudent,
   httpGetAllStudents,
   httpPatchOneStudent,
   httpGetOneStudentStats,
@@ -57,6 +58,12 @@ studentsRouter.patch(
   authz(["admin", "student"]),
   expressFileUpload(),
   asyncHandler(httpPatchOneStudent)
+);
+
+studentsRouter.delete(
+  "/:studentId",
+  authz(["admin"]),
+  asyncHandler(httpDeleteStudent)
 );
 
 studentsRouter.get(

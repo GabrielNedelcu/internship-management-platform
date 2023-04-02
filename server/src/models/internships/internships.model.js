@@ -12,6 +12,15 @@ async function createInternship(internshipData) {
 }
 
 /**
+ * Delete one internship
+ *
+ * @param {ObjectId} internshipId  - the id corresponding to the internship
+ */
+async function deleteOneInternship(internshipId) {
+  await Internship.findByIdAndDelete(internshipId);
+}
+
+/**
  * Retrieve the internship associated with an id
  *
  * @param {ObjectId} internshipId  - the id corresponding to the internship
@@ -213,9 +222,10 @@ async function countInternships(query) {
 module.exports = {
   createInternship,
   getOneInternship,
-  getAllInternships,
-  updateOneInternship,
   queryInternships,
   countInternships,
+  getAllInternships,
+  deleteOneInternship,
+  updateOneInternship,
   queryInternshipsAppendReferencedData,
 };

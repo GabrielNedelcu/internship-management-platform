@@ -1,15 +1,11 @@
-const {
-  getOneCompany,
-  getOffersStats,
-} = require("../../models/companies/companies.model");
+const { getOffersStats } = require("../../models/companies/companies.model");
 
 const {
   createOffer,
-  queryOffers,
   getOneOffer,
   getCompanyOffers,
   getValidatedOffers,
-  countOffers,
+  deleteOneOffer,
 } = require("../../models/offers/offers.model");
 const {
   queryApplications,
@@ -19,6 +15,9 @@ const {
   getPagination,
   getProjection,
 } = require("../../utils/query.utils");
+const {
+  queryInternships,
+} = require("../../models/internships/internships.model");
 
 /**
  *
@@ -39,6 +38,42 @@ async function httpCreateOffer(req, res) {
   return res.status(201).json(offer);
 }
 
+/**
+ *
+ * @api {DELETE} /offers/:offerId
+ * @apiDescription Delete an offer
+ */
+async function httpDeleteOffer(req, res) {
+  const offerId = req.params.offerId;
+
+  const offer = await getOneOffer(offerId);
+  if (!offer) {
+    const err = new Error("Offer not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  const internships = await queryInternships({ offer: offerId });
+  if (internships.totalCount) {
+    const err = new Error(
+      "Cannot delete the offer. There are already internships based on this offer"
+    );
+    err.statusCode = 400;
+    throw err;
+  }
+
+  // delete all the applications to the offer
+  const applications = await queryApplications({ offer: offerId }, { _id: 1 });
+  if (applications.totalCount)
+    for await (const application of applications.data) {
+      await deleteOneApplication(application._id);
+    }
+
+  await deleteOneOffer(offerId);
+
+  return res.status(200).send();
+}
+
 async function httpGetAllOffers(req, res) {
   const userRole = req.userRole;
   const userId = req.userId;
@@ -52,7 +87,7 @@ async function httpGetAllOffers(req, res) {
 
   if (companyID) {
     if (userRole === "company" && userId !== companyID) {
-      const err = new Error("You are not permitted to access this resource!");
+      const err = new Error("Unauthorized");
       err.statusCode = 404;
       throw err;
     }
@@ -190,7 +225,8 @@ async function httpGetOneOfferStats(req, res) {
 
 module.exports = {
   httpCreateOffer,
-  httpGetAllOffers,
   httpGetOneOffer,
+  httpDeleteOffer,
+  httpGetAllOffers,
   httpGetOneOfferStats,
 };

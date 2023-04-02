@@ -10,6 +10,7 @@ const {
 const {
   httpCreateProfessor,
   httpGetOneProfessor,
+  httpDeleteProfessor,
   httpGetAllProfessors,
   httpPatchOneProfessor,
   httpCreateMultipleProfessors,
@@ -43,6 +44,12 @@ professorsRouter.patch(
   "/:professorId",
   authz(["admin"]),
   asyncHandler(httpPatchOneProfessor)
+);
+
+professorsRouter.delete(
+  "/:professorId",
+  authz(["admin"]),
+  asyncHandler(httpDeleteProfessor)
 );
 
 module.exports = professorsRouter;

@@ -12,6 +12,15 @@ async function createOffer(offerData) {
 }
 
 /**
+ * Delete one offer
+ *
+ * @param {ObjectId} offerId  - the id corresponding to the offer
+ */
+async function deleteOneOffer(offerId) {
+  await Offer.findByIdAndDelete(offerId);
+}
+
+/**
  * Retrieve the offer associated with an id
  *
  * @param {ObjectId} offerId     - the id corresponding to the offer
@@ -189,10 +198,11 @@ async function countOffers(query) {
 module.exports = {
   createOffer,
   getOneOffer,
-  getAllOffers,
-  updateOneOffer,
   queryOffers,
-  getValidatedOffers,
-  getCompanyOffers,
   countOffers,
+  getAllOffers,
+  deleteOneOffer,
+  updateOneOffer,
+  getCompanyOffers,
+  getValidatedOffers,
 };

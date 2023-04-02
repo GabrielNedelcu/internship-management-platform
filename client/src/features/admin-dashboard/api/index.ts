@@ -439,3 +439,47 @@ export const getApplicationsStats = async () => {
   const res = await axiosClient.get(`${URL_ROUTES.APPLICATIONS}/stats`);
   return res.data;
 };
+
+/**
+ * Delete an internship
+ * @param internshipId id of the internship to delete
+ * @returns server response
+ */
+export const deleteInternship = async (internshipId: string) => {
+  const res = await axiosClient.delete(
+    `${URL_ROUTES.INTERNSHIPS}/${internshipId}`
+  );
+  return res.data;
+};
+
+/**
+ * Delete a professor
+ * @param professorId id of the professor to delete
+ * @returns server response
+ */
+export const deleteProfessor = async (professorId: string) => {
+  const res = await axiosClient.delete(
+    `${URL_ROUTES.PROFESSORS}/${professorId}`
+  );
+  return res.data;
+};
+
+/**
+ * Delete a company
+ * @param companyId id of the company to delete
+ * @returns server response
+ */
+export const deleteCompany = async (companyId: string) => {
+  const res = await axiosClient.delete(`${URL_ROUTES.COMPANIES}/${companyId}`);
+  return res.data;
+};
+
+/**
+ * Delete a student
+ * @param studentId id of the student to delete
+ * @returns server response
+ */
+export const deleteStudent = async (studentId: string) => {
+  const res = await axiosClient.delete(`${URL_ROUTES.STUDENTS}/${studentId}`);
+  return res.data;
+};

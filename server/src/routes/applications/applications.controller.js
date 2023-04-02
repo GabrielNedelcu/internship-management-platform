@@ -10,6 +10,7 @@ const {
   countApplications,
   getMostDesiredFieldsOfWork,
   getMostDesiredCompanies,
+  deleteOneApplication,
 } = require("../../models/applications/applications.model");
 const { getOneCompany } = require("../../models/companies/companies.model");
 const {
@@ -233,6 +234,36 @@ async function httpGetApplication(req, res) {
 
 /**
  *
+ * @api {DELETE} /applications/:applicationId
+ * @apiDescription Delete an application
+ *
+ * @apiParam    {String}    applicationId   Application's unique ObjectId
+ * @apiSuccess  200 OK
+ */
+async function httpDeleteApplication(req, res) {
+  const applicationId = req.params.applicationId;
+
+  const application = await getOneApplication(applicationId, { offer: 1 });
+  if (!application) {
+    const err = new Error("Application not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  // decrese the offer's applications
+  const offer = await getOneOffer(application.offer, { applications: 1 });
+  if (offer)
+    await updateOneOffer(application.offer, {
+      applications: --offer.applications,
+    });
+
+  await deleteOneApplication(applicationId);
+
+  return res.status(200).json(application);
+}
+
+/**
+ *
  * @api {GET} /applications/stats
  * @apiDescription Get the stats of the applications
  *
@@ -354,7 +385,8 @@ async function httpPatchApplication(req, res) {
 module.exports = {
   httpGetApplication,
   httpPatchApplication,
-  httpGetApplicationsCV,
   httpCreateApplication,
+  httpDeleteApplication,
+  httpGetApplicationsCV,
   httpGetAllApplications,
 };

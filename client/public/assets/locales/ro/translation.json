@@ -361,5 +361,16 @@
   "SECOND_YEAR_AVG": "Medie An 2",
   "THIRD_YEAR_AVG": "Medie An 3",
   "STUDENT_AVG": "Mediile Studentului ...",
-  "AVG": "Medie"
+  "AVG": "Medie",
+  "CANNOT_DELETE_INTERNSHIP": "Am intampinat o eroare. Nu putem sterge stagiul de practica ...",
+  "INTERNSHIP_DELETED": "Stagiul de practica a fost sters cu success",
+  "CANNOT_DELETE_PROFESSOR": "Am intampinat o eroare. Nu putem sterge profesorul ...",
+  "PROFESSOR_DELETED": "Profesorul a fost sters cu success",
+  "CANNOT_DELETE_STUDENT": "Am intampinat o eroare. Nu putem sterge studentul ...",
+  "STUDENT_DELETED": "Studentul a fost sters cu success",
+  "CANNOT_DELETE_COMPANY": "Am intampinat o eroare. Nu putem sterge compania ...",
+  "COMPANY_DELETED": "Compania a fost sters cu success",
+  "CANNOT_DELETE_COMPANY_INTERNSHIPS": "Compania nu poate fi stearsa deoarece exista deja stagii de practica create pe baza ei ...",
+  "CANNOT_DELETE_STUDENT_INTERNSHIPS": "Studentul nu poate fi sters deoarece are deja un stagiu de practica ...",
+  "FETCHING_STUDENTS": "Preluam studentii ..."
 }

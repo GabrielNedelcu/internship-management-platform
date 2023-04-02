@@ -12,6 +12,15 @@ async function createProfessor(professorData) {
 }
 
 /**
+ * Delete one professor
+ *
+ * @param {ObjectId} profId  - the id corresponding to the professor
+ */
+async function deleteOneProfessor(profId) {
+  await Professor.findByIdAndDelete(profId);
+}
+
+/**
  * Retrieve the professor associated with an id
  * Be aware that the id of the professor is the same as the
  * associated account's id
@@ -93,8 +102,9 @@ async function countProfessors(query) {
 module.exports = {
   createProfessor,
   getOneProfessor,
-  getAllProfessors,
-  updateOneProfessor,
   queryProfessors,
   countProfessors,
+  getAllProfessors,
+  deleteOneProfessor,
+  updateOneProfessor,
 };

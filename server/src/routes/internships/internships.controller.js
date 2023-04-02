@@ -4,6 +4,7 @@ const {
   getOneInternship,
   updateOneInternship,
   countInternships,
+  deleteOneInternship,
 } = require("../../models/internships/internships.model");
 const {
   getOneProfessor,
@@ -20,6 +21,15 @@ const {
   deleteUploadedFile,
   downloadUploadedFile,
 } = require("../../utils/files.utils");
+const { updateOneStudent } = require("../../models/students/students.model");
+const {
+  getOneOffer,
+  updateOneOffer,
+} = require("../../models/offers/offers.model");
+const {
+  queryApplications,
+  deleteOneApplication,
+} = require("../../models/applications/applications.model");
 
 /**
  * @api {GET} /internships/
@@ -298,6 +308,76 @@ async function httpGetInternshipsCount(req, res) {
 }
 
 /**
+ *
+ * @api {DELETE} /internships/:internshipId
+ * @apiDescription Delete an internship
+ *
+ * @apiSuccess  200 OK
+ */
+async function httpDeleteInternship(req, res) {
+  const internshipId = req.params.internshipId;
+
+  const internship = await getOneInternship(internshipId, {
+    offer: 1,
+    student: 1,
+    professor: 1,
+    documents: 1,
+  });
+  if (!internship) {
+    const err = new Error("Internship not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  // reset the student internship reference
+  await updateOneStudent(internship.student, { internship: null });
+
+  // delete the documents
+  if (internship?.documents.tripartit)
+    await deleteUploadedFile(
+      "tripartit",
+      internship.documents.tripartit.filename
+    );
+  if (internship?.documents.annex2)
+    await deleteUploadedFile("annex_2", internship.documents.annex2.filename);
+  if (internship?.documents.annex3)
+    await deleteUploadedFile("annex_3", internship.documents.annex3.filename);
+  if (internship?.documents.annex7)
+    await deleteUploadedFile("annex_7", internship.documents.annex7.filename);
+
+  // increase the professor's available positions
+  const professor = await getOneProfessor(internship.professor, {
+    numAvailablePositions: 1,
+  });
+  if (professor)
+    await updateOneProfessor(internship.professor, {
+      numAvailablePositions: ++professor.numAvailablePositions,
+    });
+
+  // increase the offer's available positions
+  const offer = await getOneOffer(internship.offer, {
+    remainingAvailablePos: 1,
+  });
+  if (offer)
+    await updateOneOffer(internship.offer, {
+      remainingAvailablePos: ++offer.remainingAvailablePos,
+    });
+
+  // delete the corresponding application
+  const application = await queryApplications({
+    offer: internship.offer,
+    student: internship.student,
+  });
+  if (application.totalCount === 1)
+    await deleteOneApplication(application.data[0]._id);
+
+  // finally delete the document
+  await deleteOneInternship(internshipId);
+
+  return res.status(200).send();
+}
+
+/**
  * @api {GET} /internships/:internshipId/documents
  * @apiDescription Get one document from the internship
  *
@@ -346,7 +426,8 @@ async function httpDownloadDocument(req, res) {
 
 module.exports = {
   httpGetInternships,
-  httpPatchInternship,
   httpGetInternship,
+  httpPatchInternship,
+  httpDeleteInternship,
   httpDownloadDocument,
 };

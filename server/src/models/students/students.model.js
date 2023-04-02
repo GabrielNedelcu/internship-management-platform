@@ -12,6 +12,15 @@ async function createStudent(studentData) {
 }
 
 /**
+ * Delete one student
+ *
+ * @param {ObjectId} studentId  - the id corresponding to the student
+ */
+async function deleteOneStudent(studentId) {
+  await Student.findByIdAndDelete(studentId);
+}
+
+/**
  * Retrieve the student associated with an id
  * Be aware that the id of the student is the same as the
  * associated account's id
@@ -89,5 +98,6 @@ module.exports = {
   queryStudents,
   countStudents,
   getAllStudents,
+  deleteOneStudent,
   updateOneStudent,
 };

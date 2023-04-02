@@ -12,6 +12,7 @@ const {
   httpGetInternships,
   httpPatchInternship,
   httpDownloadDocument,
+  httpDeleteInternship,
 } = require("./internships.controller");
 
 const internshipsRouter = express.Router();
@@ -40,6 +41,12 @@ internshipsRouter.get(
   "/:internshipId/documents",
   authz(["admin", "student"]),
   asyncHandler(httpDownloadDocument)
+);
+
+internshipsRouter.delete(
+  "/:internshipId",
+  authz(["admin"]),
+  asyncHandler(httpDeleteInternship)
 );
 
 module.exports = internshipsRouter;

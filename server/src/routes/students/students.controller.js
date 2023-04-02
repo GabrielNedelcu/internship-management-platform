@@ -5,6 +5,7 @@ const {
   queryStudents,
   updateOneStudent,
   countStudents,
+  deleteOneStudent,
 } = require("../../models/students/students.model");
 const {
   createAccount,
@@ -30,7 +31,17 @@ const {
 } = require("../../utils/query.utils");
 const {
   countApplications,
+  queryApplications,
+  deleteOneApplication,
 } = require("../../models/applications/applications.model");
+const {
+  queryInternships,
+} = require("../../models/internships/internships.model");
+const {
+  queryOffers,
+  getOneOffer,
+  updateOneOffer,
+} = require("../../models/offers/offers.model");
 
 /**
  *
@@ -185,7 +196,7 @@ async function httpGetAllStudents(req, res) {
     pageSize
   );
 
-  if (!resp.totalCount) return res.status(204).send();
+  // if (!resp.totalCount) return res.status(204).send();
 
   return res.status(200).json(resp);
 }
@@ -417,10 +428,69 @@ async function httpGetOneStudentStats(req, res) {
     .json({ applications, pendingReview, accepted, declined });
 }
 
+/**
+ *
+ * @api {DELETE} /students/:studentId
+ * @apiDescription Delete a student
+ *
+ * @apiSuccess  {Object}    200 OK
+ */
+async function httpDeleteStudent(req, res) {
+  const studentId = req.params.studentId;
+
+  const student = await getOneStudent(studentId, { _id: 1, cv: 1 });
+  if (!student) {
+    const err = new Error("Student not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  const internships = await queryInternships(
+    { student: studentId },
+    { _id: 1 }
+  );
+  if (internships.totalCount) {
+    const err = new Error(
+      "Cannot delete the student. It already has an internship"
+    );
+    err.statusCode = 400;
+    throw err;
+  }
+
+  // delete the student cv
+  if (student.cv) await deleteUploadedFile("cv", student.cv);
+
+  // delete all it's applications
+  const applications = await queryApplications(
+    { student: studentId },
+    { offer: 1 }
+  );
+
+  for await (const application of applications.data) {
+    // decrese the offers applications
+    const offer = await getOneOffer(application.offer, { applications: 1 });
+    if (offer)
+      await updateOneOffer(application.offer, {
+        applications: --offer.applications,
+      });
+
+    await deleteOneApplication(application._id);
+  }
+
+  // delete the account
+  await deleteOneAccount(studentId);
+
+  // finally delete the professor
+  await deleteOneStudent(studentId);
+
+  return res.status(200).send();
+}
+
 module.exports = {
   httpGetStudentCV,
   httpCreateStudent,
   httpGetOneStudent,
+  httpDeleteStudent,
   httpGetAllStudents,
   httpGetSelfStudent,
   httpPatchOneStudent,

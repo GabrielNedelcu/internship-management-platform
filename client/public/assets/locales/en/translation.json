@@ -361,5 +361,16 @@
   "SECOND_YEAR_AVG": "2nd year avg.",
   "THIRD_YEAR_AVG": "3rd year avg.",
   "STUDENT_AVG": "Student avg.",
-  "AVG": "Avg."
+  "AVG": "Avg.",
+  "CANNOT_DELETE_INTERNSHIP": "An error occured. Cannot delete the internship ...",
+  "INTERNSHIP_DELETED": "The internship was deleted successfully",
+  "CANNOT_DELETE_PROFESSOR": "An error occured. Cannot delete the professor ...",
+  "PROFESSOR_DELETED": "The professor was deleted successfully",
+  "CANNOT_DELETE_STUDENT": "An error occured. Cannot delete the student ...",
+  "STUDENT_DELETED": "The student was deleted successfully",
+  "CANNOT_DELETE_COMPANY": "An error occured. Cannot delete the company ...",
+  "COMPANY_DELETED": "The company was deleted successfully",
+  "CANNOT_DELETE_COMPANY_INTERNSHIPS": "The company cannot be deleted since there are already internships created based on it...",
+  "CANNOT_DELETE_STUDENT_INTERNSHIPS": "The student cannot be deleted since he already has an internship...",
+  "FETCHING_STUDENTS": "Fetching students ..."
 }

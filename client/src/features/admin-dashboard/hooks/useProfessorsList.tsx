@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { TableProps, notification, Space, Button, Tooltip, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table/interface";
 
@@ -17,7 +17,7 @@ import {
   parseTableSortObject,
 } from "common/utils";
 
-import { getProfessors } from "../api";
+import { deleteProfessor, getProfessors } from "../api";
 
 const useProfessorsList = () => {
   const { t } = useTranslation();
@@ -58,6 +58,28 @@ const useProfessorsList = () => {
         },
       }
     );
+
+  const { mutate: mutateDeleteProfessor } = useMutation(
+    ["deleteProfessor"],
+    (professorId: string) => deleteProfessor(professorId),
+    {
+      onSuccess: () => {
+        refetchProfessorsList();
+        notification.success({
+          message: t("GREAT"),
+          description: t("PROFESSOR_DELETED"),
+          duration: 10,
+        });
+      },
+      onError: () => {
+        notification.error({
+          message: "Ooops ...",
+          description: t("CANNOT_DELETE_PROFESSOR"),
+          duration: 10,
+        });
+      },
+    }
+  );
 
   useEffect(() => {
     refetchProfessorsList();
@@ -176,15 +198,18 @@ const useProfessorsList = () => {
                   }}
                 />
               </Tooltip>
-              <Tooltip title={t("DELETE")}>
-                <Button
-                  type="primary"
-                  shape="circle"
-                  icon={<DeleteOutlined />}
-                  danger
-                  onClick={() => {}}
-                />
-              </Tooltip>
+
+              {record.numAvailablePositions === record.numPositions && (
+                <Tooltip title={t("DELETE")}>
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    icon={<DeleteOutlined />}
+                    danger
+                    onClick={() => mutateDeleteProfessor(record._id)}
+                  />
+                </Tooltip>
+              )}
             </Space>
           </>
         );

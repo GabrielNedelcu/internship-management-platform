@@ -1,17 +1,34 @@
 const logger = require("../../config/logger.config");
 
-const { createAccount } = require("../../models/accounts/accounts.model");
+const {
+  createAccount,
+  deleteOneAccount,
+} = require("../../models/accounts/accounts.model");
+const {
+  queryApplications,
+  deleteOneApplication,
+} = require("../../models/applications/applications.model");
 const {
   createCompany,
   getOneCompany,
   queryCompanies,
   updateOneCompany,
   countCompanies,
+  deleteOneCompany,
 } = require("../../models/companies/companies.model");
-const { createOffer } = require("../../models/offers/offers.model");
+const {
+  getAllInternships,
+  queryInternships,
+} = require("../../models/internships/internships.model");
+const {
+  createOffer,
+  queryOffers,
+  deleteOneOffer,
+} = require("../../models/offers/offers.model");
 const {
   uploadFilesFromRequest,
   downloadUploadedFile,
+  deleteUploadedFile,
 } = require("../../utils/files.utils");
 const {
   getSort,
@@ -137,7 +154,7 @@ async function httpGetAllCompanies(req, res) {
     pageSize
   );
 
-  if (!companies.totalCount) return res.status(204).send();
+  // if (!companies.totalCount) return res.status(204).send();
 
   return res.status(200).json(companies);
 }
@@ -213,6 +230,62 @@ async function httpGetOneCompany(req, res) {
 
 /**
  *
+ * @api {DELETE} /companies/:companyID
+ * @apiDescription Delete one company
+ *
+ * @apiParam    {String}    companyID       id of the company to be deleted
+ * @apiSuccess  200 OK
+ */
+async function httpDeleteCompany(req, res) {
+  const companyId = req.params.companyId;
+
+  const company = await getOneCompany(companyId, { _id: 1, annex: 1 });
+  if (!company) {
+    const err = new Error("Company not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  const internships = await queryInternships({ company: companyId });
+  if (internships.totalCount) {
+    const err = new Error(
+      "Cannot delete company! There are already internships created based on this company!"
+    );
+    err.statusCode = 400;
+    throw err;
+  }
+
+  // delete all the company offers
+  const offers = await queryOffers({ companyID: companyId }, { _id: 1 });
+  for await (const offer of offers) {
+    await deleteOneOffer(offer._id);
+  }
+
+  // delete all the applications to this company
+  const applications = await queryApplications(
+    { company: companyId },
+    { _id: 1 }
+  );
+  if (applications.totalCount)
+    for await (const application of applications.data) {
+      await deleteOneApplication(application._id);
+    }
+
+  //delete the company contract
+  if (company.annex)
+    await deleteUploadedFile("company_contracts", company.annex);
+
+  // delete the account
+  await deleteOneAccount(companyId);
+
+  //finally delete company
+  await deleteOneCompany(companyId);
+
+  return res.status(200).send();
+}
+
+/**
+ *
  * @api {GET} /companies/count
  * @apiDescription Get the applications count
  *
@@ -254,8 +327,9 @@ async function httpGetCompanyContract(req, res) {
 
 module.exports = {
   httpCreateCompany,
-  httpGetAllCompanies,
   httpPatchCompany,
+  httpDeleteCompany,
   httpGetOneCompany,
+  httpGetAllCompanies,
   httpGetCompanyContract,
 };

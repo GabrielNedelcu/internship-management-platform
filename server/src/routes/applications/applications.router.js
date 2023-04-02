@@ -4,9 +4,10 @@ const authz = require("../../middleware/authz.middleware");
 
 const {
   httpGetApplication,
-  httpCreateApplication,
-  httpGetAllApplications,
   httpPatchApplication,
+  httpCreateApplication,
+  httpDeleteApplication,
+  httpGetAllApplications,
 } = require("./applications.controller");
 
 const {
@@ -35,6 +36,11 @@ applicationsRouter.patch(
   "/:applicationId",
   validateApplicationPatch,
   asyncHandler(httpPatchApplication)
+);
+
+applicationsRouter.delete(
+  "/:applicationId",
+  asyncHandler(httpDeleteApplication)
 );
 
 module.exports = applicationsRouter;

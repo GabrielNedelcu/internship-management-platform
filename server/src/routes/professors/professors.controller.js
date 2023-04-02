@@ -4,6 +4,7 @@ const {
   getOneProfessor,
   updateOneProfessor,
   countProfessors,
+  deleteOneProfessor,
 } = require("../../models/professors/professors.model");
 const {
   createAccount,
@@ -22,6 +23,9 @@ const { uploadFilesFromRequest } = require("../../utils/files.utils");
 const { parseExcel, professorSchema } = require("../../utils/excel.utils");
 
 const logger = require("../../config/logger.config");
+const {
+  queryInternships,
+} = require("../../models/internships/internships.model");
 
 /**
  *
@@ -175,8 +179,6 @@ async function httpGetAllProfessors(req, res) {
     pageSize
   );
 
-  if (!resp.totalCount) return res.status(204).send();
-
   return res.status(200).json(resp);
 }
 
@@ -233,6 +235,44 @@ async function httpGetProfessorsCount(req, res) {
 
 /**
  *
+ * @api {DELETE} /professors/:professorId
+ * @apiDescription Delete a professor
+ *
+ * @apiSuccess  {Object}    200 OK
+ */
+async function httpDeleteProfessor(req, res) {
+  const professorId = req.params.professorId;
+
+  const professor = await getOneProfessor(professorId, { _id: 1 });
+  if (!professor) {
+    const err = new Error("Professor not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
+  const internships = await queryInternships(
+    { professor: professorId },
+    { _id: 1 }
+  );
+  if (internships.totalCount) {
+    const err = new Error(
+      "Cannot delete the professor. It is already assigned to an internship"
+    );
+    err.statusCode = 400;
+    throw err;
+  }
+
+  // delete the account
+  await deleteOneAccount(professorId);
+
+  // finally delete the professor
+  await deleteOneProfessor(professorId);
+
+  return res.status(200).send();
+}
+
+/**
+ *
  * @api {PATCH} /professors/:professorId
  * @apiDescription Update professor data
  *
@@ -271,6 +311,7 @@ async function httpPatchOneProfessor(req, res) {
 module.exports = {
   httpCreateProfessor,
   httpGetOneProfessor,
+  httpDeleteProfessor,
   httpGetAllProfessors,
   httpPatchOneProfessor,
   httpCreateMultipleProfessors,

@@ -21,7 +21,8 @@ import {
   parseTableFiltersObject,
   parseTableSortObject,
 } from "common/utils";
-import { getAllCompanies, patchCompany } from "../api";
+import { deleteCompany, getAllCompanies, patchCompany } from "../api";
+import { AxiosError } from "axios";
 
 interface IAcceptDecline {
   companyId: string;
@@ -106,6 +107,38 @@ const useCompaniesList = (fetchValidatedOnly: boolean) => {
     }
   );
 
+  const { mutate: mutateDeleteCompany } = useMutation(
+    ["deleteCompany"],
+    (companyId: string) => deleteCompany(companyId),
+    {
+      onSuccess: () => {
+        refetchCompaniesList();
+        notification.success({
+          message: t("GREAT"),
+          description: t("COMPANY_DELETED"),
+          duration: 10,
+        });
+      },
+      onError: (error: any) => {
+        if (
+          error.response?.data.message ===
+          "Cannot delete company! There are already internships created based on this company!"
+        )
+          notification.error({
+            message: "Ooops ...",
+            description: t("CANNOT_DELETE_COMPANY_INTERNSHIPS"),
+            duration: 10,
+          });
+        else
+          notification.error({
+            message: "Ooops ...",
+            description: t("CANNOT_DELETE_COMPANY"),
+            duration: 10,
+          });
+      },
+    }
+  );
+
   const handleTablePropsChange: TableProps<ICompanyData>["onChange"] = (
     pagination,
     filters,
@@ -171,11 +204,7 @@ const useCompaniesList = (fetchValidatedOnly: boolean) => {
       ellipsis: true,
       sorter: true,
       render: (record) => {
-        return (
-          <>
-            {record && dayjs(record.createdAt).format("MMMM D YYYY").toString()}
-          </>
-        );
+        return <>{record && dayjs(record).format("MMMM D YYYY").toString()}</>;
       },
     },
     {
@@ -247,7 +276,7 @@ const useCompaniesList = (fetchValidatedOnly: boolean) => {
                     shape="circle"
                     icon={<DeleteOutlined />}
                     danger
-                    onClick={() => {}}
+                    onClick={() => mutateDeleteCompany(record._id || "")}
                   />
                 </Tooltip>
               </Space>

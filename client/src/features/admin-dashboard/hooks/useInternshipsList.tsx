@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type { ColumnsType } from "antd/es/table/interface";
 import { TableProps, notification, Space, Tooltip, Button, Tag } from "antd";
 
-import { PlusOutlined } from "@ant-design/icons";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 
 import { initialFetchOptions } from "common/constants";
 import { parseTableFiltersObject, parseTableSortObject } from "common/utils";
@@ -16,7 +16,7 @@ import {
   IServerResponseMultipleFetch,
   IStudentData,
 } from "common/types";
-import { getInternships, getProfessors } from "../api";
+import { deleteInternship, getInternships, getProfessors } from "../api";
 import { AssignProfessorModal } from "../components";
 
 const useInternshipsList = () => {
@@ -87,6 +87,28 @@ const useInternshipsList = () => {
         },
       }
     );
+
+  const { mutate: mutateDeleteInternship } = useMutation(
+    ["deleteInternship"],
+    (internshipId: string) => deleteInternship(internshipId),
+    {
+      onSuccess: () => {
+        refetchInternshipsList();
+        notification.success({
+          message: t("GREAT"),
+          description: t("INTERNSHIP_DELETED"),
+          duration: 10,
+        });
+      },
+      onError: () => {
+        notification.error({
+          message: "Ooops ...",
+          description: t("CANNOT_DELETE_INTERNSHIP"),
+          duration: 10,
+        });
+      },
+    }
+  );
 
   useEffect(() => {
     refetchInternshipsList();
@@ -220,6 +242,15 @@ const useInternshipsList = () => {
                   shape="circle"
                   icon={<PlusOutlined />}
                   onClick={() => setOpenAssignProfModal(true)}
+                />
+              </Tooltip>
+              <Tooltip title={t("DELETE")}>
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon={<DeleteOutlined />}
+                  danger
+                  onClick={() => mutateDeleteInternship(record._id || "")}
                 />
               </Tooltip>
             </Space>

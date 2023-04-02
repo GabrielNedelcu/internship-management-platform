@@ -12,6 +12,15 @@ async function createCompany(companyData) {
 }
 
 /**
+ * Delete one company
+ *
+ * @param {ObjectId} companyId  - the id corresponding to the company
+ */
+async function deleteOneCompany(companyId) {
+  await Company.findByIdAndDelete(companyId);
+}
+
+/**
  * Retrieve the company associated with an id
  * Be aware that the id of the company is the same as the
  * associated account's id
@@ -100,9 +109,10 @@ async function getOffersStats() {
 module.exports = {
   createCompany,
   getOneCompany,
-  getAllCompanies,
-  updateOneCompany,
   queryCompanies,
   countCompanies,
   getOffersStats,
+  getAllCompanies,
+  updateOneCompany,
+  deleteOneCompany,
 };

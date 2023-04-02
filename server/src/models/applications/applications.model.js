@@ -12,6 +12,15 @@ async function createApplication(applicationData) {
 }
 
 /**
+ * Delete one application
+ *
+ * @param {ObjectId} applicationId  - the id corresponding to the application
+ */
+async function deleteOneApplication(applicationId) {
+  await Application.findByIdAndDelete(applicationId);
+}
+
+/**
  * Retrieve the application associated with an id
  *
  * @param {ObjectId} applicationId  - the id corresponding to the application
@@ -240,6 +249,7 @@ module.exports = {
   queryApplications,
   getAllApplications,
   updateOneApplication,
+  deleteOneApplication,
   getMostDesiredCompanies,
   getMostDesiredFieldsOfWork,
   queryApplicationAppendStudentOfferData,

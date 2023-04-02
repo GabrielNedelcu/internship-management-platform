@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { TableProps, notification, Space, Button, Tooltip, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table/interface";
 
@@ -17,7 +17,7 @@ import {
   parseTableSortObject,
 } from "common/utils";
 
-import { getStudents } from "../api";
+import { deleteStudent, getStudents } from "../api";
 
 const useStudentsList = () => {
   const { t } = useTranslation();
@@ -58,6 +58,40 @@ const useStudentsList = () => {
         },
       }
     );
+
+  const { mutate: mutateDeleteStudent } = useMutation(
+    ["deleteStudent"],
+    (studentId: string) => deleteStudent(studentId),
+    {
+      onSuccess: () => {
+        refetchStudentsList();
+        notification.success({
+          message: t("GREAT"),
+          description: t("STUDENT_DELETED"),
+          duration: 10,
+        });
+      },
+      onError: (error: any) => {
+        console.log(error.response?.data.message);
+
+        if (
+          error.response?.data.message ===
+          "Cannot delete the student. It already has an internship"
+        )
+          notification.error({
+            message: "Ooops ...",
+            description: t("CANNOT_DELETE_STUDENT_INTERNSHIPS"),
+            duration: 10,
+          });
+        else
+          notification.error({
+            message: "Ooops ...",
+            description: t("CANNOT_DELETE_STUDENT"),
+            duration: 10,
+          });
+      },
+    }
+  );
 
   useEffect(() => {
     refetchStudentsList();
@@ -141,7 +175,7 @@ const useStudentsList = () => {
                   shape="circle"
                   icon={<DeleteOutlined />}
                   danger
-                  onClick={() => {}}
+                  onClick={() => mutateDeleteStudent(record._id || "")}
                 />
               </Tooltip>
             </Space>

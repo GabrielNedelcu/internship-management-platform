@@ -4,8 +4,9 @@ const authz = require("../../middleware/authz.middleware");
 
 const {
   httpCreateOffer,
-  httpGetAllOffers,
   httpGetOneOffer,
+  httpDeleteOffer,
+  httpGetAllOffers,
   httpGetOneOfferStats,
 } = require("./offers.controller");
 
@@ -38,6 +39,12 @@ offersRouter.get(
   "/:offerId/stats",
   authz(["company"]),
   asyncHandler(httpGetOneOfferStats)
+);
+
+offersRouter.delete(
+  "/:offerId",
+  authz(["admin"]),
+  asyncHandler(httpDeleteOffer)
 );
 
 module.exports = offersRouter;

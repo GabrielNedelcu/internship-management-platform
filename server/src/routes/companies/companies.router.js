@@ -8,6 +8,7 @@ const {
   httpPatchCompany,
   httpCreateCompany,
   httpGetOneCompany,
+  httpDeleteCompany,
   httpGetAllCompanies,
   httpGetCompanyContract,
 } = require("./companies.controller");
@@ -52,6 +53,13 @@ companiesRouter.get(
   auth,
   authz(["admin", "company"]),
   asyncHandler(httpGetCompanyContract)
+);
+
+companiesRouter.delete(
+  "/:companyId",
+  auth,
+  authz(["admin"]),
+  asyncHandler(httpDeleteCompany)
 );
 
 module.exports = companiesRouter;
