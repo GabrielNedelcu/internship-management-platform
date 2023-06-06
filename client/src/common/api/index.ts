@@ -27,6 +27,17 @@ export const logoutAccount = async () => {
 };
 
 /**
+ * Refresh the access token of the currently logged in user
+ *
+ * @returns server response
+ */
+export const refreshToken = async () => {
+  const res = await axiosClient.post(`${AUTH_URL}/tokens`);
+
+  return res.data;
+};
+
+/**
  * Change the password for the logged in user
  * @param newPassData new password and the confirmation password
  * @returns server response
