@@ -76,7 +76,6 @@ const studentsSchema = new mongoose.Schema(
     internship: {
       type: mongoose.Schema.Types.ObjectId,
       default: null,
-      unique: true,
     },
     firstYearAvg: {
       type: Number,
@@ -98,10 +97,10 @@ const studentsSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// studentsSchema.plugin(encrypt, {
-//   encryptionKey: process.env.MONGO_ENCRYPTION_KEY,
-//   signingKey: process.env.MONGO_SIGNING_KEY,
-//   encryptedFields: ["cnp", "passport"],
-// });
+studentsSchema.plugin(encrypt, {
+  encryptionKey: process.env.MONGO_ENCRYPTION_KEY,
+  signingKey: process.env.MONGO_SIGNING_KEY,
+  encryptedFields: ["cnp", "passport"],
+});
 
 module.exports = mongoose.model("Student", studentsSchema);
